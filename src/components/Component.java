@@ -1,5 +1,7 @@
 package components;
 
+import gameLib.Util;
+
 public class Component {
     // Attributes
     private int state;
@@ -65,5 +67,27 @@ public class Component {
 
     public void setSpeedY(double speedY) {
         this.speedY = speedY;
+    }
+
+    public int findFreeIndex(int[] stateArray) {
+        int i;
+        for (i = 0; i < stateArray.length; i++) {
+            if (stateArray[i] == Util.INACTIVE.getValue()) break;
+        }
+
+        return i;
+    }
+
+    public static int[] findFreeIndex(int[] stateArray, int amount) {
+        int i, k;
+        int[] freeArray = {stateArray.length, stateArray.length, stateArray.length};
+
+        for (i = 0, k = 0; i < stateArray.length && k < amount; i++) {
+            if (stateArray[i] == Util.INACTIVE.getValue()) {
+                freeArray[k] = i;
+                k++;
+            }
+        }
+        return freeArray;
     }
 }
