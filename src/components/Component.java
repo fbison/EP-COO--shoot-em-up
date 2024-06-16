@@ -11,8 +11,8 @@ public class Component {
     private double speedY;
 
     // Constructor
-    public Component(int state, double coordinateX, double coordinateY, double speedX, double speedY) {
-        this.state = state;
+    public Component(double coordinateX, double coordinateY, double speedX, double speedY) {
+        this.state = Util.INACTIVE.getValue();
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
         this.speedX = speedX;
