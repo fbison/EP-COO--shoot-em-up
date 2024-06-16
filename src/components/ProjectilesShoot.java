@@ -1,23 +1,23 @@
-package Components;
+package components;
 
 import java.util.ArrayList;
 
 public class ProjectilesShoot {
     // ArrayList to hold projectiles
-    private ArrayList<Component> Projectiles;
+    private ArrayList<Component> projectiles;
 
     // Constructor
     public ProjectilesShoot() {
-        this.Projectiles = new ArrayList<>();
+        this.projectiles = new ArrayList<>();
     }
 
-    // Getter for Projectiles
+    // Getter for projectiles
     public ArrayList<Component> getProjectiles() {
-        return Projectiles;
+        return projectiles;
     }
 
-    // Setter for Projectiles
+    // Setter for projectiles
     public void setProjectiles(ArrayList<Component> projectiles) {
-        Projectiles = projectiles;
+        this.projectiles = projectiles;
     }
 }

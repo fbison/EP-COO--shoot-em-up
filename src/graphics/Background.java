@@ -1,4 +1,4 @@
-package Graphics;
+package graphics;
 
 import java.util.ArrayList;
 
@@ -57,10 +57,5 @@ public class Background {
 
     public void setCount(double count) {
         this.count = count;
-    }
-
-    // Main method for testing
-    public static void main(String[] args) {
-        // You can add test code here
     }
 }

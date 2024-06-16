@@ -1,4 +1,4 @@
-package GameLib;
+package gameLib;
 
 public enum Util {
     WIDTH(480),
@@ -20,7 +20,7 @@ public enum Util {
         this.value = value;
     }
 
-    public int Value() {
+    public int getValue() {
         return value;
     }
 }

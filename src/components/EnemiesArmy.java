@@ -1,36 +1,36 @@
-package Components;
+package components;
 
 import java.util.ArrayList;
 
 public class EnemiesArmy {
     // ArrayList to hold enemies
-    private ArrayList<Enemy> Enemies;
+    private ArrayList<Enemy> enemies;
     // Next enemy time
-    private long NextEnemy;
+    private long nextEnemy;
 
     // Constructor
     public EnemiesArmy() {
-        this.Enemies = new ArrayList<>();
-        this.NextEnemy = 0; // Initialize to default value
+        this.enemies = new ArrayList<>();
+        this.nextEnemy = 0; // Initialize to default value
     }
 
     // Getter for Enemies
     public ArrayList<Enemy> getEnemies() {
-        return Enemies;
+        return enemies;
     }
 
     // Setter for Enemies
     public void setEnemies(ArrayList<Enemy> enemies) {
-        Enemies = enemies;
+        this.enemies = enemies;
     }
 
     // Getter for NextEnemy
     public long getNextEnemy() {
-        return NextEnemy;
+        return nextEnemy;
     }
 
     // Setter for NextEnemy
     public void setNextEnemy(long nextEnemy) {
-        NextEnemy = nextEnemy;
+        this.nextEnemy = nextEnemy;
     }
 }

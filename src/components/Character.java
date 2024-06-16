@@ -1,57 +1,57 @@
-package Components;
+package components;
 
 public class Character extends Component {
     // Additional attributes
-    private double Radius;
-    private double ExplosionStart;
-    private double ExplosionEnd;
-    private long NextShoot;
+    private double radius;
+    private double explosionStart;
+    private double explosionEnd;
+    private long nextShoot;
 
     // Constructor
     public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                      double radius, double explosionStart, double explosionEnd, long nextShoot) {
         super(state, coordinateX, coordinateY, speedX, speedY);
-        this.Radius = radius;
-        this.ExplosionStart = explosionStart;
-        this.ExplosionEnd = explosionEnd;
-        this.NextShoot = nextShoot;
+        this.radius = radius;
+        this.explosionStart = explosionStart;
+        this.explosionEnd = explosionEnd;
+        this.nextShoot = nextShoot;
     }
 
     // Additional method
-    public void Colide() {
+    public void collide() {
         // Method implementation
     }
 
     // Getters and setters for additional attributes
     public double getRadius() {
-        return Radius;
+        return radius;
     }
 
     public void setRadius(double radius) {
-        Radius = radius;
+        this.radius = radius;
     }
 
     public double getExplosionStart() {
-        return ExplosionStart;
+        return explosionStart;
     }
 
     public void setExplosionStart(double explosionStart) {
-        ExplosionStart = explosionStart;
+        this.explosionStart = explosionStart;
     }
 
     public double getExplosionEnd() {
-        return ExplosionEnd;
+        return explosionEnd;
     }
 
     public void setExplosionEnd(double explosionEnd) {
-        ExplosionEnd = explosionEnd;
+        this.explosionEnd = explosionEnd;
     }
 
     public long getNextShoot() {
-        return NextShoot;
+        return nextShoot;
     }
 
     public void setNextShoot(long nextShoot) {
-        NextShoot = nextShoot;
+        this.nextShoot = nextShoot;
     }
 }

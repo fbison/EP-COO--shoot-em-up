@@ -1,69 +1,69 @@
-package Components;
+package components;
 
 public class Component {
     // Attributes
-    private int State;
-    private double CoordinateX;
-    private double CoordinateY;
-    private double SpeedX;
-    private double SpeedY;
+    private int state;
+    private double coordinateX;
+    private double coordinateY;
+    private double speedX;
+    private double speedY;
 
     // Constructor
     public Component(int state, double coordinateX, double coordinateY, double speedX, double speedY) {
-        this.State = state;
-        this.CoordinateX = coordinateX;
-        this.CoordinateY = coordinateY;
-        this.SpeedX = speedX;
-        this.SpeedY = speedY;
+        this.state = state;
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
+        this.speedX = speedX;
+        this.speedY = speedY;
     }
 
     // Methods
-    public void UpdateState() {
+    public void updateState() {
         // Method implementation
     }
 
-    public void SetColor() {
+    public void setColor() {
         // Method implementation
     }
 
     // Getters and setters
     public int getState() {
-        return State;
+        return state;
     }
 
     public void setState(int state) {
-        State = state;
+        this.state = state;
     }
 
     public double getCoordinateX() {
-        return CoordinateX;
+        return coordinateX;
     }
 
     public void setCoordinateX(double coordinateX) {
-        CoordinateX = coordinateX;
+        this.coordinateX = coordinateX;
     }
 
     public double getCoordinateY() {
-        return CoordinateY;
+        return coordinateY;
     }
 
     public void setCoordinateY(double coordinateY) {
-        CoordinateY = coordinateY;
+        this.coordinateY = coordinateY;
     }
 
     public double getSpeedX() {
-        return SpeedX;
+        return speedX;
     }
 
     public void setSpeedX(double speedX) {
-        SpeedX = speedX;
+        this.speedX = speedX;
     }
 
     public double getSpeedY() {
-        return SpeedY;
+        return speedY;
     }
 
     public void setSpeedY(double speedY) {
-        SpeedY = speedY;
+        this.speedY = speedY;
     }
 }

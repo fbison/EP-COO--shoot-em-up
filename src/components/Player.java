@@ -1,4 +1,4 @@
-package Components;
+package components;
 
 public class Player extends Character {
     // Constructor
@@ -8,7 +8,7 @@ public class Player extends Character {
     }
 
     @Override
-    public void Colide() {
+    public void collide() {
         // Override method implementation
         System.out.println("Player collided!");
         // Additional implementation if needed
