@@ -29,7 +29,6 @@ public class GameLib {
 	
 	public static final int WIDTH = 480;
 	public static final int HEIGHT = 720;
-	
 	public static final int KEY_UP = 0;
 	public static final int KEY_DOWN = 1;
 	public static final int KEY_LEFT = 2;
