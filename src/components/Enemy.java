@@ -44,4 +44,9 @@ public class Enemy extends Character {
     public void setSpeed(long speed) {
         this.speed = speed;
     }
+
+
+    public void colideProjectile(Projectile projectile, Instant currentTime, long delta, Player player) {
+
+    }
 }
