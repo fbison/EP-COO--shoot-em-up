@@ -1,6 +1,8 @@
 package graphics;
 
 import gameLib.Game;
+import gameLib.Util;
+
 import javax.swing.JFrame;
 import java.awt.Graphics;
 import java.awt.Color;
@@ -81,5 +83,13 @@ public class Draw extends Game {
 
         this.getGraphics().setColor(new Color(r, g, b));
         circle(x, y, alpha * alpha * 40);
-        circle(x, y, alpha * alpha * 40 + 1);    }
+        circle(x, y, alpha * alpha * 40 + 1);
+    }
+
+    public void stars(int numStars, int countStars) {
+        for (int i = 0; i < numStars; i++) {
+            this.backgroundGame.getCoordinateX().add(Math.random() * Util.WIDTH.getValue());
+            this.backgroundGame.getCoordinateY().add(Math.random() * Util.WIDTH.getValue());
+        }
+    }
 }

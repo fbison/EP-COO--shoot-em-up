@@ -9,9 +9,11 @@ public class Component {
     private double coordinateY;
     private double speedX;
     private double speedY;
+    private double radius;
 
     // Constructor
-    public Component(double coordinateX, double coordinateY, double speedX, double speedY) {
+    public Component(double coordinateX, double coordinateY, double speedX, double speedY, double radius) {
+        this.radius = radius;
         this.state = Util.INACTIVE.getValue();
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
@@ -69,6 +71,14 @@ public class Component {
         this.speedY = speedY;
     }
 
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
     public int findFreeIndex(int[] stateArray) {
         int i;
         for (i = 0; i < stateArray.length; i++) {
@@ -90,4 +100,5 @@ public class Component {
         }
         return freeArray;
     }
+
 }

@@ -1,5 +1,7 @@
 package graphics;
 
+import gameLib.Util;
+
 import java.util.ArrayList;
 
 public class Background {

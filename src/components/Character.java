@@ -1,17 +1,19 @@
 package components;
 
+import gameLib.Util;
+
+import java.time.Instant;
+
 public class Character extends Component {
     // Additional attributes
-    private double radius;
-    private double explosionStart;
-    private double explosionEnd;
+    private Instant explosionStart;
+    private Instant explosionEnd;
     private long nextShoot;
 
     // Constructor
     public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                     double radius, double explosionStart, double explosionEnd, long nextShoot) {
+                     double radius, Instant explosionStart, Instant explosionEnd, long nextShoot) {
         super(state, coordinateX, coordinateY, speedX, speedY);
-        this.radius = radius;
         this.explosionStart = explosionStart;
         this.explosionEnd = explosionEnd;
         this.nextShoot = nextShoot;
@@ -22,28 +24,19 @@ public class Character extends Component {
         // Method implementation
     }
 
-    // Getters and setters for additional attributes
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-
-    public double getExplosionStart() {
+    public Instant getExplosionStart() {
         return explosionStart;
     }
 
-    public void setExplosionStart(double explosionStart) {
+    public void setExplosionStart(Instant explosionStart) {
         this.explosionStart = explosionStart;
     }
 
-    public double getExplosionEnd() {
+    public Instant getExplosionEnd() {
         return explosionEnd;
     }
 
-    public void setExplosionEnd(double explosionEnd) {
+    public void setExplosionEnd(Instant explosionEnd) {
         this.explosionEnd = explosionEnd;
     }
 
@@ -53,5 +46,29 @@ public class Character extends Component {
 
     public void setNextShoot(long nextShoot) {
         this.nextShoot = nextShoot;
+    }
+
+    public void colideCharacters(Component other) {
+        double dx = this.getCoordinateX() - other.getCoordinateX();
+        double dy = this.getCoordinateY() - other.getCoordinateY();
+        double dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < (this.getRadius() - other.getRadius())) {
+            this.setState(Util.EXPLODE.getValue());
+            this.explosionStart = Instant.now();
+            this.explosionEnd = this.explosionStart.plusMillis(2000);
+        }
+    }
+
+    public void colideProjectile(Projectile projectile) {
+        double dx = this.getCoordinateX() - projectile.getCoordinateX();
+        double dy = this.getCoordinateY() - projectile.getCoordinateY();
+        double dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < (this.getRadius())) {
+            this.setState(Util.EXPLODE.getValue());
+            this.explosionStart = Instant.now();
+            this.explosionEnd = this.explosionStart.plusMillis(2000);
+        }
     }
 }
