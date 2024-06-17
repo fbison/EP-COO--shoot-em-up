@@ -1,5 +1,9 @@
 package components;
 
+import gameLib.Util;
+
+import java.time.Instant;
+
 public class Enemy extends Character {
     // Additional attributes
     private double angle;
@@ -8,7 +12,7 @@ public class Enemy extends Character {
 
     // Constructor
     public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                 double radius, double explosionStart, double explosionEnd, long nextShoot,
+                 double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
                  double angle, double rotationSpeed, long speed) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot);
         this.angle = angle;
@@ -48,4 +52,20 @@ public class Enemy extends Character {
     public void setSpeed(long speed) {
         this.speed = speed;
     }
+
+//    public void update(long delta, Instant currentTime) {
+//        if (getState() == Util.EXPLODE.getValue()) {
+//            setState(Util.INACTIVE.getValue());
+//        } else if (getState() == Util.ACTIVE.getValue()) {
+//            if (this.getCoordinateY() > Util.HEIGHT.getValue() + 10) {
+//                setState(Util.INACTIVE.getValue());
+//            } else {
+//                this.setCoordinateX(getSpeedX() * Math.cos(getAngle() * delta));
+//                this.setCoordinateY(getSpeedY() * Math.sin(getAngle() * delta * -1.0));
+//                angle += rotationSpeed * delta;
+//
+//                if(currentTime.isAfter(getNextShoot()) && getCoordinateY())
+//            }
+//        }
+//    }
 }

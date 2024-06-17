@@ -8,12 +8,12 @@ public class Character extends Component {
     // Additional attributes
     private Instant explosionStart;
     private Instant explosionEnd;
-    private long nextShoot;
+    private Instant nextShoot;
 
     // Constructor
     public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                     double radius, Instant explosionStart, Instant explosionEnd, long nextShoot) {
-        super(state, coordinateX, coordinateY, speedX, speedY);
+                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot) {
+        super(coordinateX, coordinateY, speedX, speedY, radius);
         this.explosionStart = explosionStart;
         this.explosionEnd = explosionEnd;
         this.nextShoot = nextShoot;
@@ -40,35 +40,37 @@ public class Character extends Component {
         this.explosionEnd = explosionEnd;
     }
 
-    public long getNextShoot() {
+    public Instant getNextShoot() {
         return nextShoot;
     }
 
-    public void setNextShoot(long nextShoot) {
+    public void setNextShoot(Instant nextShoot) {
         this.nextShoot = nextShoot;
     }
 
     public void colideCharacters(Component other) {
-        double dx = this.getCoordinateX() - other.getCoordinateX();
-        double dy = this.getCoordinateY() - other.getCoordinateY();
+        double dx = getCoordinateX() - other.getCoordinateX();
+        double dy = getCoordinateY() - other.getCoordinateY();
         double dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < (this.getRadius() - other.getRadius())) {
-            this.setState(Util.EXPLODE.getValue());
-            this.explosionStart = Instant.now();
-            this.explosionEnd = this.explosionStart.plusMillis(2000);
+        if (dist < (getRadius() - other.getRadius())) {
+            setState(Util.EXPLODE.getValue());
+            explosionStart = Instant.now();
+            explosionEnd = explosionStart.plusMillis(2000);
         }
     }
 
     public void colideProjectile(Projectile projectile) {
-        double dx = this.getCoordinateX() - projectile.getCoordinateX();
-        double dy = this.getCoordinateY() - projectile.getCoordinateY();
+        double dx = getCoordinateX() - projectile.getCoordinateX();
+        double dy = getCoordinateY() - projectile.getCoordinateY();
         double dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < (this.getRadius())) {
-            this.setState(Util.EXPLODE.getValue());
-            this.explosionStart = Instant.now();
-            this.explosionEnd = this.explosionStart.plusMillis(2000);
+        if (dist < (getRadius())) {
+            setState(Util.EXPLODE.getValue());
+            explosionStart = Instant.now();
+            explosionEnd = explosionStart.plusMillis(2000);
         }
     }
+
+
 }

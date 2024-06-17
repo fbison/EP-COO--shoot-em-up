@@ -2,6 +2,8 @@ package components;
 
 import gameLib.Util;
 
+import java.util.ArrayList;
+
 public class Component {
     // Attributes
     private int state;
@@ -79,21 +81,21 @@ public class Component {
         this.radius = radius;
     }
 
-    public int findFreeIndex(int[] stateArray) {
+    public int freeIndex(ArrayList<Component> stateArray) {
         int i;
-        for (i = 0; i < stateArray.length; i++) {
-            if (stateArray[i] == Util.INACTIVE.getValue()) break;
+        for (i = 0; i < stateArray.size(); i++) {
+            if (stateArray.get(i).getState() == Util.INACTIVE.getValue()) break;
         }
 
         return i;
     }
 
-    public static int[] findFreeIndex(int[] stateArray, int amount) {
+    public static int[] freeIndex(ArrayList<Component> stateArray, int amount) {
         int i, k;
-        int[] freeArray = {stateArray.length, stateArray.length, stateArray.length};
+        int[] freeArray = {stateArray.size(), stateArray.size(), stateArray.size()};
 
-        for (i = 0, k = 0; i < stateArray.length && k < amount; i++) {
-            if (stateArray[i] == Util.INACTIVE.getValue()) {
+        for (i = 0, k = 0; i < stateArray.size() && k < amount; i++) {
+            if (stateArray.get(i).getState() == Util.INACTIVE.getValue()) {
                 freeArray[k] = i;
                 k++;
             }

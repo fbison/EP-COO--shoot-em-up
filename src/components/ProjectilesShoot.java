@@ -1,5 +1,7 @@
 package components;
 
+import gameLib.Util;
+
 import java.util.ArrayList;
 
 public class ProjectilesShoot {
@@ -8,7 +10,7 @@ public class ProjectilesShoot {
 
     // Constructor
     public ProjectilesShoot() {
-        this.projectiles = new ArrayList<>();
+        projectiles = new ArrayList<>();
     }
 
     // Getter for projectiles
@@ -18,6 +20,19 @@ public class ProjectilesShoot {
 
     // Setter for projectiles
     public void setProjectiles(ArrayList<Component> projectiles) {
-        this.projectiles = projectiles;
+        projectiles = projectiles;
+    }
+
+    public void checkProjectiles(long delta) {
+        for (int i = 0; i < projectiles.size(); i++) {
+            var currentProjectile = projectiles.get(i);
+            if (currentProjectile.getState() == Util.ACTIVE.getValue())
+                currentProjectile.setState(Util.INACTIVE.getValue());
+            else {
+                currentProjectile.setCoordinateX(currentProjectile.getCoordinateX() * delta);
+                currentProjectile.setCoordinateY(currentProjectile.getCoordinateY() * delta);
+            }
+
+        }
     }
 }
