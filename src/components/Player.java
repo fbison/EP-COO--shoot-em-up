@@ -8,11 +8,4 @@ public class Player extends Character {
                   double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot);
     }
-
-    @Override
-    public void collide() {
-        // Override method implementation
-        System.out.println("Player collided!");
-        // Additional implementation if needed
-    }
 }
