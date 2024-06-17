@@ -19,16 +19,6 @@ public class Background {
         this.count = count;
     }
 
-    // Methods
-    public void display() {
-        // Method implementation
-    }
-
-    public void move() {
-        // Method implementation
-    }
-
-    // Getters and Setters
     public ArrayList<Double> getCoordinateX() {
         return coordinateX;
     }

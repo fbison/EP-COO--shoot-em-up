@@ -19,10 +19,6 @@ public class Character extends Component {
         this.nextShoot = nextShoot;
     }
 
-    // Additional method
-    public void collide() {
-        // Method implementation
-    }
 
     public Instant getExplosionStart() {
         return explosionStart;

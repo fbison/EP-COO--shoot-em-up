@@ -2,12 +2,13 @@ package graphics;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.time.Instant;
 
 public class KeyAdapterGame extends KeyAdapter {
     // Attributes
     private int[] codes;
     private boolean[] keyStates = null;
-    private long[] releaseTimeStamps = null;
+    private Instant[] releaseTimeStamps = null;
 
     // Constructor
     public KeyAdapterGame() {
@@ -21,7 +22,7 @@ public class KeyAdapterGame extends KeyAdapter {
                 KeyEvent.VK_ESCAPE
         };
         keyStates = new boolean[codes.length];
-        releaseTimeStamps = new long[codes.length];
+        releaseTimeStamps = new Instant[codes.length];
     }
 
     // Methods
@@ -51,16 +52,16 @@ public class KeyAdapterGame extends KeyAdapter {
         int index = getIndexFromKeyCode(e.getKeyCode());
         if(index >= 0){
             keyStates[index] = false;
-            releaseTimeStamps[index] = System.currentTimeMillis();
+            releaseTimeStamps[index] = Instant.now();
         }
     }
 
     public boolean isKeyPressed(int index) {
         boolean keyState = keyStates[index];
-        long keyReleaseTime = releaseTimeStamps[index];
+        Instant keyReleaseTime = releaseTimeStamps[index];
 
         if(!keyState){
-            return System.currentTimeMillis() - keyReleaseTime <= 5;
+            return Instant.now().minusMillis(5).isBefore(keyReleaseTime);
         }
         return true;
     }
