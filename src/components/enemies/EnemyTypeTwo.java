@@ -9,8 +9,29 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 public class EnemyTypeTwo extends Enemy {
-    public EnemyTypeTwo(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, double angle, double rotationSpeed, long speed, ArrayList<Component> projectiles) {
+    private double spawnX;
+    private int count;
+
+    public EnemyTypeTwo(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, double angle, double rotationSpeed, long speed, ArrayList<Component> projectiles, int count) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, angle, rotationSpeed, speed, projectiles);
+        this.spawnX = Util.WIDTH.getValue() * 0.20;
+        this.count = count;
+    }
+
+    public double getSpawnX() {
+        return spawnX;
+    }
+
+    public void setSpawnX(double spawnX) {
+        this.spawnX = spawnX;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     @Override
@@ -66,13 +87,32 @@ public class EnemyTypeTwo extends Enemy {
 
                             getProjectiles().get(free).setCoordinateX(getCoordinateX());
                             getProjectiles().get(free).setCoordinateY(getCoordinateY());
-                            getProjectiles().get(free).setSpeedX(vX*0.30);
-                            getProjectiles().get(free).setSpeedY(vY*0.30);
+                            getProjectiles().get(free).setSpeedX(vX * 0.30);
+                            getProjectiles().get(free).setSpeedY(vY * 0.30);
                             getProjectiles().get(free).setState(Util.ACTIVE.getValue());
                         }
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public Instant cast(Instant currentTime) {
+        setCoordinateX(spawnX);
+        setCoordinateY(-10.0);
+        setSpeed(0.42);
+        setAngle((3 * Math.PI) / 2);
+        setRotationSpeed(0);
+        setState(Util.ACTIVE.getValue());
+        count += 1;
+
+        if (count < 10) {
+            return currentTime.plusMillis(120);
+        } else {
+            count = 0;
+            spawnX = Math.random() > 0.5 ? Util.WIDTH.getValue() * 0.2 : Util.WIDTH.getValue() * 0.8;
+            return currentTime.plusMillis((long) (3000 + Math.random() * 3000));
         }
     }
 }

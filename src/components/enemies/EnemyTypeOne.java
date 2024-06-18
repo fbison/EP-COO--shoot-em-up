@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 public class EnemyTypeOne extends Enemy {
-    public EnemyTypeOne(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, double angle, double rotationSpeed, long speed, ArrayList<Component> projectiles) {
+    public EnemyTypeOne(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, double angle, double rotationSpeed, double speed, ArrayList<Component> projectiles) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, angle, rotationSpeed, speed, projectiles);
     }
 
@@ -40,5 +40,17 @@ public class EnemyTypeOne extends Enemy {
                 }
             }
         }
+    }
+
+    @Override
+    public Instant cast(Instant currentTime) {
+        setCoordinateX(Math.random() * (Util.WIDTH.getValue() - 20.0) + 10.0);
+        setCoordinateY(-10.0);
+        setSpeed((long) (0.20 + Math.random() * 0.15));
+        setAngle(3 * Math.PI / 2);
+        setRotationSpeed(0);
+        setState(Util.ACTIVE.getValue());
+        setNextShoot(currentTime.plusMillis(500));
+        return currentTime.plusMillis(500);
     }
 }

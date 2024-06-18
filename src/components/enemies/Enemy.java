@@ -12,12 +12,12 @@ public abstract class Enemy extends Character {
     // Additional attributes
     private double angle;
     private double rotationSpeed;
-    private long speed;
+    private double speed;
 
     // Constructor
     public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
-                 double angle, double rotationSpeed, long speed, ArrayList<Component> projectiles) {
+                 double angle, double rotationSpeed, double speed, ArrayList<Component> projectiles) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, projectiles);
         this.angle = angle;
         this.rotationSpeed = rotationSpeed;
@@ -41,13 +41,15 @@ public abstract class Enemy extends Character {
         this.rotationSpeed = rotationSpeed;
     }
 
-    public long getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(long speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
     public abstract void attack(Projectile projectile, Player player, Instant currentTime, long delta);
+
+    public abstract Instant cast(Instant currentTime);
 }
