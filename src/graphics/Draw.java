@@ -17,6 +17,14 @@ public class Draw extends Game {
         this.backgroundGame = backgroundGame;
     }
 
+    public Background getBackgroundGame() {
+        return backgroundGame;
+    }
+
+    public void setBackgroundGame(Background backgroundGame) {
+        this.backgroundGame = backgroundGame;
+    }
+
     // Methods
     public void display() {
         this.getGraphics().dispose();

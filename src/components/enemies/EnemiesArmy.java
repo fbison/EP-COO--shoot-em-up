@@ -1,20 +1,20 @@
-package components;
+package components.enemies;
 
-import components.enemies.Enemy;
 import gameLib.Util;
 
+import java.time.Instant;
 import java.util.ArrayList;
 
 public class EnemiesArmy {
     // ArrayList to hold enemies
     private ArrayList<Enemy> enemies;
     // Next enemy time
-    private long nextEnemy;
+    private Instant nextEnemy;
 
     // Constructor
-    public EnemiesArmy() {
-        this.enemies = new ArrayList<>();
-        this.nextEnemy = 0; // Initialize to default value
+    public EnemiesArmy(ArrayList<Enemy> enemies, Instant nextEnemy) {
+        this.enemies = enemies;
+        this.nextEnemy = nextEnemy;
     }
 
     // Getter for Enemies
@@ -28,12 +28,12 @@ public class EnemiesArmy {
     }
 
     // Getter for NextEnemy
-    public long getNextEnemy() {
+    public Instant getNextEnemy() {
         return nextEnemy;
     }
 
     // Setter for NextEnemy
-    public void setNextEnemy(long nextEnemy) {
+    public void setNextEnemy(Instant nextEnemy) {
         this.nextEnemy = nextEnemy;
     }
 
@@ -43,5 +43,14 @@ public class EnemiesArmy {
             if (enemies.get(i).getState() == Util.INACTIVE.getValue()) break;
         }
         return i;
+    }
+
+    public void castEnemies(Instant currentTime, Enemy enemy) {
+        if (currentTime.isAfter(nextEnemy)) {
+            int free = freeIndex();
+            if (free < enemies.size()) {
+                nextEnemy = enemy.cast(currentTime);
+            }
+        }
     }
 }

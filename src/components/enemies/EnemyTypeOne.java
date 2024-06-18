@@ -14,7 +14,7 @@ public class EnemyTypeOne extends Enemy {
     }
 
     @Override
-    public void attack(Projectile projectile, Player player, Instant currentTime, long delta) {
+    public void attack(Player player, Instant currentTime, long delta) {
         if (getState() == Util.EXPLODE.getValue()) {
             if (currentTime.isAfter(getExplosionEnd()))
                 setState(Util.INACTIVE.getValue());

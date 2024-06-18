@@ -49,7 +49,7 @@ public abstract class Enemy extends Character {
         this.speed = speed;
     }
 
-    public abstract void attack(Projectile projectile, Player player, Instant currentTime, long delta);
+    public abstract void attack(Player player, Instant currentTime, long delta);
 
     public abstract Instant cast(Instant currentTime);
 }

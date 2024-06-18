@@ -25,6 +25,14 @@ public class KeyAdapterGame extends KeyAdapter {
         releaseTimeStamps = new Instant[codes.length];
     }
 
+    public int[] getCodes() {
+        return codes;
+    }
+
+    public void setCodes(int[] codes) {
+        this.codes = codes;
+    }
+
     // Methods
     public int getIndexFromKeyCode(int keyCode) {
         for (int i = 0; i < codes.length; i++) {
