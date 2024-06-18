@@ -80,27 +80,4 @@ public class Component {
     public void setRadius(double radius) {
         this.radius = radius;
     }
-
-    public int freeIndex(ArrayList<Component> stateArray) {
-        int i;
-        for (i = 0; i < stateArray.size(); i++) {
-            if (stateArray.get(i).getState() == Util.INACTIVE.getValue()) break;
-        }
-
-        return i;
-    }
-
-    public static int[] freeIndex(ArrayList<Component> stateArray, int amount) {
-        int i, k;
-        int[] freeArray = {stateArray.size(), stateArray.size(), stateArray.size()};
-
-        for (i = 0, k = 0; i < stateArray.size() && k < amount; i++) {
-            if (stateArray.get(i).getState() == Util.INACTIVE.getValue()) {
-                freeArray[k] = i;
-                k++;
-            }
-        }
-        return freeArray;
-    }
-
 }

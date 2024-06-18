@@ -1,5 +1,6 @@
 package components;
 
+import components.enemies.Enemy;
 import gameLib.Util;
 
 import java.util.ArrayList;

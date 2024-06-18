@@ -1,10 +1,14 @@
-package components;
+package components.enemies;
 
-import gameLib.Util;
+import components.Character;
+import components.Component;
+import components.Player;
+import components.Projectile;
 
 import java.time.Instant;
+import java.util.ArrayList;
 
-public class Enemy extends Character {
+public abstract class Enemy extends Character {
     // Additional attributes
     private double angle;
     private double rotationSpeed;
@@ -13,8 +17,8 @@ public class Enemy extends Character {
     // Constructor
     public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
-                 double angle, double rotationSpeed, long speed) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot);
+                 double angle, double rotationSpeed, long speed, ArrayList<Component> projectiles) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, projectiles);
         this.angle = angle;
         this.rotationSpeed = rotationSpeed;
         this.speed = speed;
@@ -45,8 +49,5 @@ public class Enemy extends Character {
         this.speed = speed;
     }
 
-
-    public void colideProjectile(Projectile projectile, Instant currentTime, long delta, Player player) {
-
-    }
+    public abstract void attack(Projectile projectile, Player player, Instant currentTime, long delta);
 }
