@@ -16,7 +16,7 @@ public class Component {
     // Constructor
     public Component(double coordinateX, double coordinateY, double speedX, double speedY, double radius) {
         this.radius = radius;
-        this.state = Util.INACTIVE.getValue();
+        this.state = Util.INACTIVE;
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
         this.speedX = speedX;

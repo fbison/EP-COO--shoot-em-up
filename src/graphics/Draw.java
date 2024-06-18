@@ -96,8 +96,8 @@ public class Draw extends Game {
 
     public void stars(int numStars, int countStars) {
         for (int i = 0; i < numStars; i++) {
-            this.backgroundGame.getCoordinateX().add(Math.random() * Util.WIDTH.getValue());
-            this.backgroundGame.getCoordinateY().add(Math.random() * Util.WIDTH.getValue());
+            this.backgroundGame.getCoordinateX().add(Math.random() * Util.WIDTH);
+            this.backgroundGame.getCoordinateY().add(Math.random() * Util.WIDTH);
         }
     }
 }

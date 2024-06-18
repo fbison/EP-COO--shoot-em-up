@@ -40,7 +40,7 @@ public class EnemiesArmy {
     public int freeIndex() {
         int i;
         for (i = 0; i < enemies.size(); i++) {
-            if (enemies.get(i).getState() == Util.INACTIVE.getValue()) break;
+            if (enemies.get(i).getState() == Util.INACTIVE) break;
         }
         return i;
     }

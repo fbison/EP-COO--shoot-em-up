@@ -1,26 +1,15 @@
 package gameLib;
 
-public enum Util {
-    WIDTH(480),
-    HEIGHT(720),
-    KEY_UP(0),
-    KEY_DOWN(1),
-    KEY_LEFT(2),
-    KEY_RIGHT(3),
-    KEY_CONTROL(4),
-    KEY_ESCAPE(5),
-    INACTIVE(0),
-    ACTIVE(1),
-    EXPLODE(2);
-
-    private final int value;
-
-    // Constructor
-    Util(int value) {
-        this.value = value;
-    }
-
-    public int getValue() {
-        return value;
-    }
+public class Util {
+    public static final int WIDTH = 480;
+    public static final int HEIGHT = 720;
+    public static final int KEY_UP = 0;
+    public static final int KEY_DOWN = 1;
+    public static final int KEY_LEFT = 2;
+    public static final int KEY_RIGHT = 3;
+    public static final int KEY_CONTROL = 4;
+    public static final int KEY_ESCAPE = 5;
+    public static final int INACTIVE = 0;
+    public static final int ACTIVE = 1;
+    public static final int EXPLODE = 2;
 }

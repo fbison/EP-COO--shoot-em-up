@@ -14,7 +14,7 @@ public class EnemyTypeTwo extends Enemy {
 
     public EnemyTypeTwo(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, double angle, double rotationSpeed, long speed, ArrayList<Component> projectiles, int count) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, angle, rotationSpeed, speed, projectiles);
-        this.spawnX = Util.WIDTH.getValue() * 0.20;
+        this.spawnX = Util.WIDTH * 0.20;
         this.count = count;
     }
 
@@ -36,16 +36,16 @@ public class EnemyTypeTwo extends Enemy {
 
     @Override
     public void attack(Player player, Instant currentTime, long delta) {
-        if (getState() == Util.EXPLODE.getValue()) {
+        if (getState() == Util.EXPLODE) {
             if (currentTime.isAfter(getExplosionEnd()))
-                setState(Util.INACTIVE.getValue());
-        } else if (getState() == Util.ACTIVE.getValue()) {
-            if (getCoordinateY() > Util.HEIGHT.getValue() + 10)
-                setState(Util.INACTIVE.getValue());
+                setState(Util.INACTIVE);
+        } else if (getState() == Util.ACTIVE) {
+            if (getCoordinateY() > Util.HEIGHT + 10)
+                setState(Util.INACTIVE);
             else {
                 boolean shootNow = false;
                 double previousCoordinateY = getCoordinateY();
-                double threshold = Util.HEIGHT.getValue() * 0.30;
+                double threshold = Util.HEIGHT * 0.30;
 
                 setCoordinateX(getSpeedX() * Math.cos(getAngle()) * delta);
                 setCoordinateY(getSpeedY() * Math.sin(getAngle()) * delta * -1.0);
@@ -58,12 +58,12 @@ public class EnemyTypeTwo extends Enemy {
                         getProjectiles().get(free).setCoordinateY(getCoordinateY());
                         getProjectiles().get(free).setSpeedX(Math.cos(getAngle()) * 0.45);
                         getProjectiles().get(free).setSpeedY(Math.sin(getAngle()) * 0.45 * (-1));
-                        getProjectiles().get(free).setState(Util.ACTIVE.getValue());
+                        getProjectiles().get(free).setState(Util.ACTIVE);
                     }
                 }
 
                 if (previousCoordinateY < threshold && getCoordinateY() > threshold) {
-                    if (getCoordinateX() < (double) Util.WIDTH.getValue() / 2) setRotationSpeed(0.003);
+                    if (getCoordinateX() < (double) Util.WIDTH / 2) setRotationSpeed(0.003);
                     else setRotationSpeed(-0.003);
                 }
 
@@ -89,7 +89,7 @@ public class EnemyTypeTwo extends Enemy {
                             getProjectiles().get(free).setCoordinateY(getCoordinateY());
                             getProjectiles().get(free).setSpeedX(vX * 0.30);
                             getProjectiles().get(free).setSpeedY(vY * 0.30);
-                            getProjectiles().get(free).setState(Util.ACTIVE.getValue());
+                            getProjectiles().get(free).setState(Util.ACTIVE);
                         }
                     }
                 }
@@ -104,14 +104,14 @@ public class EnemyTypeTwo extends Enemy {
         setSpeed(0.42);
         setAngle((3 * Math.PI) / 2);
         setRotationSpeed(0);
-        setState(Util.ACTIVE.getValue());
+        setState(Util.ACTIVE);
         count += 1;
 
         if (count < 10) {
             return currentTime.plusMillis(120);
         } else {
             count = 0;
-            spawnX = Math.random() > 0.5 ? Util.WIDTH.getValue() * 0.2 : Util.WIDTH.getValue() * 0.8;
+            spawnX = Math.random() > 0.5 ? Util.WIDTH * 0.2 : Util.WIDTH * 0.8;
             return currentTime.plusMillis((long) (3000 + Math.random() * 3000));
         }
     }

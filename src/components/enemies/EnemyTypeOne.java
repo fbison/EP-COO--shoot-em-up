@@ -15,12 +15,12 @@ public class EnemyTypeOne extends Enemy {
 
     @Override
     public void attack(Player player, Instant currentTime, long delta) {
-        if (getState() == Util.EXPLODE.getValue()) {
+        if (getState() == Util.EXPLODE) {
             if (currentTime.isAfter(getExplosionEnd()))
-                setState(Util.INACTIVE.getValue());
-        } else if (getState() == Util.ACTIVE.getValue()) {
-            if (getCoordinateY() > Util.HEIGHT.getValue() + 10)
-                setState(Util.INACTIVE.getValue());
+                setState(Util.INACTIVE);
+        } else if (getState() == Util.ACTIVE) {
+            if (getCoordinateY() > Util.HEIGHT + 10)
+                setState(Util.INACTIVE);
             else {
                 setCoordinateX(getSpeedX() * Math.cos(getAngle()) * delta);
                 setCoordinateY(getSpeedY() * Math.sin(getAngle()) * delta * -1.0);
@@ -33,7 +33,7 @@ public class EnemyTypeOne extends Enemy {
                         getProjectiles().get(free).setCoordinateY(getCoordinateY());
                         getProjectiles().get(free).setSpeedX(Math.cos(getAngle()) * 0.45);
                         getProjectiles().get(free).setSpeedY(Math.sin(getAngle()) * 0.45 * (-1));
-                        getProjectiles().get(free).setState(Util.ACTIVE.getValue());
+                        getProjectiles().get(free).setState(Util.ACTIVE);
 
                         setNextShoot(currentTime.plusMillis((long) (200 + Math.random() * 500)));
                     }
@@ -44,12 +44,12 @@ public class EnemyTypeOne extends Enemy {
 
     @Override
     public Instant cast(Instant currentTime) {
-        setCoordinateX(Math.random() * (Util.WIDTH.getValue() - 20.0) + 10.0);
+        setCoordinateX(Math.random() * (Util.WIDTH - 20.0) + 10.0);
         setCoordinateY(-10.0);
         setSpeed((long) (0.20 + Math.random() * 0.15));
         setAngle(3 * Math.PI / 2);
         setRotationSpeed(0);
-        setState(Util.ACTIVE.getValue());
+        setState(Util.ACTIVE);
         setNextShoot(currentTime.plusMillis(500));
         return currentTime.plusMillis(500);
     }

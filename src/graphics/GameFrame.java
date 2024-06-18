@@ -25,7 +25,7 @@ public class GameFrame extends Game {
     // Methods
     public void initGraphics() {
         this.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getFrame().setSize(Util.WIDTH.getValue(), Util.HEIGHT.getValue());
+        this.getFrame().setSize(Util.WIDTH, Util.HEIGHT);
         this.getFrame().setResizable(false);
         this.getFrame().setVisible(true);
         this.getFrame().addKeyListener(this.keyAdapterGame);

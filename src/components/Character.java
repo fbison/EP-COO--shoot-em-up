@@ -61,7 +61,7 @@ public class Character extends Component {
         double dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < (getRadius() - other.getRadius())) {
-            setState(Util.EXPLODE.getValue());
+            setState(Util.EXPLODE);
             explosionStart = Instant.now();
             explosionEnd = explosionStart.plusMillis(2000);
         }
@@ -73,7 +73,7 @@ public class Character extends Component {
         double dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < (getRadius())) {
-            setState(Util.EXPLODE.getValue());
+            setState(Util.EXPLODE);
             explosionStart = Instant.now();
             explosionEnd = explosionStart.plusMillis(2000);
         }
@@ -82,8 +82,8 @@ public class Character extends Component {
     public void updateProjectiles(long delta) {
         for (int i = 0; i < projectiles.size(); i++) {
             var currentProjectile = projectiles.get(i);
-            if (currentProjectile.getState() == Util.ACTIVE.getValue())
-                currentProjectile.setState(Util.INACTIVE.getValue());
+            if (currentProjectile.getState() == Util.ACTIVE)
+                currentProjectile.setState(Util.INACTIVE);
             else {
                 currentProjectile.setCoordinateX(currentProjectile.getCoordinateX() * delta);
                 currentProjectile.setCoordinateY(currentProjectile.getCoordinateY() * delta);
@@ -95,7 +95,7 @@ public class Character extends Component {
     public int findFreeIndex(){
         int i;
         for (i = 0; i < projectiles.size(); i++) {
-            if(projectiles.get(i).getState() == Util.INACTIVE.getValue())
+            if(projectiles.get(i).getState() == Util.INACTIVE)
                 return i;
         }
         return i;
@@ -106,7 +106,7 @@ public class Character extends Component {
         int [] freeArray = { projectiles.size(), projectiles.size(), projectiles.size() };
 
         for(i = 0, k = 0; i < projectiles.size() && k < amount; i++){
-            if(projectiles.get(i).getState() == Util.INACTIVE.getValue()) {
+            if(projectiles.get(i).getState() == Util.INACTIVE) {
                 freeArray[k] = i;
                 k++;
             }
