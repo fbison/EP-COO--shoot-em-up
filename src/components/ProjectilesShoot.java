@@ -35,4 +35,12 @@ public class ProjectilesShoot {
 
         }
     }
+
+    public int freeIndex() {
+        int i;
+        for (i = 0; i < projectiles.size(); i++) {
+            if (projectiles.get(i).getState() == Util.INACTIVE.getValue()) break;
+        }
+        return i;
+    }
 }

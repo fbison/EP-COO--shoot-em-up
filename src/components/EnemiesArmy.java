@@ -1,5 +1,7 @@
 package components;
 
+import gameLib.Util;
+
 import java.util.ArrayList;
 
 public class EnemiesArmy {
@@ -32,5 +34,13 @@ public class EnemiesArmy {
     // Setter for NextEnemy
     public void setNextEnemy(long nextEnemy) {
         this.nextEnemy = nextEnemy;
+    }
+
+    public int freeIndex() {
+        int i;
+        for (i = 0; i < enemies.size(); i++) {
+            if (enemies.get(i).getState() == Util.INACTIVE.getValue()) break;
+        }
+        return i;
     }
 }
