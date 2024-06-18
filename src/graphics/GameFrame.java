@@ -2,8 +2,8 @@ package graphics;
 
 import gameLib.Game;
 import gameLib.Util;
+import gameLib.MyFrame;
 
-import javax.swing.JFrame;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -12,19 +12,13 @@ public class GameFrame extends Game {
     private Background backgroundGame;
     private KeyAdapterGame keyAdapterGame;
 
-    public GameFrame(Graphics graphics, JFrame frame) {
+    public GameFrame(Graphics graphics, MyFrame frame) {
         super(graphics, frame);
-//        ArrayList<Double> list = new ArrayList<>();
-//
-//        for (int i = 0; i < list.size(); i++) {
-//            double randomValue = Math.random() * GameLib.WIDTH;
-//            list.set(i, randomValue);
-//        }
     }
 
     // Methods
     public void initGraphics() {
-        this.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.getFrame().setDefaultCloseOperation(MyFrame.EXIT_ON_CLOSE);
         this.getFrame().setSize(Util.WIDTH, Util.HEIGHT);
         this.getFrame().setResizable(false);
         this.getFrame().setVisible(true);

@@ -4,11 +4,11 @@ import javax.swing.JFrame;
 import java.awt.Graphics;
 
 public class Game {
-    private Graphics graphics;
-    private JFrame frame;
+    private MyFrame frame = null;
+    private Graphics graphics = null;
 
     // Constructor
-    public Game(Graphics graphics, JFrame frame) {
+    public Game(Graphics graphics, MyFrame frame) {
         this.graphics = graphics;
         this.frame = frame;
     }
@@ -24,12 +24,12 @@ public class Game {
     }
 
     // Getter for frame
-    public JFrame getFrame() {
+    public MyFrame getFrame() {
         return frame;
     }
 
     // Setter for frame
-    public void setFrame(JFrame frame) {
+        public void setFrame(MyFrame frame) {
         this.frame = frame;
     }
 }

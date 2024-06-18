@@ -50,4 +50,13 @@ public class Background {
     public void setCount(double count) {
         this.count = count;
     }
+
+    public void initializeStars() {
+        for (int i = 0; i < coordinateX.size(); i++) {
+            coordinateX.set(i, Math.random() * Util.WIDTH);
+        }
+        for (int i = 0; i < coordinateY.size(); i++) {
+            coordinateY.set(i, Math.random() * Util.HEIGHT);
+        }
+    }
 }

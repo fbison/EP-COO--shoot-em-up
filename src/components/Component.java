@@ -14,9 +14,9 @@ public class Component {
     private double radius;
 
     // Constructor
-    public Component(double coordinateX, double coordinateY, double speedX, double speedY, double radius) {
+    public Component(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius) {
         this.radius = radius;
-        this.state = Util.INACTIVE;
+        this.state = state;
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
         this.speedX = speedX;

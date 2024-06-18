@@ -1,6 +1,7 @@
 package graphics;
 
 import gameLib.Game;
+import gameLib.MyFrame;
 import gameLib.Util;
 
 import javax.swing.JFrame;
@@ -12,7 +13,7 @@ public class Draw extends Game {
     // Attributes
     private Background backgroundGame;
 
-    public Draw(Graphics graphics, JFrame frame, Background backgroundGame) {
+    public Draw(Graphics graphics, MyFrame frame, Background backgroundGame) {
         super(graphics, frame);
         this.backgroundGame = backgroundGame;
     }
