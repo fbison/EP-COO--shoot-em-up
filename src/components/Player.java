@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Player extends Character {
     // Constructor
     public Player(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, ArrayList<Component> projectiles) {
+                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, ArrayList<Projectile> projectiles) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, projectiles);
     }
 }

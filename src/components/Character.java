@@ -10,11 +10,11 @@ public class Character extends Component {
     private Instant explosionStart;
     private Instant explosionEnd;
     private Instant nextShoot;
-    private ArrayList<Component> projectiles;
+    private ArrayList<Projectile> projectiles;
 
     // Constructor
     public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, ArrayList<Component> projectiles) {
+                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, ArrayList<Projectile> projectiles) {
         super(coordinateX, coordinateY, speedX, speedY, radius);
         this.explosionStart = explosionStart;
         this.explosionEnd = explosionEnd;
@@ -47,11 +47,11 @@ public class Character extends Component {
         this.nextShoot = nextShoot;
     }
 
-    public ArrayList<Component> getProjectiles() {
+    public ArrayList<Projectile> getProjectiles() {
         return projectiles;
     }
 
-    public void setProjectiles(ArrayList<Component> projectiles) {
+    public void setProjectiles(ArrayList<Projectile> projectiles) {
         this.projectiles = projectiles;
     }
 
