@@ -1,9 +1,5 @@
 package components;
 
-import gameLib.Util;
-
-import java.util.ArrayList;
-
 public class Component {
     // Attributes
     private int state;

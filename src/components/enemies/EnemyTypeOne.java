@@ -1,9 +1,8 @@
 package components.enemies;
 
-import components.Component;
 import components.Player;
 import components.Projectile;
-import gameLib.Util;
+import graphics.Util;
 
 import java.time.Instant;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package gameLib;
+package graphics;
 
 public class Util {
     public static final int WIDTH = 480;

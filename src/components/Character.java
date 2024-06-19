@@ -1,6 +1,6 @@
 package components;
 
-import gameLib.Util;
+import graphics.Util;
 
 import java.time.Instant;
 import java.util.ArrayList;

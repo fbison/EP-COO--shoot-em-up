@@ -1,6 +1,6 @@
 package components;
 
-import gameLib.Util;
+import graphics.Util;
 
 public class Projectile extends Component {
     // Constructor
