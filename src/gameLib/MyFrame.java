@@ -3,7 +3,8 @@ package gameLib;
 import javax.swing.*;
 import java.awt.*;
 
-public class MyFrame extends JFrame {
+@SuppressWarnings("serial")
+class MyFrame extends JFrame {
 
     public MyFrame(String title){
 

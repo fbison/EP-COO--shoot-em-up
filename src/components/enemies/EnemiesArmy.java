@@ -45,10 +45,11 @@ public class EnemiesArmy {
         return i;
     }
 
-    public void castEnemies(Instant currentTime, Enemy enemy) {
+    public void castEnemies(Instant currentTime) {
         if (currentTime.isAfter(nextEnemy)) {
             int free = freeIndex();
             if (free < enemies.size()) {
+                var enemy = enemies.get(free);
                 nextEnemy = enemy.cast(currentTime);
             }
         }

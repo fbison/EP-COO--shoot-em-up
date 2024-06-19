@@ -1,11 +1,11 @@
 package gameLib;
 
 import javax.swing.JFrame;
-import java.awt.Graphics;
+import java.awt.*;
 
 public class Game {
     private MyFrame frame = null;
-    private Graphics graphics = null;
+    private static Graphics graphics = null;
 
     // Constructor
     public Game(Graphics graphics, MyFrame frame) {
@@ -31,5 +31,9 @@ public class Game {
     // Setter for frame
         public void setFrame(MyFrame frame) {
         this.frame = frame;
+    }
+
+    public static void setColor(Color c){
+        graphics.setColor(c);
     }
 }
