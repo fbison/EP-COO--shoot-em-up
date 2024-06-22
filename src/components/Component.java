@@ -1,20 +1,18 @@
 package components;
 
-public class Component {
+public class Component extends GameComponent{
     // Attributes
     private int state;
-    private double coordinateX;
-    private double coordinateY;
+
     private double speedX;
     private double speedY;
     private double radius;
 
     // Constructor
     public Component(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius) {
+        super(coordinateX, coordinateY);
         this.radius = radius;
         this.state = state;
-        this.coordinateX = coordinateX;
-        this.coordinateY = coordinateY;
         this.speedX = speedX;
         this.speedY = speedY;
     }
@@ -35,22 +33,6 @@ public class Component {
 
     public void setState(int state) {
         this.state = state;
-    }
-
-    public double getCoordinateX() {
-        return coordinateX;
-    }
-
-    public void setCoordinateX(double coordinateX) {
-        this.coordinateX = coordinateX;
-    }
-
-    public double getCoordinateY() {
-        return coordinateY;
-    }
-
-    public void setCoordinateY(double coordinateY) {
-        this.coordinateY = coordinateY;
     }
 
     public double getSpeedX() {

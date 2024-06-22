@@ -9,4 +9,9 @@ public class Player extends Character {
                   double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, ArrayList<Projectile> projectiles) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, projectiles);
     }
+
+    public Player(int state, double coordinateX, double coordinateY, double speedX, double speedY,
+                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, int countProjectiles, int projectileRadius) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, countProjectiles, projectileRadius);
+    }
 }

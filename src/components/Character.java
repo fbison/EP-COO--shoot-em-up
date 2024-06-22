@@ -22,6 +22,18 @@ public class Character extends Component {
         this.projectiles = projectiles;
     }
 
+    public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
+                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, int countProjectiles, int projectileRadius) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius);
+        this.explosionStart = explosionStart;
+        this.explosionEnd = explosionEnd;
+        this.nextShoot = nextShoot;
+        this.projectiles = new ArrayList<>(countProjectiles);
+        for (int i = 0; i < countProjectiles; i++) {
+            this.projectiles.add(new Projectile(projectileRadius));
+        }
+    }
+
     public Instant getExplosionStart() {
         return explosionStart;
     }
@@ -54,30 +66,15 @@ public class Character extends Component {
         this.projectiles = projectiles;
     }
 
-    public void colideCharacters(Component other) {
+    public void colide(Component opponent) {
         if (getState() != Util.ACTIVE)
             return;
 
-        double dx = getCoordinateX() - other.getCoordinateX();
-        double dy = getCoordinateY() - other.getCoordinateY();
+        double dx = getCoordinateX() - opponent.getCoordinateX();
+        double dy = getCoordinateY() - opponent.getCoordinateY();
         double dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < (getRadius() - other.getRadius())) {
-            setState(Util.EXPLODE);
-            explosionStart = Instant.now();
-            explosionEnd = explosionStart.plusMillis(2000);
-        }
-    }
-
-    public void colideProjectile(Projectile projectile) {
-        if (getState() != Util.ACTIVE)
-            return;
-
-        double dx = getCoordinateX() - projectile.getCoordinateX();
-        double dy = getCoordinateY() - projectile.getCoordinateY();
-        double dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < (getRadius())) {
+        if (dist < (getRadius() + opponent.getRadius()) * 0.8) {
             setState(Util.EXPLODE);
             explosionStart = Instant.now();
             explosionEnd = explosionStart.plusMillis(2000);
@@ -89,8 +86,8 @@ public class Character extends Component {
             if (projectile.getCoordinateY() < 0)
                 projectile.setState(Util.INACTIVE);
             else {
-                projectile.setCoordinateX(projectile.getCoordinateX() * delta);
-                projectile.setCoordinateY(projectile.getCoordinateY() * delta);
+                projectile.setCoordinateX(projectile.getSpeedX() * delta);
+                projectile.setCoordinateY(projectile.getSpeedY() * delta);
             }
         }
     }

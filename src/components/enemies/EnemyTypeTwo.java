@@ -17,6 +17,14 @@ public class EnemyTypeTwo extends Enemy {
         this.count = 0;
     }
 
+    public EnemyTypeTwo(int state, double coordinateX, double coordinateY, double speedX, double speedY,
+                        double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
+                        double angle, double rotationSpeed, double speed, int spawnX, int countProjectiles, int projectileRadius) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, angle, rotationSpeed, speed, countProjectiles, projectileRadius);
+        this.spawnX = spawnX;
+        this.count = 0;
+    }
+
     public double getSpawnX() {
         return spawnX;
     }
@@ -39,36 +47,31 @@ public class EnemyTypeTwo extends Enemy {
             if (currentTime.isAfter(getExplosionEnd()))
                 setState(Util.INACTIVE);
         } else if (getState() == Util.ACTIVE) {
-            if (getCoordinateY() > Util.HEIGHT + 10)
+            if (getCoordinateX() < -10 || getCoordinateY() > Util.HEIGHT + 10)
                 setState(Util.INACTIVE);
             else {
                 boolean shootNow = false;
                 double previousCoordinateY = getCoordinateY();
                 double threshold = Util.HEIGHT * 0.30;
 
-                setCoordinateX(getSpeedX() * Math.cos(getAngle()) * delta);
-                setCoordinateY(getSpeedY() * Math.sin(getAngle()) * delta * -1.0);
+                setCoordinateX(getSpeed() * Math.cos(getAngle()) * delta);
+                setCoordinateY(getSpeed() * Math.sin(getAngle()) * delta * -1.0);
                 setAngle(getRotationSpeed() * delta);
 
-                if (currentTime.isAfter(getNextShoot()) && getCoordinateY() < player.getCoordinateY()) {
-                    int free = findFreeIndex();
-                    if (free < getProjectiles().size()) {
-                        getProjectiles().get(free).setCoordinateX(getCoordinateX());
-                        getProjectiles().get(free).setCoordinateY(getCoordinateY());
-                        getProjectiles().get(free).setSpeedX(Math.cos(getAngle()) * 0.45);
-                        getProjectiles().get(free).setSpeedY(Math.sin(getAngle()) * 0.45 * (-1));
-                        getProjectiles().get(free).setState(Util.ACTIVE);
-                    }
-                }
-
-                if (previousCoordinateY < threshold && getCoordinateY() > threshold) {
+                if (previousCoordinateY < threshold && getCoordinateY() >= threshold) {
                     if (getCoordinateX() < (double) Util.WIDTH / 2) setRotationSpeed(0.003);
                     else setRotationSpeed(-0.003);
                 }
 
-                if (getRotationSpeed() > 0 && Math.abs(getAngle() * Math.PI) < 0.05) {
-                    setRotationSpeed(0);
+                if (getRotationSpeed() > 0 && Math.abs(getAngle() - 3 * Math.PI) < 0.05) {
+                    setRotationSpeed(0.0);
                     setAngle(3 * Math.PI);
+                    shootNow = true;
+                }
+
+                if (getRotationSpeed() < 0 && Math.abs(getAngle()) < 0.05) {
+                    setRotationSpeed(0.0);
+                    setAngle(0.0);
                     shootNow = true;
                 }
 

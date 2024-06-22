@@ -4,6 +4,7 @@ import components.Character;
 import components.Component;
 import components.Player;
 import components.Projectile;
+import graphics.Util;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -19,6 +20,15 @@ public abstract class Enemy extends Character {
                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
                  double angle, double rotationSpeed, double speed, ArrayList<Projectile> projectiles) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, projectiles);
+        this.angle = angle;
+        this.rotationSpeed = rotationSpeed;
+        this.speed = speed;
+    }
+
+    public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
+                 double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
+                 double angle, double rotationSpeed, double speed, int countProjectiles, int projectileRadius) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, countProjectiles, projectileRadius);
         this.angle = angle;
         this.rotationSpeed = rotationSpeed;
         this.speed = speed;
@@ -52,4 +62,21 @@ public abstract class Enemy extends Character {
     public abstract void attack(Player player, Instant currentTime, long delta);
 
     public abstract Instant cast(Instant currentTime);
+
+    @Override
+    public void colide(Component opponent) {
+        if (getState() != Util.ACTIVE)
+            return;
+
+        double dx = getCoordinateX() - opponent.getCoordinateX();
+        double dy = getCoordinateY() - opponent.getCoordinateY();
+        double dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < getRadius()) {
+            setState(Util.EXPLODE);
+            var now = Instant.now();
+            this.setExplosionStart(now);
+            this.setExplosionEnd(now.plusMillis(2000));
+        }
+    }
 }

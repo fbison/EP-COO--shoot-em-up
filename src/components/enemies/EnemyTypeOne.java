@@ -12,6 +12,12 @@ public class EnemyTypeOne extends Enemy {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, angle, rotationSpeed, speed, projectiles);
     }
 
+    public EnemyTypeOne(int state, double coordinateX, double coordinateY, double speedX, double speedY,
+                        double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
+                        double angle, double rotationSpeed, double speed, int countProjectiles, int projectileRadius) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, angle, rotationSpeed, speed, countProjectiles, projectileRadius);
+    }
+
     @Override
     public void attack(Player player, Instant currentTime, long delta) {
         if (getState() == Util.EXPLODE) {
