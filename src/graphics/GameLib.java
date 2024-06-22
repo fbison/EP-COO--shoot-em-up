@@ -1,7 +1,10 @@
 package graphics;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
 
 public class GameLib {
 
@@ -9,7 +12,7 @@ public class GameLib {
     private static Graphics g = null;
     private static MyKeyAdapter keyboard = null;
 
-    public static void initGraphics(){
+    public static void initGraphics() {
 
         frame = new MyFrame("Projeto COO");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,17 +28,17 @@ public class GameLib {
         g = frame.getBufferStrategy().getDrawGraphics();
     }
 
-    public static void setColor(Color c){
+    public static void setColor(Color c) {
 
         g.setColor(c);
     }
 
-    public static void drawLine(double x1, double y1, double x2, double y2){
+    public static void drawLine(double x1, double y1, double x2, double y2) {
 
         g.drawLine((int) Math.round(x1), (int) Math.round(y1), (int) Math.round(x2), (int) Math.round(y2));
     }
 
-    public static void drawCircle(double cx, double cy, double radius){
+    public static void drawCircle(double cx, double cy, double radius) {
 
         int x = (int) Math.round(cx - radius);
         int y = (int) Math.round(cy - radius);
@@ -45,7 +48,7 @@ public class GameLib {
         g.drawOval(x, y, width, height);
     }
 
-    public static void drawDiamond(double x, double y, double radius){
+    public static void drawDiamond(double x, double y, double radius) {
 
         int x1 = (int) Math.round(x);
         int y1 = (int) Math.round(y - radius);
@@ -65,7 +68,7 @@ public class GameLib {
         drawLine(x4, y4, x1, y1);
     }
 
-    public static void drawPlayer(double player_X, double player_Y, double player_size){
+    public static void drawPlayer(double player_X, double player_Y, double player_size) {
 
         GameLib.drawLine(player_X - player_size, player_Y + player_size, player_X, player_Y - player_size);
         GameLib.drawLine(player_X + player_size, player_Y + player_size, player_X, player_Y - player_size);
@@ -73,27 +76,27 @@ public class GameLib {
         GameLib.drawLine(player_X + player_size, player_Y + player_size, player_X, player_Y + player_size * 0.5);
     }
 
-    public static void drawExplosion(double x, double y, double alpha){
+    public static void drawExplosion(double x, double y, double alpha) {
 
         int p = 5;
         int r = (int) (255 - Math.pow(alpha, p) * 255);
         int g = (int) (128 - Math.pow(alpha, p) * 128);
         int b = 0;
-
+        if (r > 255) r = 255;
         GameLib.setColor(new Color(r, g, b));
         GameLib.drawCircle(x, y, alpha * alpha * 40);
         GameLib.drawCircle(x, y, alpha * alpha * 40 + 1);
     }
 
-    public static void fillRect(double cx, double cy, double width, double height){
+    public static void fillRect(double cx, double cy, double width, double height) {
 
-        int x = (int) Math.round(cx - width/2);
-        int y = (int) Math.round(cy - height/2);
+        int x = (int) Math.round(cx - width / 2);
+        int y = (int) Math.round(cy - height / 2);
 
         g.fillRect(x, y, (int) Math.round(width), (int) Math.round(height));
     }
 
-    public static void display(){
+    public static void display() {
 
         g.dispose();
         frame.getBufferStrategy().show();
@@ -105,12 +108,12 @@ public class GameLib {
         g.setColor(Color.WHITE);
     }
 
-    public static boolean isKeyPressed(int index){
+    public static boolean isKeyPressed(int index) {
 
         return keyboard.isKeyPressed(index);
     }
 
-    public static void debugKeys(){
+    public static void debugKeys() {
 
         keyboard.debug();
     }

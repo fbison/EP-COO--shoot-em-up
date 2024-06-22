@@ -3,7 +3,7 @@ package components;
 import graphics.GameLib;
 import graphics.Util;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class BackgroundStars {

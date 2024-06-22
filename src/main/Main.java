@@ -162,7 +162,7 @@ public class Main {
                 GameLib.drawPlayer(player.getCoordinateX(), player.getCoordinateY(), player.getRadius());
             }
 
-            //projeteis - player
+            //desenho - projeteis (player)
             for (int i = 0; i < player.getProjectiles().size(); i++) {
                 var projectile = player.getProjectiles().get(i);
                 if (projectile.getState() == Util.ACTIVE) {
@@ -173,28 +173,35 @@ public class Main {
                 }
             }
 
-            //projéteis - inimigos
+            //desenho - projeteis (inimigo tipo 1)
             for (int i = 0; i < armyEnemyOne.getEnemies().size(); i++) {
-                if (armyEnemyOne.getEnemies().get(i).getState() == Util.ACTIVE) {
-                    var current = armyEnemyOne.getEnemies().get(i);
-                    GameLib.setColor(Color.RED);
-                    GameLib.drawCircle(current.getCoordinateX(), current.getCoordinateY(), current.getRadius());
+                var currentEnemy = armyEnemyOne.getEnemies().get(i);
+                if (currentEnemy.getState() == Util.ACTIVE) {
+                    for (int j = 0; j < currentEnemy.getProjectiles().size(); j++) {
+                        var currentProjectile = armyEnemyOne.getEnemies().get(i).getProjectiles().get(j);
+                        GameLib.setColor(Color.RED);
+                        GameLib.drawCircle(currentProjectile.getCoordinateX(), currentProjectile.getCoordinateY(), currentProjectile.getRadius());
+                    }
                 }
             }
 
+            //desenho - projeteis (inimigo tipo 2)
             for (int i = 0; i < armyEnemyTwo.getEnemies().size(); i++) {
-                if (armyEnemyTwo.getEnemies().get(i).getState() == Util.ACTIVE) {
-                    var current = armyEnemyTwo.getEnemies().get(i);
-                    GameLib.setColor(Color.RED);
-                    GameLib.drawCircle(current.getCoordinateX(), current.getCoordinateY(), current.getRadius());
+                var currentEnemy = armyEnemyTwo.getEnemies().get(i);
+                if (currentEnemy.getState() == Util.ACTIVE) {
+                    for (int j = 0; j < currentEnemy.getProjectiles().size(); j++) {
+                        var currentProjectile = armyEnemyTwo.getEnemies().get(i).getProjectiles().get(j);
+                        GameLib.setColor(Color.RED);
+                        GameLib.drawCircle(currentProjectile.getCoordinateX(), currentProjectile.getCoordinateY(), currentProjectile.getRadius());
+                    }
                 }
             }
 
-            //inimigos tipo 1
+            //desenho - inimigos tipo 1
             for (int i = 0; i < armyEnemyOne.getEnemies().size(); i++) {
                 var current = armyEnemyOne.getEnemies().get(i);
                 if (current.getState() == Util.EXPLODE) {
-                    double alpha = Duration.between(currentTime, current.getExplosionStart()).toMillis() / Duration.between(current.getExplosionStart(), current.getExplosionEnd()).toMillis();
+                    double alpha = (double) Duration.between(currentTime, current.getExplosionStart()).toMillis() / Duration.between(current.getExplosionStart(), current.getExplosionEnd()).toMillis();
                     GameLib.drawExplosion(current.getCoordinateX(), current.getCoordinateY(), alpha);
                 } else if (current.getState() == Util.ACTIVE) {
                     GameLib.setColor(Color.CYAN);
@@ -209,8 +216,8 @@ public class Main {
                     double alpha = Duration.between(currentTime, current.getExplosionStart()).toMillis() / Duration.between(current.getExplosionStart(), current.getExplosionEnd()).toMillis();
                     GameLib.drawExplosion(current.getCoordinateX(), current.getCoordinateY(), alpha);
                 } else if (current.getState() == Util.ACTIVE) {
-                    GameLib.setColor(Color.CYAN);
-                    GameLib.drawCircle(current.getCoordinateX(), current.getCoordinateY(), current.getRadius());
+                    GameLib.setColor(Color.MAGENTA);
+                    GameLib.drawDiamond(current.getCoordinateX(), current.getCoordinateY(), current.getRadius());
                 }
             }
 
