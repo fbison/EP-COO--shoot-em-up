@@ -1,7 +1,9 @@
 package main;
 
 import components.BackgroundStars;
+
 import java.awt.Color;
+
 import components.enemies.Enemy;
 import components.enemies.EnemiesArmy;
 import components.enemies.EnemyTypeOne;
@@ -189,37 +191,41 @@ public class Main {
             //projéteis - inimigos
             for (int i = 0; i < armyEnemyOne.getEnemies().size(); i++) {
                 if (armyEnemyOne.getEnemies().get(i).getState() == Util.ACTIVE) {
+                    var current = armyEnemyOne.getEnemies().get(i);
                     GameLib.setColor(Color.RED);
-                    GameLib.drawCircle(armyEnemyOne.getEnemies().get(i).getCoordinateX(), armyEnemyOne.getEnemies().get(i).getCoordinateY(), armyEnemyOne.getEnemies().get(i).getRadius());
+                    GameLib.drawCircle(current.getCoordinateX(), current.getCoordinateY(), current.getRadius());
                 }
             }
 
             for (int i = 0; i < armyEnemyTwo.getEnemies().size(); i++) {
                 if (armyEnemyTwo.getEnemies().get(i).getState() == Util.ACTIVE) {
+                    var current = armyEnemyTwo.getEnemies().get(i);
                     GameLib.setColor(Color.RED);
-                    GameLib.drawCircle(armyEnemyTwo.getEnemies().get(i).getCoordinateX(), armyEnemyTwo.getEnemies().get(i).getCoordinateY(), armyEnemyTwo.getEnemies().get(i).getRadius());
+                    GameLib.drawCircle(current.getCoordinateX(), current.getCoordinateY(), current.getRadius());
                 }
             }
 
             //inimigos tipo 1
             for (int i = 0; i < armyEnemyOne.getEnemies().size(); i++) {
-                if (armyEnemyOne.getEnemies().get(i).getState() == Util.EXPLODE) {
-                    double alpha = Duration.between(currentTime, armyEnemyOne.getEnemies().get(i).getExplosionStart()).toMillis() / Duration.between(armyEnemyOne.getEnemies().get(i).getExplosionStart(), armyEnemyOne.getEnemies().get(i).getExplosionEnd()).toMillis();
-                    GameLib.drawExplosion(armyEnemyOne.getEnemies().get(i).getCoordinateX(), armyEnemyOne.getEnemies().get(i).getCoordinateY(), alpha);
-                } else if (armyEnemyOne.getEnemies().get(i).getState() == Util.ACTIVE) {
+                var current = armyEnemyOne.getEnemies().get(i);
+                if (current.getState() == Util.EXPLODE) {
+                    double alpha = Duration.between(currentTime, current.getExplosionStart()).toMillis() / Duration.between(current.getExplosionStart(), current.getExplosionEnd()).toMillis();
+                    GameLib.drawExplosion(current.getCoordinateX(), current.getCoordinateY(), alpha);
+                } else if (current.getState() == Util.ACTIVE) {
                     GameLib.setColor(Color.CYAN);
-                    GameLib.drawCircle(armyEnemyOne.getEnemies().get(i).getCoordinateX(), armyEnemyOne.getEnemies().get(i).getCoordinateY(), armyEnemyOne.getEnemies().get(i).getRadius());
+                    GameLib.drawCircle(current.getCoordinateX(), current.getCoordinateY(), current.getRadius());
                 }
             }
 
             //inimigos tipo 2
             for (int i = 0; i < armyEnemyTwo.getEnemies().size(); i++) {
-                if (armyEnemyTwo.getEnemies().get(i).getState() == Util.EXPLODE) {
-                    double alpha = (double) Duration.between(currentTime, armyEnemyTwo.getEnemies().get(i).getExplosionStart()).toMillis() / Duration.between(armyEnemyTwo.getEnemies().get(i).getExplosionStart(), armyEnemyTwo.getEnemies().get(i).getExplosionEnd()).toMillis();
-                    GameLib.drawExplosion(armyEnemyTwo.getEnemies().get(i).getCoordinateX(), armyEnemyTwo.getEnemies().get(i).getCoordinateY(), alpha);
-                } else if (armyEnemyTwo.getEnemies().get(i).getState() == Util.ACTIVE) {
+                var current = armyEnemyTwo.getEnemies().get(i);
+                if (current.getState() == Util.EXPLODE) {
+                    double alpha = Duration.between(currentTime, current.getExplosionStart()).toMillis() / Duration.between(current.getExplosionStart(), current.getExplosionEnd()).toMillis();
+                    GameLib.drawExplosion(current.getCoordinateX(), current.getCoordinateY(), alpha);
+                } else if (current.getState() == Util.ACTIVE) {
                     GameLib.setColor(Color.CYAN);
-                    GameLib.drawCircle(armyEnemyTwo.getEnemies().get(i).getCoordinateX(), armyEnemyTwo.getEnemies().get(i).getCoordinateY(), armyEnemyTwo.getEnemies().get(i).getRadius());
+                    GameLib.drawCircle(current.getCoordinateX(), current.getCoordinateY(), current.getRadius());
                 }
             }
 
