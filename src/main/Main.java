@@ -28,15 +28,17 @@ public class Main {
         final int enemyProjectiles = 10;
         var currentTime = Instant.now();
         boolean running = true;
-        long delta = 0;
 
         //inicialização do player
-        Player player = new Player(Util.ACTIVE, Util.WIDTH / 2, Util.HEIGHT * 0.90, 0.25, 0.25, 12.0, Instant.EPOCH, Instant.EPOCH, currentTime, enemyProjectiles, 2);
+        Player player = new Player(Util.ACTIVE, (double) (Util.WIDTH) / 2, Util.HEIGHT * 0.90, 0.25,
+                0.25, 12.0, Instant.EPOCH, Instant.EPOCH, currentTime, enemyProjectiles, 2);
 
         //inicialização de Inimigo Tipo 1
         var enemiesOne = new ArrayList<Enemy>();
+        //passar pro EnemiesArmy
         for (int i = 0; i < enemyProjectiles; i++) {
-            var enemyOne = new EnemyTypeOne(Util.INACTIVE, 0, 0, 0, 0, 9.0, Instant.EPOCH, Instant.EPOCH, Instant.EPOCH, 0, 0, 0, 10, 2);
+            var enemyOne = new EnemyTypeOne(Util.INACTIVE, 0, 0, 0, 0,
+                    9.0, Instant.EPOCH, Instant.EPOCH, Instant.EPOCH, 0, 0, 0, 10, 2);
             enemiesOne.add(enemyOne);
         }
         var armyEnemyOne = new EnemiesArmy(enemiesOne, currentTime.plusMillis(2000));
@@ -44,21 +46,21 @@ public class Main {
         //inicialização de Inimigo Tipo 2
         var enemiesTwo = new ArrayList<Enemy>();
         for (int i = 0; i < enemyProjectiles; i++) {
-            var enemyTwo = new EnemyTypeTwo(Util.INACTIVE, 0.0, 0.0, 0.0, 0.0, 9.0, Instant.EPOCH, Instant.EPOCH,
-                    Instant.EPOCH, 0.0, 0.0, 0.0, (int) (Util.WIDTH * 0.20), 10, 2);
+            var enemyTwo = new EnemyTypeTwo(Util.INACTIVE, 0.0, 0.0, 0.0, 0.0, 9.0, Instant.EPOCH,
+                    Instant.EPOCH, Instant.EPOCH, 0.0, 0.0, 0.0, (int) (Util.WIDTH * 0.20), 10, 2);
             enemiesTwo.add(enemyTwo);
         }
         var armyEnemyTwo = new EnemiesArmy(enemiesTwo, currentTime.plusMillis(2000));
 
         // estrelas que formam o fundo de primeiro plano
-        var starsFirst = new BackgroundStars(0.045, 0.0, 20);
-        var starsSecond = new BackgroundStars(0.045, 0.0, 50);
+        var starsFirst = new BackgroundStars(0.070, 0.0, 20, Color.GRAY);
+        var starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
 
         //Inicialização da interface
         GameLib.initGraphics();
 
         while (running) {
-            delta = Duration.between(currentTime, Instant.now()).toMillis();
+            long delta = Duration.between(currentTime, Instant.now()).toMillis();
             currentTime = Instant.now();
 
             //verificação de colisões
@@ -146,22 +148,11 @@ public class Main {
             //Desenho da cena
 
             //Plano de fundo distante
-            GameLib.setColor(Color.DARK_GRAY);
-            starsSecond.setCount(starsSecond.getStars().getFirst().getSpeed() * delta);
-
-            for (int i = 0; i < starsSecond.getStars().size(); i++) {
-                var star = starsSecond.getStars().get(i);
-                GameLib.fillRect(star.getCoordinateX(), (star.getCoordinateY() + starsSecond.getCount()) % Util.HEIGHT, 2, 2);
-            }
+            starsSecond.update(delta);
 
             //Plano de fundo
-            GameLib.setColor(Color.GRAY);
-            starsFirst.setCount(starsFirst.getStars().getFirst().getSpeed() * delta);
+            starsFirst.update(delta);
 
-            for (int i = 0; i < starsFirst.getStars().size(); i++) {
-                var star = starsFirst.getStars().get(i);
-                GameLib.fillRect(star.getCoordinateX(), (star.getCoordinateY() + starsFirst.getCount()) % Util.HEIGHT, 2, 2);
-            }
 
             //desenho - player
             if (player.getState() == Util.EXPLODE) {
