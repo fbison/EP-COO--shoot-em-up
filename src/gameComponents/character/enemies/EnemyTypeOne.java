@@ -1,18 +1,17 @@
-package components.enemies;
+package gameComponents.character.enemies;
 
-import components.Player;
-import components.Projectile;
+import gameComponents.character.Player;
 import graphics.GameLib;
 import graphics.Util;
 
 import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 
 public class EnemyTypeOne extends Enemy {
     public EnemyTypeOne() {
-        super(Util.INACTIVE, 0, 0, 0, 0, 9.0, null, null, null, 0, 0, 0, 10, 2);
+        super(Util.INACTIVE, 0, 0, 0, 0, 9.0, null,
+                null, null, 0, 0, 0, 10, 2, Color.CYAN, Color.RED);
     }
 
     @Override
@@ -57,12 +56,12 @@ public class EnemyTypeOne extends Enemy {
     }
 
     @Override
-    public void draw(Color color, Instant currentTime){
+    public void draw(Instant currentTime){
         if (getState() == Util.EXPLODE) {
             double alpha = (double) Duration.between(currentTime, getExplosionStart()).toMillis() / Duration.between(getExplosionStart(), getExplosionEnd()).toMillis();
             GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), alpha);
         } else if (getState() == Util.ACTIVE) {
-            GameLib.setColor(color);
+            GameLib.setColor(getColor());
             GameLib.drawCircle(getCoordinateX(), getCoordinateY(), getRadius());
         }
     }

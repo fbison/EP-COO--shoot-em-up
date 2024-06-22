@@ -1,20 +1,18 @@
 package main;
 
-import components.BackgroundStars;
+import gameComponents.scenario.BackgroundStars;
 
 import java.awt.Color;
 
-import components.enemies.Enemy;
-import components.enemies.EnemiesArmy;
-import components.enemies.EnemyTypeOne;
-import components.enemies.EnemyTypeTwo;
-import components.Player;
+import gameComponents.character.enemies.EnemiesArmy;
+import gameComponents.character.enemies.EnemyTypeOne;
+import gameComponents.character.enemies.EnemyTypeTwo;
+import gameComponents.character.Player;
 import graphics.Util;
 import graphics.GameLib;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 
 public class Main {
     public static void busyWait(Instant endTime) {
@@ -32,9 +30,9 @@ public class Main {
         long delta;
 
         Player player = new Player((double) Util.WIDTH / 2,
-                Util.HEIGHT * 0.90, 0.25, 0.25, 12.0,currentTime, projectileQuantity);
-        EnemiesArmy armyEnemyOne = new EnemiesArmy(enemyQuantity, EnemyTypeOne.class, currentTime.plusMillis(2000), Color.CYAN);
-        EnemiesArmy armyEnemyTwo = new EnemiesArmy(enemyQuantity, EnemyTypeTwo.class, currentTime.plusMillis(2000), Color.MAGENTA);
+                Util.HEIGHT * 0.90, 0.25, 0.25, 12.0,currentTime, projectileQuantity, Color.BLUE, Color.GREEN);
+        EnemiesArmy armyEnemyOne = new EnemiesArmy(enemyQuantity, EnemyTypeOne.class, currentTime.plusMillis(2000));
+        EnemiesArmy armyEnemyTwo = new EnemiesArmy(enemyQuantity, EnemyTypeTwo.class, currentTime.plusMillis(2000));
 
         BackgroundStars starsFirst = new BackgroundStars(0.07, 0.0, 20, Color.GRAY);
         BackgroundStars starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
@@ -70,7 +68,7 @@ public class Main {
             if (GameLib.isKeyPressed(Util.KEY_ESCAPE)) running = false;
             player.verifyActions(currentTime, delta);
 
-            player.keepInTheScren();
+            player.keepInScren();
             starsSecond.update(delta);
             starsFirst.update(delta);
             player.draw(currentTime);

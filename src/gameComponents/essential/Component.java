@@ -1,32 +1,23 @@
-package components;
+package gameComponents.essential;
 
-public class Component extends GameComponent{
+import java.awt.Color;
+
+public class Component extends GameObject {
     // Attributes
     private int state;
-
     private double speedX;
     private double speedY;
     private double radius;
 
     // Constructor
-    public Component(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius) {
-        super(coordinateX, coordinateY);
+    public Component(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius, Color color) {
+        super(coordinateX, coordinateY, color);
         this.radius = radius;
         this.state = state;
         this.speedX = speedX;
         this.speedY = speedY;
     }
 
-    // Methods
-    public void updateState() {
-        // Method implementation
-    }
-
-    public void setColor() {
-        // Method implementation
-    }
-
-    // Getters and setters
     public int getState() {
         return state;
     }

@@ -1,16 +1,13 @@
-package components.enemies;
+package gameComponents.character.enemies;
 
-import components.Character;
-import components.Component;
-import components.Player;
-import components.Projectile;
-import graphics.GameLib;
+import gameComponents.character.Character;
+import gameComponents.essential.Component;
+import gameComponents.character.Player;
+import gameComponents.character.Projectile;
 import graphics.Util;
 
 import java.awt.*;
-import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 
 public abstract class Enemy extends Character {
     // Additional attributes
@@ -21,8 +18,8 @@ public abstract class Enemy extends Character {
     // Constructor
     public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
-                 double angle, double rotationSpeed, double speed) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot);
+                 double angle, double rotationSpeed, double speed, Color colorEnemy) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, colorEnemy);
         this.angle = angle;
         this.rotationSpeed = rotationSpeed;
         this.speed = speed;
@@ -30,8 +27,8 @@ public abstract class Enemy extends Character {
 
     public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
-                 double angle, double rotationSpeed, double speed, int countProjectiles, int projectileRadius) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, countProjectiles, projectileRadius);
+                 double angle, double rotationSpeed, double speed, int countProjectiles, int projectileRadius, Color colorEnemy, Color colorProjectile) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, countProjectiles, projectileRadius, colorEnemy, colorProjectile);
         this.angle = angle;
         this.rotationSpeed = rotationSpeed;
         this.speed = speed;
@@ -66,7 +63,7 @@ public abstract class Enemy extends Character {
 
     public abstract Instant cast(Instant currentTime);
 
-    public abstract void draw(Color color, Instant currentTime);
+    public abstract void draw(Instant currentTime);
 
     @Override
     public void colide(Component opponent) {

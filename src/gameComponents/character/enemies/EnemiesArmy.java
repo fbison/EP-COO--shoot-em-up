@@ -1,11 +1,10 @@
-package components.enemies;
+package gameComponents.character.enemies;
 
-import components.Player;
-import components.Projectile;
+import gameComponents.character.Player;
+import gameComponents.character.Projectile;
 import graphics.GameLib;
 import graphics.Util;
 
-import java.awt.*;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -14,14 +13,12 @@ public class EnemiesArmy {
     private ArrayList<Enemy> enemies;
     // Next enemy time
     private Instant nextEnemy;
-    private Color color;
 
 
     // Constructor
-    public EnemiesArmy(int quantity, Class<? extends Enemy> enemyClass, Instant nextEnemy, Color color) {
+    public EnemiesArmy(int quantity, Class<? extends Enemy> enemyClass, Instant nextEnemy) {
         this.enemies = createEnemies(quantity, enemyClass);
         this.nextEnemy = nextEnemy;
-        this.color = color;
     }
     public static ArrayList<Enemy> createEnemies(int quantity, Class<? extends Enemy> enemyClass) {
         ArrayList<Enemy> enemies = new ArrayList<>();
@@ -85,7 +82,7 @@ public class EnemiesArmy {
         for(Enemy enemy : getEnemies()){
             if (enemy.getState() == Util.ACTIVE) {
                 for (Projectile projectile : enemy.getProjectiles()){
-                    GameLib.setColor(Color.RED);
+                    GameLib.setColor(projectile.getColor());
                     GameLib.drawCircle(projectile.getCoordinateX(), projectile.getCoordinateY(), projectile.getRadius());
                 }
             }
@@ -93,7 +90,7 @@ public class EnemiesArmy {
     }
     public void drawEnemys(Instant currentTime){
         for(Enemy enemy : getEnemies()){
-            enemy.draw(color, currentTime);
+            enemy.draw(currentTime);
         }
     }
     public void checkCollisions(Player player){

@@ -1,7 +1,9 @@
-package components;
+package gameComponents.character;
 
+import gameComponents.essential.Component;
 import graphics.Util;
 
+import java.awt.Color;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -14,8 +16,8 @@ public class Character extends Component {
 
     // Constructor
     public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius);
+                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, Color color) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, color);
         this.explosionStart = explosionStart;
         this.explosionEnd = explosionEnd;
         this.nextShoot = nextShoot;
@@ -23,14 +25,15 @@ public class Character extends Component {
     }
 
     public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, int countProjectiles, int projectileRadius) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius);
+                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
+                     int countProjectiles, int projectileRadius, Color colorCharacter, Color colorProjectile) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, colorCharacter);
         this.explosionStart = explosionStart;
         this.explosionEnd = explosionEnd;
         this.nextShoot = nextShoot;
         this.projectiles = new ArrayList<>(countProjectiles);
         for (int i = 0; i < countProjectiles; i++) {
-            this.projectiles.add(new Projectile(projectileRadius));
+            this.projectiles.add(new Projectile(projectileRadius, colorProjectile));
         }
     }
 
@@ -114,5 +117,4 @@ public class Character extends Component {
 
         return freeArray;
     }
-
 }

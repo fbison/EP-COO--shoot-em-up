@@ -1,14 +1,12 @@
-package components.enemies;
+package gameComponents.character.enemies;
 
-import components.Player;
-import components.Projectile;
+import gameComponents.character.Player;
 import graphics.GameLib;
 import graphics.Util;
 
 import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 
 public class EnemyTypeTwo extends Enemy {
     private double spawnX;
@@ -16,7 +14,7 @@ public class EnemyTypeTwo extends Enemy {
 
     public EnemyTypeTwo() {
         super(Util.INACTIVE, 0.0, 0.0, 0.0, 0.0, 12.0, null, null,
-                null, 0.0, 0.0, 0.0);
+                null, 0.0, 0.0, 0.0, 10, 2, Color.MAGENTA, Color.RED);
         this.spawnX = (Util.WIDTH * 0.20);
         this.count = 0;
     }
@@ -115,12 +113,12 @@ public class EnemyTypeTwo extends Enemy {
     }
 
     @Override
-    public void draw(Color color, Instant currentTime){
+    public void draw(Instant currentTime){
         if (getState() == Util.EXPLODE) {
             double alpha = (double) Duration.between(currentTime, getExplosionStart()).toMillis() / Duration.between(getExplosionStart(), getExplosionEnd()).toMillis();
             GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), alpha);
         } else if (getState() == Util.ACTIVE) {
-            GameLib.setColor(color);
+            GameLib.setColor(getColor());
             GameLib.drawDiamond(getCoordinateX(), getCoordinateY(), getRadius());
         }
     }
