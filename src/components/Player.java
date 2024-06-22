@@ -1,5 +1,6 @@
 package components;
 
+import graphics.GameLib;
 import graphics.Util;
 
 import java.time.Instant;
@@ -32,6 +33,35 @@ public class Player extends Character {
                 else {
                     projectile.setCoordinateX(projectile.getCoordinateX() + (projectile.getSpeedX() * delta));
                     projectile.setCoordinateY(projectile.getCoordinateY() + (projectile.getSpeedY() * delta));
+                }
+            }
+        }
+    }
+
+    public void atack(Instant currentTime){
+        int free = findFreeIndex();
+        if (free < getProjectiles().size()) {
+            getProjectiles().get(free).setCoordinateX(getCoordinateX());
+            getProjectiles().get(free).setCoordinateY(getCoordinateY() - 2 * getRadius());
+            getProjectiles().get(free).setSpeedX(0);
+            getProjectiles().get(free).setSpeedY(-1.0);
+            getProjectiles().get(free).setState(Util.ACTIVE);
+            setNextShoot(currentTime.plusMillis(100));
+        }
+    }
+    public void verifyActions(Instant currentTime, long delta){
+        if (getState() == Util.ACTIVE) {
+            if (GameLib.isKeyPressed(Util.KEY_UP))
+                setCoordinateY(getCoordinateY() - delta * getSpeedY());
+            if (GameLib.isKeyPressed(Util.KEY_DOWN))
+                setCoordinateY(getCoordinateY() + delta * getSpeedY());
+            if (GameLib.isKeyPressed(Util.KEY_LEFT))
+                setCoordinateX(getCoordinateX() - delta * getSpeedX());
+            if (GameLib.isKeyPressed(Util.KEY_RIGHT))
+                setCoordinateX(getCoordinateX() + delta * getSpeedX());
+            if (GameLib.isKeyPressed(Util.KEY_CONTROL)) {
+                if(currentTime.isAfter(getNextShoot())) {
+                    atack(currentTime);
                 }
             }
         }

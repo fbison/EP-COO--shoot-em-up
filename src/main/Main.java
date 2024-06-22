@@ -113,29 +113,7 @@ public class Main {
             }
 
             //Verificando entrada do usuário (teclado)
-            if (player.getState() == Util.ACTIVE) {
-                if (GameLib.isKeyPressed(Util.KEY_UP))
-                    player.setCoordinateY(player.getCoordinateY() - delta * player.getSpeedY());
-                if (GameLib.isKeyPressed(Util.KEY_DOWN))
-                    player.setCoordinateY(player.getCoordinateY() + delta * player.getSpeedY());
-                if (GameLib.isKeyPressed(Util.KEY_LEFT))
-                    player.setCoordinateX(player.getCoordinateX() - delta * player.getSpeedX());
-                if (GameLib.isKeyPressed(Util.KEY_RIGHT))
-                    player.setCoordinateX(player.getCoordinateX() + delta * player.getSpeedX());
-                if (GameLib.isKeyPressed(Util.KEY_CONTROL)) {
-                    if(currentTime.isAfter(player.getNextShoot())) {
-                        int free = player.findFreeIndex();
-                        if (free < player.getProjectiles().size()) {
-                            player.getProjectiles().get(free).setCoordinateX(player.getCoordinateX());
-                            player.getProjectiles().get(free).setCoordinateY(player.getCoordinateY() - 2 * player.getRadius());
-                            player.getProjectiles().get(free).setSpeedX(0);
-                            player.getProjectiles().get(free).setSpeedY(-1.0);
-                            player.getProjectiles().get(free).setState(Util.ACTIVE);
-                            player.setNextShoot(currentTime.plusMillis(100));
-                        }
-                    }
-                }
-            }
+            player.verifyActions(currentTime, delta);
             if (GameLib.isKeyPressed(Util.KEY_ESCAPE)) running = false;
 
             player.keepInTheScren();
