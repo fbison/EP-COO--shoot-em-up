@@ -27,8 +27,8 @@ public class EnemyTypeOne extends Enemy {
             if (getCoordinateY() > Util.HEIGHT + 10)
                 setState(Util.INACTIVE);
             else {
-                setCoordinateX(getSpeedX() * Math.cos(getAngle()) * delta);
-                setCoordinateY(getSpeedY() * Math.sin(getAngle()) * delta * -1.0);
+                setCoordinateX(getSpeed() * Math.cos(getAngle()) * delta);
+                setCoordinateY(getSpeed() * Math.sin(getAngle()) * delta * -1.0);
                 setAngle(getRotationSpeed() * delta);
 
                 if (currentTime.isAfter(getNextShoot()) && getCoordinateY() < player.getCoordinateY()) {
@@ -51,7 +51,7 @@ public class EnemyTypeOne extends Enemy {
     public Instant cast(Instant currentTime) {
         setCoordinateX(Math.random() * (Util.WIDTH - 20.0) + 10.0);
         setCoordinateY(-10.0);
-        setSpeed((long) (0.20 + Math.random() * 0.15));
+        setSpeed(0.20 + Math.random() * 0.15);
         setAngle(3 * Math.PI / 2);
         setRotationSpeed(0);
         setState(Util.ACTIVE);

@@ -49,8 +49,7 @@ public class EnemiesArmy {
         if (currentTime.isAfter(nextEnemy)) {
             int free = freeIndex();
             if (free < enemies.size()) {
-                var enemy = enemies.get(free);
-                nextEnemy = enemy.cast(currentTime);
+                nextEnemy = enemies.get(free).cast(currentTime);
             }
         }
     }
