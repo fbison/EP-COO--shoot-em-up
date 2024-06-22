@@ -84,4 +84,11 @@ public class EnemiesArmy {
             enemy.draw(color, currentTime);
         }
     }
+    public void checkCollisions(Player player){
+        for (Projectile projectile : player.getProjectiles()){
+            for(Enemy enemy : getEnemies()){
+                enemy.colide(projectile);
+            }
+        }
+    }
 }

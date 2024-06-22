@@ -67,16 +67,8 @@ public class Main {
             player.checkCollisions(armyEnemyOne);
             player.checkCollisions(armyEnemyTwo);
 
-            //colisões projeteis (player) - inimigos
-            for (int i = 0; i < player.getProjectiles().size(); i++) {
-                for (int j = 0; j < armyEnemyOne.getEnemies().size(); j++) {
-                    armyEnemyOne.getEnemies().get(j).colide(player.getProjectiles().get(i));
-                }
-
-                for (int j = 0; j < armyEnemyTwo.getEnemies().size(); j++) {
-                    armyEnemyTwo.getEnemies().get(j).colide(player.getProjectiles().get(i));
-                }
-            }
+            armyEnemyOne.checkCollisions(player);
+            armyEnemyTwo.checkCollisions(player);
 
             //atualização de projéteis
             player.updateProjectiles(delta);
