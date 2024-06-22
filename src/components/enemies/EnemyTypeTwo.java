@@ -2,8 +2,11 @@ package components.enemies;
 
 import components.Player;
 import components.Projectile;
+import graphics.GameLib;
 import graphics.Util;
 
+import java.awt.*;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -108,6 +111,17 @@ public class EnemyTypeTwo extends Enemy {
             count = 0;
             spawnX = Math.random() > 0.5 ? Util.WIDTH * 0.2 : Util.WIDTH * 0.8;
             return currentTime.plusMillis((long) (3000 + Math.random() * 3000));
+        }
+    }
+
+    @Override
+    public void draw(Color color, Instant currentTime){
+        if (getState() == Util.EXPLODE) {
+            double alpha = (double) Duration.between(currentTime, getExplosionStart()).toMillis() / Duration.between(getExplosionStart(), getExplosionEnd()).toMillis();
+            GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), alpha);
+        } else if (getState() == Util.ACTIVE) {
+            GameLib.setColor(color);
+            GameLib.drawDiamond(getCoordinateX(), getCoordinateY(), getRadius());
         }
     }
 }

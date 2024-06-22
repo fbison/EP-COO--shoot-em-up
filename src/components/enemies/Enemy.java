@@ -66,6 +66,8 @@ public abstract class Enemy extends Character {
 
     public abstract Instant cast(Instant currentTime);
 
+    public abstract void draw(Color color, Instant currentTime);
+
     @Override
     public void colide(Component opponent) {
         if (getState() != Util.ACTIVE)
@@ -95,13 +97,5 @@ public abstract class Enemy extends Character {
         }
     }
 
-    public void draw(Color color, Instant currentTime){
-        if (getState() == Util.EXPLODE) {
-            double alpha = (double) Duration.between(currentTime, getExplosionStart()).toMillis() / Duration.between(getExplosionStart(), getExplosionEnd()).toMillis();
-            GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), alpha);
-        } else if (getState() == Util.ACTIVE) {
-            GameLib.setColor(color);
-            GameLib.drawCircle(getCoordinateX(), getCoordinateY(), getRadius());
-        }
-    }
+
 }

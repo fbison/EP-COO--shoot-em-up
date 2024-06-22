@@ -2,8 +2,11 @@ package components.enemies;
 
 import components.Player;
 import components.Projectile;
+import graphics.GameLib;
 import graphics.Util;
 
+import java.awt.*;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -51,5 +54,16 @@ public class EnemyTypeOne extends Enemy {
         setState(Util.ACTIVE);
         setNextShoot(currentTime.plusMillis(500));
         return currentTime.plusMillis(500);
+    }
+
+    @Override
+    public void draw(Color color, Instant currentTime){
+        if (getState() == Util.EXPLODE) {
+            double alpha = (double) Duration.between(currentTime, getExplosionStart()).toMillis() / Duration.between(getExplosionStart(), getExplosionEnd()).toMillis();
+            GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), alpha);
+        } else if (getState() == Util.ACTIVE) {
+            GameLib.setColor(color);
+            GameLib.drawCircle(getCoordinateX(), getCoordinateY(), getRadius());
+        }
     }
 }
