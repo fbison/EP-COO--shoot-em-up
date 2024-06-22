@@ -51,7 +51,7 @@ public class Main {
         var armyEnemyTwo = new EnemiesArmy(enemiesTwo, currentTime.plusMillis(2000));
 
         // estrelas que formam o fundo de primeiro plano
-        var starsFrist = new BackgroundStars(0.045, 0.0, 20);
+        var starsFirst = new BackgroundStars(0.045, 0.0, 20);
         var starsSecond = new BackgroundStars(0.045, 0.0, 50);
 
         //Inicialização da interface
@@ -143,12 +143,7 @@ public class Main {
             }
             if (GameLib.isKeyPressed(Util.KEY_ESCAPE)) running = false;
 
-            //Verificação se as coordenadas do player estão dentro da tela
-            if (player.getCoordinateX() < 0) player.setCoordinateX(0);
-            if (player.getCoordinateX() >= Util.WIDTH) player.setCoordinateX(Util.WIDTH - 1);
-            if (player.getCoordinateY() < 25) player.setCoordinateY(25);
-            if (player.getCoordinateY() >= Util.HEIGHT) player.setCoordinateY(Util.HEIGHT - 1);
-
+            player.keepInTheScren();
             //Desenho da cena
 
             //Plano de fundo distante
@@ -162,11 +157,11 @@ public class Main {
 
             //Plano de fundo
             GameLib.setColor(Color.GRAY);
-            starsFrist.setCount(starsFrist.getStars().getFirst().getSpeed() * delta);
+            starsFirst.setCount(starsFirst.getStars().getFirst().getSpeed() * delta);
 
-            for (int i = 0; i < starsFrist.getStars().size(); i++) {
-                var star = starsFrist.getStars().get(i);
-                GameLib.fillRect(star.getCoordinateX(), (star.getCoordinateY() + starsFrist.getCount()) % Util.HEIGHT, 2, 2);
+            for (int i = 0; i < starsFirst.getStars().size(); i++) {
+                var star = starsFirst.getStars().get(i);
+                GameLib.fillRect(star.getCoordinateX(), (star.getCoordinateY() + starsFirst.getCount()) % Util.HEIGHT, 2, 2);
             }
 
             //desenho - player
