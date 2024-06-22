@@ -28,10 +28,10 @@ public class Main {
         final int enemyProjectiles = 10;
         var currentTime = Instant.now();
         boolean running = true;
+        long delta = 0;
 
         //inicialização do player
-        Player player = new Player(Util.ACTIVE, (double) (Util.WIDTH) / 2, Util.HEIGHT * 0.90, 0.25,
-                0.25, 12.0, Instant.EPOCH, Instant.EPOCH, currentTime, enemyProjectiles, 2);
+        Player player = new Player(Util.ACTIVE, Util.WIDTH / 2, Util.HEIGHT * 0.90, 0.25, 0.25, 12.0, Instant.EPOCH, Instant.EPOCH, currentTime, enemyProjectiles, 2);
 
         //inicialização de Inimigo Tipo 1
         var enemiesOne = new ArrayList<Enemy>();
@@ -53,14 +53,14 @@ public class Main {
         var armyEnemyTwo = new EnemiesArmy(enemiesTwo, currentTime.plusMillis(2000));
 
         // estrelas que formam o fundo de primeiro plano
-        var starsFirst = new BackgroundStars(0.070, 0.0, 20, Color.GRAY);
+        var starsFirst = new BackgroundStars(0.045, 0.0, 20, Color.GRAY);
         var starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
 
         //Inicialização da interface
         GameLib.initGraphics();
 
         while (running) {
-            long delta = Duration.between(currentTime, Instant.now()).toMillis();
+            delta = Duration.between(currentTime, Instant.now()).toMillis();
             currentTime = Instant.now();
 
             //verificação de colisões
@@ -152,7 +152,6 @@ public class Main {
 
             //Plano de fundo
             starsFirst.update(delta);
-
 
             //desenho - player
             if (player.getState() == Util.EXPLODE) {

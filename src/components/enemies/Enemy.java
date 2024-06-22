@@ -79,4 +79,16 @@ public abstract class Enemy extends Character {
             this.setExplosionEnd(now.plusMillis(2000));
         }
     }
+
+    @Override
+    public void updateProjectiles(long delta) {
+        for (Projectile projectile : this.getProjectiles()) {
+            if (projectile.getCoordinateY() > Util.HEIGHT)
+                projectile.setState(Util.INACTIVE);
+            else {
+                projectile.setCoordinateX(projectile.getCoordinateX() + (projectile.getSpeedX() * delta));
+                projectile.setCoordinateY(projectile.getCoordinateY() + (projectile.getSpeedY() * delta));
+            }
+        }
+    }
 }
