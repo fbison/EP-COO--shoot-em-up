@@ -1,5 +1,6 @@
 package components.enemies;
 
+import components.Player;
 import graphics.Util;
 
 import java.time.Instant;
@@ -51,6 +52,17 @@ public class EnemiesArmy {
             if (free < enemies.size()) {
                 nextEnemy = enemies.get(free).cast(currentTime);
             }
+        }
+    }
+
+    public void atack(Player player, Instant currentTime, long delta){
+        for(Enemy enemy: getEnemies()) {
+            enemy.attack(player, currentTime, delta);
+        }
+    }
+    public void updateProjectiles(long delta){
+        for(Enemy enemy: getEnemies()) {
+            enemy.updateProjectiles(delta);
         }
     }
 }

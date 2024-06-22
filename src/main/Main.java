@@ -4,6 +4,7 @@ import components.BackgroundStars;
 
 import java.awt.Color;
 
+import components.Projectile;
 import components.enemies.Enemy;
 import components.enemies.EnemiesArmy;
 import components.enemies.EnemyTypeOne;
@@ -31,29 +32,27 @@ public class Main {
         long delta = 0;
 
         //inicialização do player
-        Player player = new Player(Util.ACTIVE, Util.WIDTH / 2, Util.HEIGHT * 0.90, 0.25, 0.25, 12.0, Instant.EPOCH, Instant.EPOCH, currentTime, enemyProjectiles, 2);
-
+        Player player = new Player(Util.ACTIVE, (double) Util.WIDTH / 2, Util.HEIGHT * 0.90, 0.25, 0.25, 12.0, null, null, currentTime, enemyProjectiles, 0);
         //inicialização de Inimigo Tipo 1
         var enemiesOne = new ArrayList<Enemy>();
         //passar pro EnemiesArmy
         for (int i = 0; i < enemyProjectiles; i++) {
-            var enemyOne = new EnemyTypeOne(Util.INACTIVE, 0, 0, 0, 0,
-                    9.0, Instant.EPOCH, Instant.EPOCH, Instant.EPOCH, 0, 0, 0, 10, 2);
+            var enemyOne = new EnemyTypeOne(Util.INACTIVE, 0, 0, 0, 0, 9.0, null, null, null, 0, 0, 0, 10, 2);
             enemiesOne.add(enemyOne);
         }
-        var armyEnemyOne = new EnemiesArmy(enemiesOne, currentTime.plusMillis(2000));
+        EnemiesArmy armyEnemyOne = new EnemiesArmy(enemiesOne, currentTime.plusMillis(2000));
 
         //inicialização de Inimigo Tipo 2
         var enemiesTwo = new ArrayList<Enemy>();
         for (int i = 0; i < enemyProjectiles; i++) {
-            var enemyTwo = new EnemyTypeTwo(Util.INACTIVE, 0.0, 0.0, 0.0, 0.0, 9.0, Instant.EPOCH,
-                    Instant.EPOCH, Instant.EPOCH, 0.0, 0.0, 0.0, (int) (Util.WIDTH * 0.20), 10, 2);
+            var enemyTwo = new EnemyTypeTwo(Util.INACTIVE, 0.0, 0.0, 0.0, 0.0, 9.0, null, null,
+                    null, 0.0, 0.0, 0.0, (int) (Util.WIDTH * 0.20), 10, 2);
             enemiesTwo.add(enemyTwo);
         }
         var armyEnemyTwo = new EnemiesArmy(enemiesTwo, currentTime.plusMillis(2000));
 
         // estrelas que formam o fundo de primeiro plano
-        var starsFirst = new BackgroundStars(0.045, 0.0, 20, Color.GRAY);
+        var starsFirst = new BackgroundStars(0.07, 0.0, 20, Color.GRAY);
         var starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
 
         //Inicialização da interface
@@ -86,30 +85,23 @@ public class Main {
             //colisões projeteis (player) - inimigos
             for (int i = 0; i < player.getProjectiles().size(); i++) {
                 for (int j = 0; j < armyEnemyOne.getEnemies().size(); j++) {
-                    armyEnemyOne.getEnemies().get(i).colide(player.getProjectiles().get(i));
+                    armyEnemyOne.getEnemies().get(j).colide(player.getProjectiles().get(i));
                 }
 
                 for (int j = 0; j < armyEnemyTwo.getEnemies().size(); j++) {
-                    armyEnemyTwo.getEnemies().get(i).colide(player.getProjectiles().get(i));
+                    armyEnemyTwo.getEnemies().get(j).colide(player.getProjectiles().get(i));
                 }
             }
 
             //atualização de projéteis
             player.updateProjectiles(delta);
-            for (int i = 0; i < armyEnemyOne.getEnemies().size(); i++) {
-                armyEnemyOne.getEnemies().get(i).updateProjectiles(delta);
-            }
-            for (int i = 0; i < armyEnemyTwo.getEnemies().size(); i++) {
-                armyEnemyTwo.getEnemies().get(i).updateProjectiles(delta);
-            }
+
+            armyEnemyOne.updateProjectiles(delta);
+            armyEnemyTwo.updateProjectiles(delta);
 
             //inimigos tipo 1 e 2
-            for(Enemy enemy: armyEnemyOne.getEnemies()) {
-                enemy.attack(player, currentTime, delta);
-            }
-            for(Enemy enemy: armyEnemyTwo.getEnemies()) {
-                enemy.attack(player, currentTime, delta);
-            }
+            armyEnemyOne.atack(player, currentTime, delta);
+            armyEnemyTwo.atack(player, currentTime, delta);
 
             // verificando se novos inimigos devem ser lançados
             armyEnemyOne.castEnemies(currentTime);
@@ -130,15 +122,17 @@ public class Main {
                     player.setCoordinateX(player.getCoordinateX() - delta * player.getSpeedX());
                 if (GameLib.isKeyPressed(Util.KEY_RIGHT))
                     player.setCoordinateX(player.getCoordinateX() + delta * player.getSpeedX());
-                if (GameLib.isKeyPressed(Util.KEY_CONTROL) && currentTime.isAfter(player.getNextShoot())) {
-                    int free = player.findFreeIndex();
-                    if (free < player.getProjectiles().size()) {
-                        player.getProjectiles().get(free).setCoordinateX(player.getCoordinateX());
-                        player.getProjectiles().get(free).setCoordinateY(player.getCoordinateY() - 2 * player.getRadius());
-                        player.getProjectiles().get(free).setSpeedX(0);
-                        player.getProjectiles().get(free).setSpeedY(-1.0);
-                        player.getProjectiles().get(free).setState(Util.ACTIVE);
-                        player.setNextShoot(currentTime.plusMillis(100));
+                if (GameLib.isKeyPressed(Util.KEY_CONTROL)) {
+                    if(currentTime.isAfter(player.getNextShoot())) {
+                        int free = player.findFreeIndex();
+                        if (free < player.getProjectiles().size()) {
+                            player.getProjectiles().get(free).setCoordinateX(player.getCoordinateX());
+                            player.getProjectiles().get(free).setCoordinateY(player.getCoordinateY() - 2 * player.getRadius());
+                            player.getProjectiles().get(free).setSpeedX(0);
+                            player.getProjectiles().get(free).setSpeedY(-1.0);
+                            player.getProjectiles().get(free).setState(Util.ACTIVE);
+                            player.setNextShoot(currentTime.plusMillis(100));
+                        }
                     }
                 }
             }
@@ -163,8 +157,7 @@ public class Main {
             }
 
             //desenho - projeteis (player)
-            for (int i = 0; i < player.getProjectiles().size(); i++) {
-                var projectile = player.getProjectiles().get(i);
+            for (Projectile projectile : player.getProjectiles()){
                 if (projectile.getState() == Util.ACTIVE) {
                     GameLib.setColor(Color.GREEN);
                     GameLib.drawLine(projectile.getCoordinateX(), projectile.getCoordinateY() - 5, projectile.getCoordinateX(), projectile.getCoordinateY() + 5);

@@ -114,4 +114,5 @@ public class Character extends Component {
 
         return freeArray;
     }
+
 }

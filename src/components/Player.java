@@ -24,4 +24,16 @@ public class Player extends Character {
         if (this.getCoordinateY() < 25) this.setCoordinateY(25);
         if (this.getCoordinateY() >= Util.HEIGHT) this.setCoordinateY(Util.HEIGHT - 1);
     }
+    public void updateProjectiles(long delta) {
+        for (Projectile projectile : this.getProjectiles()) {
+            if(projectile.getState() == Util.ACTIVE) {
+                if (projectile.getCoordinateY() < 0)
+                    projectile.setState(Util.INACTIVE);
+                else {
+                    projectile.setCoordinateX(projectile.getCoordinateX() + (projectile.getSpeedX() * delta));
+                    projectile.setCoordinateY(projectile.getCoordinateY() + (projectile.getSpeedY() * delta));
+                }
+            }
+        }
+    }
 }
