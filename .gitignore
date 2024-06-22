@@ -1,4 +1,14 @@
+# IntelliJ IDEA
+.idea/
+*.iml
 
+# Compiled source files
+*.class
+
+# Production and build directories
+out/
+classes/
+production/
 
 # Log file
 *.log
