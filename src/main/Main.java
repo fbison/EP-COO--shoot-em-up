@@ -4,7 +4,6 @@ import components.BackgroundStars;
 
 import java.awt.Color;
 
-import components.Projectile;
 import components.enemies.Enemy;
 import components.enemies.EnemiesArmy;
 import components.enemies.EnemyTypeOne;
@@ -29,7 +28,7 @@ public class Main {
         final int enemyProjectiles = 10;
         var currentTime = Instant.now();
         boolean running = true;
-        long delta = 0;
+        long delta;
 
         //inicialização do player
         Player player = new Player(Util.ACTIVE, (double) Util.WIDTH / 2, Util.HEIGHT * 0.90, 0.25, 0.25, 12.0, null, null, currentTime, enemyProjectiles, 0);
