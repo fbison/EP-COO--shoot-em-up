@@ -64,23 +64,8 @@ public class Main {
 
             //verificação de colisões
 
-            if (player.getState() == Util.ACTIVE) {
-
-                // colisões player - projeteis inimigos
-                for (int i = 0; i < armyEnemyOne.getEnemies().size(); i++) {
-                    for (int j = 0; j < armyEnemyOne.getEnemies().get(i).getProjectiles().size(); j++) {
-                        player.colide(armyEnemyOne.getEnemies().get(i).getProjectiles().get(j));
-                    }
-                }
-
-                // colisões player - inimigos
-                for (int i = 0; i < armyEnemyOne.getEnemies().size(); i++) {
-                    player.colide(armyEnemyOne.getEnemies().get(i));
-                }
-                for (int i = 0; i < armyEnemyTwo.getEnemies().size(); i++) {
-                    player.colide(armyEnemyTwo.getEnemies().get(i));
-                }
-            }
+            player.checkCollisions(armyEnemyOne);
+            player.checkCollisions(armyEnemyTwo);
 
             //colisões projeteis (player) - inimigos
             for (int i = 0; i < player.getProjectiles().size(); i++) {

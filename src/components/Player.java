@@ -1,5 +1,7 @@
 package components;
 
+import components.enemies.EnemiesArmy;
+import components.enemies.Enemy;
 import graphics.GameLib;
 import graphics.Util;
 
@@ -94,5 +96,26 @@ public class Player extends Character {
             GameLib.drawPlayer(getCoordinateX(), getCoordinateY(), getRadius());
         }
         drawProjectiles();
+    }
+    public void checkCollisions(EnemiesArmy army)
+    {
+        if(getState() == Util.ACTIVE) {
+            checkCollisionsWithProjectiles(army);
+            checkCollisionsWithEnemys(army);
+        }
+    }
+    public void checkCollisionsWithProjectiles(EnemiesArmy army)
+    {
+        for(Enemy enemy : army.getEnemies()){
+            for(Projectile projectile: enemy.getProjectiles()) {
+                colide(projectile);
+            }
+        }
+    }
+    public void checkCollisionsWithEnemys(EnemiesArmy army)
+    {
+        for(Enemy enemy : army.getEnemies()){
+            colide(enemy);
+        }
     }
 }
