@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/src/EP-COO-shoot-em-up.iml" filepath="$PROJECT_DIR$/src/EP-COO-shoot-em-up.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProjetoCOO.iml" filepath="$PROJECT_DIR$/ProjetoCOO.iml" />
     </modules>
   </component>
 </project>

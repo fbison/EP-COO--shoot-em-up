@@ -1,7 +1,7 @@
 package main;
 
 import components.BackgroundStars;
-import components.Star;
+import java.awt.Color;
 import components.enemies.Enemy;
 import components.enemies.EnemiesArmy;
 import components.enemies.EnemyTypeOne;
@@ -10,7 +10,6 @@ import components.Player;
 import graphics.Util;
 import graphics.GameLib;
 
-import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
