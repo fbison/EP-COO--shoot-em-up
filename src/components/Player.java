@@ -3,6 +3,8 @@ package components;
 import graphics.GameLib;
 import graphics.Util;
 
+import java.awt.*;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -18,6 +20,12 @@ public class Player extends Character {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, countProjectiles, projectileRadius);
     }
 
+    // Verificando se a explosão do player já acabou. Ao final da explosão, o player volta a ser controlável
+    public void backToLife(Instant currentTime){
+        if (getState() == Util.EXPLODE && currentTime.isAfter(getExplosionEnd())) {
+            setState(Util.ACTIVE);
+        }
+    }
     //Verificação se as coordenadas do player estão dentro da tela
     public void keepInTheScren(){
         if (this.getCoordinateX() < 0) this.setCoordinateX(0);
@@ -65,5 +73,26 @@ public class Player extends Character {
                 }
             }
         }
+    }
+
+    public void drawProjectiles(){
+        for (Projectile projectile : getProjectiles()){
+            if (projectile.getState() == Util.ACTIVE) {
+                GameLib.setColor(Color.GREEN);
+                GameLib.drawLine(projectile.getCoordinateX(), projectile.getCoordinateY() - 5, projectile.getCoordinateX(), projectile.getCoordinateY() + 5);
+                GameLib.drawLine(projectile.getCoordinateX() - 1, projectile.getCoordinateY() - 3, projectile.getCoordinateX() - 1, projectile.getCoordinateY() + 3);
+                GameLib.drawLine(projectile.getCoordinateX() + 1, projectile.getCoordinateY() - 3, projectile.getCoordinateX() + 1, projectile.getCoordinateY() + 3);
+            }
+        }
+    }
+    public void draw(Instant currentTime){
+        if (getState() == Util.EXPLODE) {
+            var alpha = Duration.between(currentTime, getExplosionStart()).toMillis() / Duration.between(getExplosionEnd(), getExplosionStart()).toMillis();
+            GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), Math.abs(alpha));
+        } else {
+            GameLib.setColor(Color.BLUE);
+            GameLib.drawPlayer(getCoordinateX(), getCoordinateY(), getRadius());
+        }
+        drawProjectiles();
     }
 }

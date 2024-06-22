@@ -4,8 +4,11 @@ import components.Character;
 import components.Component;
 import components.Player;
 import components.Projectile;
+import graphics.GameLib;
 import graphics.Util;
 
+import java.awt.*;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -89,6 +92,16 @@ public abstract class Enemy extends Character {
                 projectile.setCoordinateX(projectile.getCoordinateX() + (projectile.getSpeedX() * delta));
                 projectile.setCoordinateY(projectile.getCoordinateY() + (projectile.getSpeedY() * delta));
             }
+        }
+    }
+
+    public void draw(Color color, Instant currentTime){
+        if (getState() == Util.EXPLODE) {
+            double alpha = (double) Duration.between(currentTime, getExplosionStart()).toMillis() / Duration.between(getExplosionStart(), getExplosionEnd()).toMillis();
+            GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), alpha);
+        } else if (getState() == Util.ACTIVE) {
+            GameLib.setColor(color);
+            GameLib.drawCircle(getCoordinateX(), getCoordinateY(), getRadius());
         }
     }
 }

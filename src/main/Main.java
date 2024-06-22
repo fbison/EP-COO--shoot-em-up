@@ -40,7 +40,7 @@ public class Main {
             var enemyOne = new EnemyTypeOne(Util.INACTIVE, 0, 0, 0, 0, 9.0, null, null, null, 0, 0, 0, 10, 2);
             enemiesOne.add(enemyOne);
         }
-        EnemiesArmy armyEnemyOne = new EnemiesArmy(enemiesOne, currentTime.plusMillis(2000));
+        EnemiesArmy armyEnemyOne = new EnemiesArmy(enemiesOne, currentTime.plusMillis(2000), Color.CYAN);
 
         //inicialização de Inimigo Tipo 2
         var enemiesTwo = new ArrayList<Enemy>();
@@ -49,7 +49,7 @@ public class Main {
                     null, 0.0, 0.0, 0.0, (int) (Util.WIDTH * 0.20), 10, 2);
             enemiesTwo.add(enemyTwo);
         }
-        var armyEnemyTwo = new EnemiesArmy(enemiesTwo, currentTime.plusMillis(2000));
+        var armyEnemyTwo = new EnemiesArmy(enemiesTwo, currentTime.plusMillis(2000), Color.MAGENTA);
 
         // estrelas que formam o fundo de primeiro plano
         var starsFirst = new BackgroundStars(0.07, 0.0, 20, Color.GRAY);
@@ -99,97 +99,26 @@ public class Main {
             armyEnemyOne.updateProjectiles(delta);
             armyEnemyTwo.updateProjectiles(delta);
 
-            //inimigos tipo 1 e 2
             armyEnemyOne.atack(player, currentTime, delta);
             armyEnemyTwo.atack(player, currentTime, delta);
 
-            // verificando se novos inimigos devem ser lançados
             armyEnemyOne.castEnemies(currentTime);
             armyEnemyTwo.castEnemies(currentTime);
 
-            // Verificando se a explosão do player já acabou. Ao final da explosão, o player volta a ser controlável
-            if (player.getState() == Util.EXPLODE && currentTime.isAfter(player.getExplosionEnd())) {
-                player.setState(Util.ACTIVE);
-            }
+            player.backToLife(currentTime);
 
-            //Verificando entrada do usuário (teclado)
-            player.verifyActions(currentTime, delta);
             if (GameLib.isKeyPressed(Util.KEY_ESCAPE)) running = false;
+            player.verifyActions(currentTime, delta);
 
             player.keepInTheScren();
-            //Desenho da cena
-
-            //Plano de fundo distante
             starsSecond.update(delta);
-
-            //Plano de fundo
             starsFirst.update(delta);
+            player.draw(currentTime);
 
-            //desenho - player
-            if (player.getState() == Util.EXPLODE) {
-                var alpha = Duration.between(currentTime, player.getExplosionStart()).toMillis() / Duration.between(player.getExplosionEnd(), player.getExplosionStart()).toMillis();
-                GameLib.drawExplosion(player.getCoordinateX(), player.getCoordinateY(), Math.abs(alpha));
-            } else {
-                GameLib.setColor(Color.BLUE);
-                GameLib.drawPlayer(player.getCoordinateX(), player.getCoordinateY(), player.getRadius());
-            }
-
-            //desenho - projeteis (player)
-            for (Projectile projectile : player.getProjectiles()){
-                if (projectile.getState() == Util.ACTIVE) {
-                    GameLib.setColor(Color.GREEN);
-                    GameLib.drawLine(projectile.getCoordinateX(), projectile.getCoordinateY() - 5, projectile.getCoordinateX(), projectile.getCoordinateY() + 5);
-                    GameLib.drawLine(projectile.getCoordinateX() - 1, projectile.getCoordinateY() - 3, projectile.getCoordinateX() - 1, projectile.getCoordinateY() + 3);
-                    GameLib.drawLine(projectile.getCoordinateX() + 1, projectile.getCoordinateY() - 3, projectile.getCoordinateX() + 1, projectile.getCoordinateY() + 3);
-                }
-            }
-
-            //desenho - projeteis (inimigo tipo 1)
-            for (int i = 0; i < armyEnemyOne.getEnemies().size(); i++) {
-                var currentEnemy = armyEnemyOne.getEnemies().get(i);
-                if (currentEnemy.getState() == Util.ACTIVE) {
-                    for (int j = 0; j < currentEnemy.getProjectiles().size(); j++) {
-                        var currentProjectile = armyEnemyOne.getEnemies().get(i).getProjectiles().get(j);
-                        GameLib.setColor(Color.RED);
-                        GameLib.drawCircle(currentProjectile.getCoordinateX(), currentProjectile.getCoordinateY(), currentProjectile.getRadius());
-                    }
-                }
-            }
-
-            //desenho - projeteis (inimigo tipo 2)
-            for (int i = 0; i < armyEnemyTwo.getEnemies().size(); i++) {
-                var currentEnemy = armyEnemyTwo.getEnemies().get(i);
-                if (currentEnemy.getState() == Util.ACTIVE) {
-                    for (int j = 0; j < currentEnemy.getProjectiles().size(); j++) {
-                        var currentProjectile = armyEnemyTwo.getEnemies().get(i).getProjectiles().get(j);
-                        GameLib.setColor(Color.RED);
-                        GameLib.drawCircle(currentProjectile.getCoordinateX(), currentProjectile.getCoordinateY(), currentProjectile.getRadius());
-                    }
-                }
-            }
-
-            //Juntar esses os desenhor abaixo na classe Inimigo
-
-            //desenho - inimigos tipo 1
-            for(Enemy enemy : armyEnemyOne.getEnemies()){
-                if (enemy.getState() == Util.EXPLODE) {
-                    double alpha = (double) Duration.between(currentTime, enemy.getExplosionStart()).toMillis() / Duration.between(enemy.getExplosionStart(), enemy.getExplosionEnd()).toMillis();
-                    GameLib.drawExplosion(enemy.getCoordinateX(), enemy.getCoordinateY(), alpha);
-                } else if (enemy.getState() == Util.ACTIVE) {
-                    GameLib.setColor(Color.CYAN);
-                    GameLib.drawCircle(enemy.getCoordinateX(), enemy.getCoordinateY(), enemy.getRadius());
-                }
-            }
-            //inimigos tipo 2
-            for(Enemy enemy : armyEnemyTwo.getEnemies()){
-                if (enemy.getState() == Util.EXPLODE) {
-                    double alpha = (double) Duration.between(currentTime, enemy.getExplosionStart()).toMillis() / Duration.between(enemy.getExplosionStart(), enemy.getExplosionEnd()).toMillis();
-                    GameLib.drawExplosion(enemy.getCoordinateX(), enemy.getCoordinateY(), alpha);
-                } else if (enemy.getState() == Util.ACTIVE) {
-                    GameLib.setColor(Color.MAGENTA);
-                    GameLib.drawCircle(enemy.getCoordinateX(), enemy.getCoordinateY(), enemy.getRadius());
-                }
-            }
+            armyEnemyOne.drawProjetiles();
+            armyEnemyTwo.drawProjetiles();
+            armyEnemyOne.drawEnemys(currentTime);
+            armyEnemyTwo.drawEnemys(currentTime);
 
             GameLib.display();
             busyWait(currentTime.plusMillis(5));

@@ -1,8 +1,11 @@
 package components.enemies;
 
 import components.Player;
+import components.Projectile;
+import graphics.GameLib;
 import graphics.Util;
 
+import java.awt.*;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -11,11 +14,12 @@ public class EnemiesArmy {
     private ArrayList<Enemy> enemies;
     // Next enemy time
     private Instant nextEnemy;
-
+    private Color color;
     // Constructor
-    public EnemiesArmy(ArrayList<Enemy> enemies, Instant nextEnemy) {
+    public EnemiesArmy(ArrayList<Enemy> enemies, Instant nextEnemy, Color color) {
         this.enemies = enemies;
         this.nextEnemy = nextEnemy;
+        this.color = color;
     }
 
     // Getter for Enemies
@@ -63,6 +67,21 @@ public class EnemiesArmy {
     public void updateProjectiles(long delta){
         for(Enemy enemy: getEnemies()) {
             enemy.updateProjectiles(delta);
+        }
+    }
+    public void drawProjetiles(){
+        for(Enemy enemy : getEnemies()){
+            if (enemy.getState() == Util.ACTIVE) {
+                for (Projectile projectile : enemy.getProjectiles()){
+                    GameLib.setColor(Color.RED);
+                    GameLib.drawCircle(projectile.getCoordinateX(), projectile.getCoordinateY(), projectile.getRadius());
+                }
+            }
+        }
+    }
+    public void drawEnemys(Instant currentTime){
+        for(Enemy enemy : getEnemies()){
+            enemy.draw(color, currentTime);
         }
     }
 }
