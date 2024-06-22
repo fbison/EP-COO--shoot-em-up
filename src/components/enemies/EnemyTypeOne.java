@@ -8,14 +8,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 public class EnemyTypeOne extends Enemy {
-    public EnemyTypeOne(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, double angle, double rotationSpeed, double speed, ArrayList<Projectile> projectiles) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, angle, rotationSpeed, speed, projectiles);
-    }
-
-    public EnemyTypeOne(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                        double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
-                        double angle, double rotationSpeed, double speed, int countProjectiles, int projectileRadius) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, angle, rotationSpeed, speed, countProjectiles, projectileRadius);
+    public EnemyTypeOne() {
+        super(Util.INACTIVE, 0, 0, 0, 0, 9.0, null, null, null, 0, 0, 0, 10, 2);
     }
 
     @Override

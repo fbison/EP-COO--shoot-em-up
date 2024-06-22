@@ -14,12 +14,12 @@ public class Character extends Component {
 
     // Constructor
     public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, ArrayList<Projectile> projectiles) {
+                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius);
         this.explosionStart = explosionStart;
         this.explosionEnd = explosionEnd;
         this.nextShoot = nextShoot;
-        this.projectiles = projectiles;
+        this.projectiles = new ArrayList<>();
     }
 
     public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,

@@ -15,13 +15,25 @@ public class EnemiesArmy {
     // Next enemy time
     private Instant nextEnemy;
     private Color color;
+
+
     // Constructor
-    public EnemiesArmy(ArrayList<Enemy> enemies, Instant nextEnemy, Color color) {
-        this.enemies = enemies;
+    public EnemiesArmy(int quantity, Class<? extends Enemy> enemyClass, Instant nextEnemy, Color color) {
+        this.enemies = createEnemies(quantity, enemyClass);
         this.nextEnemy = nextEnemy;
         this.color = color;
     }
-
+    public static ArrayList<Enemy> createEnemies(int quantity, Class<? extends Enemy> enemyClass) {
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        try {
+            for (int i = 0; i < quantity; i++) {
+                enemies.add(enemyClass.getDeclaredConstructor().newInstance());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return enemies;
+    }
     // Getter for Enemies
     public ArrayList<Enemy> getEnemies() {
         return enemies;

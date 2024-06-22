@@ -11,17 +11,10 @@ public class EnemyTypeTwo extends Enemy {
     private double spawnX;
     private int count;
 
-    public EnemyTypeTwo(int state, double coordinateX, double coordinateY, double speedX, double speedY, double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, double angle, double rotationSpeed, long speed, ArrayList<Projectile> projectiles, double spawnX, int count) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, angle, rotationSpeed, speed, projectiles);
-        this.spawnX = spawnX;
-        this.count = 0;
-    }
-
-    public EnemyTypeTwo(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                        double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
-                        double angle, double rotationSpeed, double speed, double spawnX, int countProjectiles, int projectileRadius) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, angle, rotationSpeed, speed, countProjectiles, projectileRadius);
-        this.spawnX = spawnX;
+    public EnemyTypeTwo() {
+        super(Util.INACTIVE, 0.0, 0.0, 0.0, 0.0, 12.0, null, null,
+                null, 0.0, 0.0, 0.0);
+        this.spawnX = (Util.WIDTH * 0.20);
         this.count = 0;
     }
 

@@ -21,8 +21,8 @@ public abstract class Enemy extends Character {
     // Constructor
     public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
-                 double angle, double rotationSpeed, double speed, ArrayList<Projectile> projectiles) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, projectiles);
+                 double angle, double rotationSpeed, double speed) {
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot);
         this.angle = angle;
         this.rotationSpeed = rotationSpeed;
         this.speed = speed;
