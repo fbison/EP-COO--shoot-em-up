@@ -27,9 +27,9 @@ public class EnemyTypeOne extends Enemy {
             if (getCoordinateY() > Util.HEIGHT + 10)
                 setState(Util.INACTIVE);
             else {
-                setCoordinateX(getSpeed() * Math.cos(getAngle()) * delta);
-                setCoordinateY(getSpeed() * Math.sin(getAngle()) * delta * -1.0);
-                setAngle(getRotationSpeed() * delta);
+                setCoordinateX(getCoordinateX() + getSpeed() * Math.cos(getAngle()) * delta);
+                setCoordinateY(getCoordinateY() + getSpeed() * Math.sin(getAngle()) * delta * -1.0);
+                setAngle(getAngle() + getRotationSpeed() * delta);
 
                 if (currentTime.isAfter(getNextShoot()) && getCoordinateY() < player.getCoordinateY()) {
                     int free = findFreeIndex();

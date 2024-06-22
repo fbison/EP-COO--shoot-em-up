@@ -54,9 +54,9 @@ public class EnemyTypeTwo extends Enemy {
                 double previousCoordinateY = getCoordinateY();
                 double threshold = Util.HEIGHT * 0.30;
 
-                setCoordinateX(getSpeed() * Math.cos(getAngle()) * delta);
-                setCoordinateY(getSpeed() * Math.sin(getAngle()) * delta * -1.0);
-                setAngle(getRotationSpeed() * delta);
+                setCoordinateX( getCoordinateX() + (getSpeed() * Math.cos(getAngle()) * delta));
+                setCoordinateY( getCoordinateY() + getSpeed() * Math.sin(getAngle()) * delta * -1.0);
+                setAngle( getAngle() + getRotationSpeed() * delta);
 
                 if (previousCoordinateY < threshold && getCoordinateY() >= threshold) {
                     if (getCoordinateX() < (double) Util.WIDTH / 2) setRotationSpeed(0.003);
@@ -107,7 +107,7 @@ public class EnemyTypeTwo extends Enemy {
         setAngle((3 * Math.PI) / 2);
         setRotationSpeed(0);
         setState(Util.ACTIVE);
-        count += 1;
+        count ++;
 
         if (count < 10) {
             return currentTime.plusMillis(120);
