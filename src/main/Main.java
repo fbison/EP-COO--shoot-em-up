@@ -31,12 +31,12 @@ public class Main {
         long delta = 0;
 
         //inicialização do player
-        Player player = new Player(Util.ACTIVE, Util.WIDTH / 2, Util.HEIGHT * 0.90, 0.25, 0.25, 12.0, Instant.EPOCH, Instant.EPOCH, currentTime, enemyProjectiles, 2);
+        Player player = new Player(Util.ACTIVE, Util.WIDTH / 2, Util.HEIGHT * 0.90, 0.25, 0.25, 12.0, null, null, currentTime, enemyProjectiles, 0);
 
         //inicialização de Inimigo Tipo 1
         var enemiesOne = new ArrayList<Enemy>();
         for (int i = 0; i < enemyProjectiles; i++) {
-            var enemyOne = new EnemyTypeOne(Util.INACTIVE, 0, 0, 0, 0, 9.0, Instant.EPOCH, Instant.EPOCH, Instant.EPOCH, 0, 0, 0, 10, 2);
+            var enemyOne = new EnemyTypeOne(Util.INACTIVE, 0, 0, 0, 0, 9.0, null, null, null, 0, 0, 0, 10, 2);
             enemiesOne.add(enemyOne);
         }
         var armyEnemyOne = new EnemiesArmy(enemiesOne, currentTime.plusMillis(2000));
@@ -44,8 +44,8 @@ public class Main {
         //inicialização de Inimigo Tipo 2
         var enemiesTwo = new ArrayList<Enemy>();
         for (int i = 0; i < enemyProjectiles; i++) {
-            var enemyTwo = new EnemyTypeTwo(Util.INACTIVE, 0.0, 0.0, 0.0, 0.0, 9.0, Instant.EPOCH, Instant.EPOCH,
-                    Instant.EPOCH, 0.0, 0.0, 0.0, (int) (Util.WIDTH * 0.20), 10, 2);
+            var enemyTwo = new EnemyTypeTwo(Util.INACTIVE, 0.0, 0.0, 0.0, 0.0, 9.0, null, null,
+                    null, 0.0, 0.0, 0.0, (int) (Util.WIDTH * 0.20), 10, 2);
             enemiesTwo.add(enemyTwo);
         }
         var armyEnemyTwo = new EnemiesArmy(enemiesTwo, currentTime.plusMillis(2000));
@@ -94,6 +94,7 @@ public class Main {
 
             //atualização de projéteis
             player.updateProjectiles(delta);
+
             for (int i = 0; i < armyEnemyOne.getEnemies().size(); i++) {
                 armyEnemyOne.getEnemies().get(i).updateProjectiles(delta);
             }

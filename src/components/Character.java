@@ -86,8 +86,8 @@ public class Character extends Component {
             if (projectile.getCoordinateY() < 0)
                 projectile.setState(Util.INACTIVE);
             else {
-                projectile.setCoordinateX(projectile.getSpeedX() * delta);
-                projectile.setCoordinateY(projectile.getSpeedY() * delta);
+                projectile.setCoordinateX(projectile.getCoordinateX() + (projectile.getSpeedX() * delta));
+                projectile.setCoordinateY(projectile.getCoordinateY() + (projectile.getSpeedY() * delta));
             }
         }
     }
