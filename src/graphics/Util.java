@@ -12,4 +12,5 @@ public class Util {
     public static final int INACTIVE = 0;
     public static final int ACTIVE = 1;
     public static final int EXPLODE = 2;
+    public static final int MAX_LIFE = 10;
 }

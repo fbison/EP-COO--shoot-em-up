@@ -11,10 +11,19 @@ import java.time.Instant;
 
 public class Player extends Character {
 
+    private int life;
+
     public Player(double coordinateX, double coordinateY, double speedX, double speedY,
                   double radius,Instant nextShoot, int countProjectiles, Color colorPlayer, Color colorProjectile) {
         super(Util.ACTIVE, coordinateX, coordinateY, speedX, speedY, radius, null, null,
                 nextShoot, countProjectiles, 0, colorPlayer, colorProjectile);
+        life = Util.MAX_LIFE;
+    }
+
+    @Override
+    public void prepareExplosion(){
+        life--;
+        super.prepareExplosion();
     }
 
     // Verificando se a explosão do player já acabou. Ao final da explosão, o player volta a ser controlável
@@ -90,11 +99,12 @@ public class Player extends Character {
         if (getState() == Util.EXPLODE) {
             var alpha = Duration.between(currentTime, getExplosionStart()).toMillis() / Duration.between(getExplosionEnd(), getExplosionStart()).toMillis();
             GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), Math.abs(alpha));
-        } else {
+        } else if (getLife() > 0){
             GameLib.setColor(getColor());
             GameLib.drawPlayer(getCoordinateX(), getCoordinateY(), getRadius());
+            drawProjectiles();
         }
-        drawProjectiles();
+
     }
 
     public void checkCollisions(EnemiesArmy army)
@@ -119,5 +129,10 @@ public class Player extends Character {
         for(Enemy enemy : army.getEnemies()){
             colide(enemy);
         }
+    }
+
+    //getter do atributo life que sera utilizado para printar a barra de vida
+    public int getLife() {
+        return life;
     }
 }

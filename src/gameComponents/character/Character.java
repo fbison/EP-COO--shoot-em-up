@@ -69,6 +69,12 @@ public class Character extends Component {
         this.projectiles = projectiles;
     }
 
+    public void prepareExplosion(){
+        setState(Util.EXPLODE);
+        explosionStart = Instant.now();
+        explosionEnd = explosionStart.plusMillis(2000);
+    }
+
     public void colide(Component opponent) {
         if (getState() != Util.ACTIVE)
             return;
@@ -78,9 +84,7 @@ public class Character extends Component {
         double dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < (getRadius() + opponent.getRadius()) * 0.8) {
-            setState(Util.EXPLODE);
-            explosionStart = Instant.now();
-            explosionEnd = explosionStart.plusMillis(2000);
+            prepareExplosion();
         }
     }
 

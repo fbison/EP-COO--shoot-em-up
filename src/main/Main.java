@@ -8,6 +8,8 @@ import gameComponents.character.enemies.EnemiesArmy;
 import gameComponents.character.enemies.EnemyTypeOne;
 import gameComponents.character.enemies.EnemyTypeTwo;
 import gameComponents.character.Player;
+import gameComponents.scenario.LifeBar;
+import gameComponents.scenario.Message;
 import graphics.Util;
 import graphics.GameLib;
 
@@ -36,6 +38,9 @@ public class Main {
 
         BackgroundStars starsFirst = new BackgroundStars(0.07, 0.0, 20, Color.GRAY);
         BackgroundStars starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
+
+        LifeBar vida = new LifeBar();
+        Message GameOver = new Message("Game Over");
 
         GameLib.initGraphics();
 
@@ -66,6 +71,10 @@ public class Main {
             player.backToLife(currentTime);
 
             if (GameLib.isKeyPressed(Util.KEY_ESCAPE)) running = false;
+            if (player.getLife() == 0) {
+                player.setState(Util.INACTIVE);
+                GameOver.update();
+            }
             player.verifyActions(currentTime, delta);
 
             player.keepInScren();
@@ -77,9 +86,12 @@ public class Main {
             armyEnemyTwo.drawProjetiles();
             armyEnemyOne.drawEnemys(currentTime);
             armyEnemyTwo.drawEnemys(currentTime);
+            vida.update(player.getLife());
 
             GameLib.display();
             busyWait(currentTime.plusMillis(5));
         }
+
+        //printar mensagem de fim de jogo
     }
 }

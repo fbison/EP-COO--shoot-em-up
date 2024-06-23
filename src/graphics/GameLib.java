@@ -3,6 +3,8 @@ package graphics;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.Font;
+import java.awt.FontMetrics;
 
 import javax.swing.JFrame;
 
@@ -117,5 +119,23 @@ public class GameLib {
 
         keyboard.debug();
     }
+
+    //utilizado para printar mensagem de game over
+    public static void setFont(Font f) {
+        g.setFont(f);
+    }
+
+    public static FontMetrics getFontMetrics(Font f) {
+       return g.getFontMetrics(f);
+    }
+
+    public static Font getFont(){
+        return g.getFont();
+    }
+
+    public static void drawString(String str, int x, int y) {
+        g.drawString(str, x, y);
+    }
+
 }
 
