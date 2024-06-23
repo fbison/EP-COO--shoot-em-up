@@ -92,6 +92,5 @@ public class Main {
             busyWait(currentTime.plusMillis(5));
         }
 
-        //printar mensagem de fim de jogo
     }
 }
