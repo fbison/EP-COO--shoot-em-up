@@ -1,5 +1,7 @@
 package main;
 
+//import gameComponents.character.enemies.EnemyTypeThree;
+import gameComponents.character.enemies.EnemyTypeThree;
 import gameComponents.scenario.BackgroundStars;
 
 import java.awt.Color;
@@ -22,7 +24,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
         final int enemyQuantity = 10;
         final int projectileQuantity = 10;
         var currentTime = Instant.now();
@@ -30,9 +31,10 @@ public class Main {
         long delta;
 
         Player player = new Player((double) Util.WIDTH / 2,
-                Util.HEIGHT * 0.90, 0.25, 0.25, 12.0,currentTime, projectileQuantity, Color.BLUE, Color.GREEN);
+                Util.HEIGHT * 0.90, 0.25, 0.25, 12.0, currentTime, projectileQuantity, Color.BLUE, Color.GREEN);
         EnemiesArmy armyEnemyOne = new EnemiesArmy(enemyQuantity, EnemyTypeOne.class, currentTime.plusMillis(2000));
         EnemiesArmy armyEnemyTwo = new EnemiesArmy(enemyQuantity, EnemyTypeTwo.class, currentTime.plusMillis(2000));
+        EnemiesArmy armyEnemyThree = new EnemiesArmy(enemyQuantity, EnemyTypeThree.class, currentTime.plusMillis(2000));
 
         BackgroundStars starsFirst = new BackgroundStars(0.07, 0.0, 20, Color.GRAY);
         BackgroundStars starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
@@ -43,23 +45,30 @@ public class Main {
             delta = Duration.between(currentTime, Instant.now()).toMillis();
             currentTime = Instant.now();
 
-            //verificação de colisões
-
+            // verificação de colisões
             player.checkCollisions(armyEnemyOne);
             player.checkCollisions(armyEnemyTwo);
+            player.checkCollisions(armyEnemyThree);
 
             armyEnemyOne.checkCollisions(player);
             armyEnemyTwo.checkCollisions(player);
+            armyEnemyThree.checkCollisions(player);
 
-            //atualização de projéteis
+            // atualização de projéteis
             player.updateProjectiles(delta);
 
             armyEnemyOne.updateProjectiles(delta);
             armyEnemyTwo.updateProjectiles(delta);
+            armyEnemyThree.updateProjectiles(delta);
 
             armyEnemyOne.atack(player, currentTime, delta);
             armyEnemyTwo.atack(player, currentTime, delta);
+            armyEnemyThree.atack(player, currentTime, delta);
 
+            // Limitar o número de inimigos do tipo EnemyTypeThree
+            armyEnemyThree.castSpecificEnemy(currentTime, 3);
+
+            // Continua a geração dos outros tipos de inimigos normalmente
             armyEnemyOne.castEnemies(currentTime);
             armyEnemyTwo.castEnemies(currentTime);
 
@@ -75,8 +84,11 @@ public class Main {
 
             armyEnemyOne.drawProjetiles();
             armyEnemyTwo.drawProjetiles();
+            armyEnemyThree.drawProjetiles();
+
             armyEnemyOne.drawEnemys(currentTime);
             armyEnemyTwo.drawEnemys(currentTime);
+            armyEnemyThree.drawEnemys(currentTime);
 
             GameLib.display();
             busyWait(currentTime.plusMillis(5));

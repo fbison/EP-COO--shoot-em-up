@@ -93,10 +93,30 @@ public class EnemiesArmy {
             enemy.draw(currentTime);
         }
     }
+
     public void checkCollisions(Player player){
         for (Projectile projectile : player.getProjectiles()){
             for(Enemy enemy : getEnemies()){
                 enemy.colide(projectile);
+            }
+        }
+    }
+
+    public int countActiveEnemies() {
+        int activeCount = 0;
+        for (Enemy enemy : enemies) {
+            if (enemy.getState() == Util.ACTIVE) {
+                activeCount++;
+            }
+        }
+        return activeCount;
+    }
+
+    public void castSpecificEnemy(Instant currentTime, int maxActive) {
+        if (countActiveEnemies() < maxActive && currentTime.isAfter(nextEnemy)) {
+            int free = freeIndex();
+            if (free < enemies.size()) {
+                nextEnemy = enemies.get(free).cast(currentTime);
             }
         }
     }

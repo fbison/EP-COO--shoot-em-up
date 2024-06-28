@@ -88,6 +88,22 @@ public class GameLib {
         GameLib.drawCircle(x, y, alpha * alpha * 40 + 1);
     }
 
+    public static void drawHexagon(double cx, double cy, double radius) {
+        int points = 6;
+        double[] xPoints = new double[points];
+        double[] yPoints = new double[points];
+
+        for (int i = 0; i < points; i++) {
+            double angle = i * 2 * Math.PI / points;
+            xPoints[i] = cx + Math.cos(angle) * radius;
+            yPoints[i] = cy + Math.sin(angle) * radius;
+        }
+
+        for (int i = 0; i < points; i++) {
+            drawLine(xPoints[i], yPoints[i], xPoints[(i + 1) % points], yPoints[(i + 1) % points]);
+        }
+    }
+
     public static void fillRect(double cx, double cy, double width, double height) {
 
         int x = (int) Math.round(cx - width / 2);
