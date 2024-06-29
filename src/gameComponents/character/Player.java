@@ -8,6 +8,7 @@ import graphics.Util;
 import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Scanner;
 
 public class Player extends Character {
 
@@ -135,4 +136,16 @@ public class Player extends Character {
     public int getLife() {
         return life;
     }
+
+    public void setLife (int life){
+        this.life = life;
+    }
+
+    public int lifeFromComamndLine(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Insira a quantidade de vidas desejada!");
+        return scanner.nextInt();
+    }
 }
+
