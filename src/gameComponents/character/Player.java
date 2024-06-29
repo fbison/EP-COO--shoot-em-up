@@ -15,10 +15,10 @@ public class Player extends Character {
     private int life;
 
     public Player(double coordinateX, double coordinateY, double speedX, double speedY,
-                  double radius,Instant nextShoot, int countProjectiles, Color colorPlayer, Color colorProjectile, int maxLife) {
+                  double radius,Instant nextShoot, int countProjectiles, Color colorPlayer, Color colorProjectile) {
         super(Util.ACTIVE, coordinateX, coordinateY, speedX, speedY, radius, null, null,
                 nextShoot, countProjectiles, 0, colorPlayer, colorProjectile);
-        life = maxLife;
+        life = lifeFromComamndLine();
     }
 
     @Override

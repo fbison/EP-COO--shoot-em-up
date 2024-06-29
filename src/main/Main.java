@@ -34,14 +34,14 @@ public class Main {
         long delta;
 
         Player player = new Player((double) Util.WIDTH / 2,
-                Util.HEIGHT * 0.90, 0.25, 0.25, 12.0,currentTime, projectileQuantity, Color.BLUE, Color.GREEN, 12);
+                Util.HEIGHT * 0.90, 0.25, 0.25, 12.0,currentTime, projectileQuantity, Color.BLUE, Color.GREEN);
         EnemiesArmy armyEnemyOne = new EnemiesArmy(enemyQuantity, EnemyTypeOne.class, currentTime.plusMillis(2000));
         EnemiesArmy armyEnemyTwo = new EnemiesArmy(enemyQuantity, EnemyTypeTwo.class, currentTime.plusMillis(2000));
 
         BackgroundStars starsFirst = new BackgroundStars(0.07, 0.0, 20, Color.GRAY);
         BackgroundStars starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
 
-        LifeBar vida = new LifeBar(12);
+        LifeBar vida = new LifeBar(player.getLife());
         Message GameOver = new Message("Game Over");
 
         GameLib.initGraphics();
