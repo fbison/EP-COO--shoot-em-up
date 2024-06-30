@@ -9,9 +9,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 public class EnemiesArmy {
-    // ArrayList to hold enemies
     private ArrayList<Enemy> enemies;
-    // Next enemy time
     private Instant nextEnemy;
 
 
