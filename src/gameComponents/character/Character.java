@@ -71,7 +71,7 @@ public class Character extends Component {
         GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), alpha);
     }
     public void colide(Component opponent, Instant currentTime) {
-        if (getState() != Util.ACTIVE)
+        if (isInactive())
             return;
 
         double dx = getCoordinateX() - opponent.getCoordinateX();

@@ -2,6 +2,7 @@ package gameComponents.character.enemies;
 
 import gameComponents.character.Player;
 import gameComponents.character.Projectile;
+import gameComponents.essential.Component;
 import graphics.GameLib;
 import graphics.Util;
 
@@ -78,7 +79,7 @@ public class EnemiesArmy {
 
     public void drawProjetiles() {
         for (Enemy enemy : getEnemies()) {
-            if (enemy.getState() == Util.ACTIVE) {
+            if (enemy.isActive()) {
                 for (Projectile projectile : enemy.getProjectiles()) {
                     GameLib.setColor(projectile.getColor());
                     GameLib.drawCircle(projectile.getCoordinateX(), projectile.getCoordinateY(), projectile.getRadius());
@@ -104,7 +105,7 @@ public class EnemiesArmy {
     public int countActiveEnemies() {
         int activeCount = 0;
         for (Enemy enemy : enemies) {
-            if (enemy.getState() == Util.ACTIVE) {
+            if (enemy.isActive()) {
                 activeCount++;
             }
         }
@@ -112,6 +113,6 @@ public class EnemiesArmy {
     }
 
     public void cleanInactive(){
-        enemies.removeIf(inimigo -> !inimigo.isActive());
+        enemies.removeIf(Component::isInactive);
     }
 }

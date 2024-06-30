@@ -59,7 +59,7 @@ public class EnemyTypeTwo extends Enemy {
         if (getState() == Util.EXPLODE) {
             if (currentTime.isAfter(getExplosionEnd()))
                 setState(Util.INACTIVE);
-        } else if (getState() == Util.ACTIVE) {
+        } else if (isActive()) {
             if (getCoordinateX() < -10 || getCoordinateY() > Util.HEIGHT + 10)
                 setState(Util.INACTIVE);
             else {
@@ -117,7 +117,7 @@ public class EnemyTypeTwo extends Enemy {
     public void draw(Instant currentTime){
         if (getState() == Util.EXPLODE) {
             drawExplosion(currentTime);
-        } else if (getState() == Util.ACTIVE) {
+        } else if (isActive()) {
             GameLib.setColor(getColor());
             GameLib.drawDiamond(getCoordinateX(), getCoordinateY(), getRadius());
         }

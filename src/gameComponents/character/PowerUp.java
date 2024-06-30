@@ -32,14 +32,14 @@ public class PowerUp extends Component {
     }
 
     public void draw() {
-        if (this.getState() == Util.ACTIVE) {
+        if (this.isActive()) {
             GameLib.setColor(this.getColor());
             GameLib.drawStar(this.getCoordinateX(), this.getCoordinateY(), this.getRadius());
         }
     }
 
     public void checkCollision(Player player) {
-        if (this.getState() == Util.ACTIVE && player.getState() == Util.ACTIVE) {
+        if (this.isActive() && player.isActive()) {
             double dx = this.getCoordinateX() - player.getCoordinateX();
             double dy = this.getCoordinateY() - player.getCoordinateY();
             double dist = Math.sqrt(dx * dx + dy * dy);

@@ -56,7 +56,7 @@ public abstract class Enemy extends Character {
 
     @Override
     public void colide(Component opponent, Instant now) {
-        if (getState() != Util.ACTIVE)
+        if (isInactive())
             return;
 
         double dx = getCoordinateX() - opponent.getCoordinateX();

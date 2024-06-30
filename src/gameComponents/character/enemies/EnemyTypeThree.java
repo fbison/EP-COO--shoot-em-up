@@ -27,7 +27,7 @@ public class EnemyTypeThree extends Enemy {
             if (currentTime.isAfter(getExplosionEnd())) {
                 setState(Util.INACTIVE);
             }
-        } else if (getState() == Util.ACTIVE) {
+        } else if (isActive()) {
             // Movimentação horizontal
             if (movingRight) {
                 setCoordinateX(getCoordinateX() + getSpeed() * delta);
@@ -65,7 +65,7 @@ public class EnemyTypeThree extends Enemy {
     public void draw(Instant currentTime){
         if (getState() == Util.EXPLODE) {
             drawExplosion(currentTime);
-        } else if (getState() == Util.ACTIVE) {
+        } else if (isActive()) {
             GameLib.setColor(getColor());
             GameLib.drawHexagon(getCoordinateX(), getCoordinateY(), getRadius());
         }

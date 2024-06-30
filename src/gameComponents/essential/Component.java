@@ -27,6 +27,9 @@ public class Component extends GameObject {
     public boolean isActive(){
         return state == Util.ACTIVE;
     }
+    public boolean isInactive(){
+        return state == Util.INACTIVE;
+    }
 
     public void setState(int state) {
         this.state = state;

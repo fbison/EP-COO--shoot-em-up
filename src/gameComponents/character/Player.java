@@ -51,7 +51,7 @@ public class Player extends Character {
 
     public void updateProjectiles(long delta) {
         for (Projectile projectile : this.getProjectiles()) {
-            if (projectile.getState() == Util.ACTIVE) {
+            if (projectile.isActive()) {
                 if (projectile.getCoordinateY() < 0)
                     projectile.setState(Util.INACTIVE);
                 else {
@@ -80,7 +80,7 @@ public class Player extends Character {
     }
 
     public void verifyActions(Instant currentTime, long delta) {
-        if (getState() == Util.ACTIVE) {
+        if (isActive()) {
             if (GameLib.isKeyPressed(Util.KEY_UP))
                 setCoordinateY(getCoordinateY() - delta * getSpeedY());
             if (GameLib.isKeyPressed(Util.KEY_DOWN))
@@ -100,7 +100,7 @@ public class Player extends Character {
 
     public void drawProjectiles() {
         for (Projectile projectile : getProjectiles()) {
-            if (projectile.getState() == Util.ACTIVE) {
+            if (projectile.isActive()) {
                 GameLib.setColor(projectile.getColor());
                 GameLib.drawLine(projectile.getCoordinateX(), projectile.getCoordinateY() - 5, projectile.getCoordinateX(), projectile.getCoordinateY() + 5);
                 GameLib.drawLine(projectile.getCoordinateX() - 1, projectile.getCoordinateY() - 3, projectile.getCoordinateX() - 1, projectile.getCoordinateY() + 3);
@@ -124,7 +124,7 @@ public class Player extends Character {
     }
 
     public void checkCollisions(EnemiesArmy army, Instant currentTime) {
-        if (!immune && getState() == Util.ACTIVE) {
+        if (!immune && isActive()) {
             checkCollisionsWithProjectiles(army, currentTime);
             checkCollisionsWithEnemys(army, currentTime);
         }
