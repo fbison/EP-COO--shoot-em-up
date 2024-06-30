@@ -5,12 +5,14 @@ import java.awt.event.KeyEvent;
 
 public class MyKeyAdapter extends KeyAdapter {
 
-    private int[] codes = {KeyEvent.VK_UP,
+    private int[] codes = {
+            KeyEvent.VK_UP,
             KeyEvent.VK_DOWN,
             KeyEvent.VK_LEFT,
             KeyEvent.VK_RIGHT,
             KeyEvent.VK_CONTROL,
-            KeyEvent.VK_ESCAPE
+            KeyEvent.VK_ESCAPE,
+            KeyEvent.VK_R,
     };
 
     private boolean[] keyStates = null;

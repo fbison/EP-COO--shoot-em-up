@@ -9,6 +9,8 @@ public class Util {
     public static final int KEY_RIGHT = 3;
     public static final int KEY_CONTROL = 4;
     public static final int KEY_ESCAPE = 5;
+    public static final int KEY_R = 6;
+
     public static final int INACTIVE = 0;
     public static final int ACTIVE = 1;
     public static final int EXPLODE = 2;
