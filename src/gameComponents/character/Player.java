@@ -24,6 +24,7 @@ public class Player extends Character {
     @Override
     public void prepareExplosion(){
         life--;
+        this.setColor(Color.WHITE);
         if (life == 0){
         super.prepareExplosion();
         }
@@ -106,6 +107,9 @@ public class Player extends Character {
             GameLib.setColor(getColor());
             GameLib.drawPlayer(getCoordinateX(), getCoordinateY(), getRadius());
             drawProjectiles();
+            if (this.getColor() == Color.WHITE){
+                this.setColor(Color.blue);
+            }
         }
 
     }
