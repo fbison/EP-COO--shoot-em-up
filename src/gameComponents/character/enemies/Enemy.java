@@ -56,7 +56,7 @@ public abstract class Enemy extends Character {
     public abstract void draw(Instant currentTime);
 
     @Override
-    public void colide(Component opponent) {
+    public void colide(Component opponent, Instant now) {
         if (getState() != Util.ACTIVE)
             return;
 
@@ -66,7 +66,6 @@ public abstract class Enemy extends Character {
 
         if (dist < getRadius()) {
             setState(Util.EXPLODE);
-            var now = Instant.now();
             this.setExplosionStart(now);
             this.setExplosionEnd(now.plusMillis(2000));
         }

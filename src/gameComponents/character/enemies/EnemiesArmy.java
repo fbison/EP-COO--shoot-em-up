@@ -93,10 +93,10 @@ public class EnemiesArmy {
             enemy.draw(currentTime);
         }
     }
-    public void checkCollisions(Player player){
+    public void checkCollisions(Player player, Instant currentTime){
         for (Projectile projectile : player.getProjectiles()){
             for(Enemy enemy : getEnemies()){
-                enemy.colide(projectile);
+                enemy.colide(projectile, currentTime);
             }
         }
     }

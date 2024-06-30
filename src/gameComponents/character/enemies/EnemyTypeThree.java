@@ -5,7 +5,6 @@ import graphics.GameLib;
 import graphics.Util;
 
 import java.awt.*;
-import java.time.Duration;
 import java.time.Instant;
 
 public class EnemyTypeThree extends Enemy {
@@ -75,8 +74,7 @@ public class EnemyTypeThree extends Enemy {
     @Override
     public void draw(Instant currentTime){
         if (getState() == Util.EXPLODE) {
-            double alpha = (double) Duration.between(currentTime, getExplosionStart()).toMillis() / Duration.between(getExplosionStart(), getExplosionEnd()).toMillis();
-            GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), alpha);
+            drawExplosion(currentTime);
         } else if (getState() == Util.ACTIVE) {
             GameLib.setColor(getColor());
             GameLib.drawHexagon(getCoordinateX(), getCoordinateY(), getRadius());

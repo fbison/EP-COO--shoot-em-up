@@ -14,5 +14,9 @@ public class Util {
     public static final int INACTIVE = 0;
     public static final int ACTIVE = 1;
     public static final int EXPLODE = 2;
-    public static final int MAX_LIFE = 10;
+
+
+    public static final int ENEMY_QUANTITY = 10;
+    public static final int PROJECTILE_QUANTITY = 10;
+    public static final int ENEMY3_MAX_ACTIVE = 2;
 }

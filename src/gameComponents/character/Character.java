@@ -1,9 +1,11 @@
 package gameComponents.character;
 
 import gameComponents.essential.Component;
+import graphics.GameLib;
 import graphics.Util;
 
 import java.awt.Color;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -13,16 +15,6 @@ public class Character extends Component {
     private Instant explosionEnd;
     private Instant nextShoot;
     private ArrayList<Projectile> projectiles;
-
-    // Constructor
-    public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                     double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot, Color color) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, color);
-        this.explosionStart = explosionStart;
-        this.explosionEnd = explosionEnd;
-        this.nextShoot = nextShoot;
-        this.projectiles = new ArrayList<>();
-    }
 
     public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                      double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
@@ -69,13 +61,16 @@ public class Character extends Component {
         this.projectiles = projectiles;
     }
 
-    public void prepareExplosion(){
+    public void prepareExplosion( Instant currentTime){
         setState(Util.EXPLODE);
-        explosionStart = Instant.now();
+        explosionStart = currentTime;
         explosionEnd = explosionStart.plusMillis(2000);
     }
-
-    public void colide(Component opponent) {
+    public void drawExplosion(Instant currentTime){
+        double alpha = (double) Duration.between(getExplosionStart(), currentTime).toMillis() / Duration.between(getExplosionStart(), getExplosionEnd()).toMillis();
+        GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), alpha);
+    }
+    public void colide(Component opponent, Instant currentTime) {
         if (getState() != Util.ACTIVE)
             return;
 
@@ -84,7 +79,7 @@ public class Character extends Component {
         double dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < (getRadius() + opponent.getRadius()) * 0.8) {
-            prepareExplosion();
+            prepareExplosion(currentTime);
         }
     }
 

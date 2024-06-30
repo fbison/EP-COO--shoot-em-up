@@ -6,7 +6,6 @@ import graphics.GameLib;
 import graphics.Util;
 
 import java.awt.*;
-import java.time.Duration;
 import java.time.Instant;
 import java.util.Scanner;
 
@@ -25,12 +24,12 @@ public class Player extends Character {
     }
 
     @Override
-    public void prepareExplosion() {
+    public void prepareExplosion(Instant currentTime) {
         if (!immune) {
             life--;
             this.setColor(Color.WHITE);
             if (life == 0) {
-                super.prepareExplosion();
+                super.prepareExplosion(currentTime);
             }
         }
     }
@@ -112,8 +111,7 @@ public class Player extends Character {
 
     public void draw(Instant currentTime) {
         if (getState() == Util.EXPLODE) {
-            var alpha = Duration.between(currentTime, getExplosionStart()).toMillis() / Duration.between(getExplosionEnd(), getExplosionStart()).toMillis();
-            GameLib.drawExplosion(getCoordinateX(), getCoordinateY(), Math.abs(alpha));
+            drawExplosion(currentTime);
         } else if (getLife() > 0) {
             GameLib.setColor(getColor());
             GameLib.drawPlayer(getCoordinateX(), getCoordinateY(), getRadius());
@@ -125,24 +123,24 @@ public class Player extends Character {
 
     }
 
-    public void checkCollisions(EnemiesArmy army) {
+    public void checkCollisions(EnemiesArmy army, Instant currentTime) {
         if (!immune && getState() == Util.ACTIVE) {
-            checkCollisionsWithProjectiles(army);
-            checkCollisionsWithEnemys(army);
+            checkCollisionsWithProjectiles(army, currentTime);
+            checkCollisionsWithEnemys(army, currentTime);
         }
     }
 
-    private void checkCollisionsWithProjectiles(EnemiesArmy army) {
+    private void checkCollisionsWithProjectiles(EnemiesArmy army, Instant currentTime) {
         for (Enemy enemy : army.getEnemies()) {
             for (Projectile projectile : enemy.getProjectiles()) {
-                colide(projectile);
+                colide(projectile, currentTime);
             }
         }
     }
 
-    private void checkCollisionsWithEnemys(EnemiesArmy army) {
+    private void checkCollisionsWithEnemys(EnemiesArmy army, Instant currentTime) {
         for (Enemy enemy : army.getEnemies()) {
-            colide(enemy);
+            colide(enemy, currentTime);
         }
     }
 

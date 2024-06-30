@@ -27,14 +27,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        final int enemyQuantity = 10;
-        final int projectileQuantity = 10;
+        final int enemyQuantity = Util.ENEMY_QUANTITY;
         var currentTime = Instant.now();
         boolean running = true;
         long delta;
 
         Player player = new Player((double) Util.WIDTH / 2,
-                Util.HEIGHT * 0.90, 0.25, 0.25, 12.0,currentTime, projectileQuantity, Color.BLUE, Color.GREEN);
+                Util.HEIGHT * 0.90, 0.25, 0.25, 12.0,currentTime, Util.PROJECTILE_QUANTITY, Color.BLUE, Color.GREEN);
+
         EnemiesArmy armyEnemyOne = new EnemiesArmy(enemyQuantity, EnemyTypeOne.class, currentTime.plusMillis(2000));
         EnemiesArmy armyEnemyTwo = new EnemiesArmy(enemyQuantity, EnemyTypeTwo.class, currentTime.plusMillis(2000));
         EnemiesArmy armyEnemyThree = new EnemiesArmy(enemyQuantity, EnemyTypeThree.class, currentTime.plusMillis(2000));
@@ -54,13 +54,13 @@ public class Main {
 
             //verificação de colisões
 
-            player.checkCollisions(armyEnemyOne);
-            player.checkCollisions(armyEnemyTwo);
-            player.checkCollisions(armyEnemyThree);
+            player.checkCollisions(armyEnemyOne, currentTime);
+            player.checkCollisions(armyEnemyTwo, currentTime);
+            player.checkCollisions(armyEnemyThree, currentTime);
 
-            armyEnemyOne.checkCollisions(player);
-            armyEnemyTwo.checkCollisions(player);
-            armyEnemyThree.checkCollisions(player);
+            armyEnemyOne.checkCollisions(player, currentTime);
+            armyEnemyTwo.checkCollisions(player, currentTime);
+            armyEnemyThree.checkCollisions(player, currentTime);
 
             //atualização de projéteis
             player.updateProjectiles(delta);
@@ -73,7 +73,7 @@ public class Main {
             armyEnemyTwo.atack(player, currentTime, delta);
             armyEnemyThree.atack(player, currentTime, delta);
 
-            armyEnemyThree.castSpecificEnemy(currentTime, 3);
+            armyEnemyThree.castSpecificEnemy(currentTime, Util.ENEMY3_MAX_ACTIVE);
 
             armyEnemyOne.castEnemies(currentTime);
             armyEnemyTwo.castEnemies(currentTime);
