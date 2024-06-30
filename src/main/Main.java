@@ -1,5 +1,6 @@
 package main;
 
+import gameComponents.character.PowerUp;
 import gameComponents.scenario.BackgroundStars;
 
 import java.awt.Color;
@@ -41,6 +42,7 @@ public class Main {
 
         LifeBar lifeBar = new LifeBar(player.getLife());
         Message GameOver = new Message("Game Over");
+        PowerUp powerUp = new PowerUp();
 
         GameLib.initGraphics();
 
@@ -86,6 +88,14 @@ public class Main {
             armyEnemyOne.drawEnemys(currentTime);
             armyEnemyTwo.drawEnemys(currentTime);
             lifeBar.update(player.getLife());
+
+            powerUp.draw();
+            powerUp.checkCollision(player);
+
+            if (currentTime.toEpochMilli() % 15000 < delta) {
+                powerUp.activate();
+            }
+            player.updateImmunity(currentTime);
 
             GameLib.display();
             busyWait(currentTime.plusMillis(5));

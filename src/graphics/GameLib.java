@@ -90,6 +90,25 @@ public class GameLib {
         GameLib.drawCircle(x, y, alpha * alpha * 40 + 1);
     }
 
+    public static void drawStar(double x, double y, double size) {
+        double innerRadius = size / 2.5;
+        double outerRadius = size;
+        double[] xPoints = new double[10];
+        double[] yPoints = new double[10];
+
+        for (int i = 0; i < 10; i++) {
+            double angle = Math.PI / 5 * i;
+            double radius = (i % 2 == 0) ? outerRadius : innerRadius;
+            xPoints[i] = x + Math.cos(angle) * radius;
+            yPoints[i] = y + Math.sin(angle) * radius;
+        }
+
+        for (int i = 0; i < 10; i++) {
+            int nextIndex = (i + 1) % 10;
+            drawLine(xPoints[i], yPoints[i], xPoints[nextIndex], yPoints[nextIndex]);
+        }
+    }
+
     public static void fillRect(double cx, double cy, double width, double height) {
 
         int x = (int) Math.round(cx - width / 2);

@@ -11,22 +11,26 @@ import java.time.Instant;
 import java.util.Scanner;
 
 public class Player extends Character {
-
     private int life;
+    private boolean immune;
+    private Instant immunityEndTime;
 
     public Player(double coordinateX, double coordinateY, double speedX, double speedY,
                   double radius,Instant nextShoot, int countProjectiles, Color colorPlayer, Color colorProjectile) {
         super(Util.ACTIVE, coordinateX, coordinateY, speedX, speedY, radius, null, null,
                 nextShoot, countProjectiles, 0, colorPlayer, colorProjectile);
         life = lifeFromComamndLine();
+        this.immune = false;
     }
 
     @Override
     public void prepareExplosion(){
-        life--;
-        this.setColor(Color.WHITE);
-        if (life == 0){
-        super.prepareExplosion();
+        if (!immune) {
+            life--;
+            this.setColor(Color.WHITE);
+            if (life == 0){
+                super.prepareExplosion();
+            }
         }
     }
 
@@ -124,17 +128,21 @@ public class Player extends Character {
 
     public void checkCollisionsWithProjectiles(EnemiesArmy army)
     {
-        for(Enemy enemy : army.getEnemies()){
-            for(Projectile projectile: enemy.getProjectiles()) {
-                colide(projectile);
+        if (!immune) {
+            for (Enemy enemy : army.getEnemies()) {
+                for (Projectile projectile : enemy.getProjectiles()) {
+                    colide(projectile);
+                }
             }
         }
     }
 
     public void checkCollisionsWithEnemys(EnemiesArmy army)
     {
-        for(Enemy enemy : army.getEnemies()){
-            colide(enemy);
+        if (!immune) {
+            for (Enemy enemy : army.getEnemies()) {
+                colide(enemy);
+            }
         }
     }
 
@@ -152,6 +160,17 @@ public class Player extends Character {
 
         System.out.println("Insira a quantidade de vidas desejada!");
         return scanner.nextInt();
+    }
+
+    public void activateImmunity() {
+        immune = true;
+        immunityEndTime = Instant.now().plusSeconds(5);
+    }
+
+    public void updateImmunity(Instant currentTime) {
+        if (immune && currentTime.isAfter(immunityEndTime)) {
+            immune = false;
+        }
     }
 }
 
