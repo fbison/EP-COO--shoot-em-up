@@ -24,13 +24,15 @@ public class Player extends Character {
     @Override
     public void prepareExplosion(){
         life--;
+        if (life == 0){
         super.prepareExplosion();
+        }
     }
 
-    // Verificando se a explosão do player já acabou. Ao final da explosão, o player volta a ser controlável
-    public void backToLife(Instant currentTime){
+    // Verificando se a explosão do player já acabou. Ao final da explosão, o player se torna inativo
+    public void setInactive(Instant currentTime){
         if (getState() == Util.EXPLODE && currentTime.isAfter(getExplosionEnd())) {
-            setState(Util.ACTIVE);
+            setState(Util.INACTIVE);
         }
     }
 

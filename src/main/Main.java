@@ -25,8 +25,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //em todo lugar que ta escrito o numero doze, trocar por variavel nova que eu vou ler
-
         final int enemyQuantity = 10;
         final int projectileQuantity = 10;
         var currentTime = Instant.now();
@@ -41,7 +39,7 @@ public class Main {
         BackgroundStars starsFirst = new BackgroundStars(0.07, 0.0, 20, Color.GRAY);
         BackgroundStars starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
 
-        LifeBar vida = new LifeBar(player.getLife());
+        LifeBar lifeBar = new LifeBar(player.getLife());
         Message GameOver = new Message("Game Over");
 
         GameLib.initGraphics();
@@ -70,11 +68,10 @@ public class Main {
             armyEnemyOne.castEnemies(currentTime);
             armyEnemyTwo.castEnemies(currentTime);
 
-            player.backToLife(currentTime);
+            player.setInactive(currentTime);
 
             if (GameLib.isKeyPressed(Util.KEY_ESCAPE)) running = false;
             if (player.getLife() == 0) {
-                player.setState(Util.INACTIVE);
                 GameOver.update();
             }
             player.verifyActions(currentTime, delta);
@@ -88,7 +85,7 @@ public class Main {
             armyEnemyTwo.drawProjetiles();
             armyEnemyOne.drawEnemys(currentTime);
             armyEnemyTwo.drawEnemys(currentTime);
-            vida.update(player.getLife());
+            lifeBar.update(player.getLife());
 
             GameLib.display();
             busyWait(currentTime.plusMillis(5));
