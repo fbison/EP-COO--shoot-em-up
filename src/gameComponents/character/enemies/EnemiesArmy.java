@@ -11,24 +11,33 @@ import java.util.ArrayList;
 public class EnemiesArmy {
     private ArrayList<Enemy> enemies;
     private Instant nextEnemy;
-
+    private int maxActive;
 
     // Constructor
     public EnemiesArmy(int quantity, Class<? extends Enemy> enemyClass, Instant nextEnemy) {
         this.enemies = createEnemies(quantity, enemyClass);
+        this.maxActive = quantity;
         this.nextEnemy = nextEnemy;
     }
+
+    private static Enemy createEnemyFromInstance(Class<? extends Enemy> enemyClass) {
+        try {
+            return (enemyClass.getDeclaredConstructor().newInstance());
+        } catch (Exception e) {
+            System.out.println("Inimigo construido sem construtor");
+            return null;
+        }
+    }
+
     public static ArrayList<Enemy> createEnemies(int quantity, Class<? extends Enemy> enemyClass) {
         ArrayList<Enemy> enemies = new ArrayList<>();
-        try {
-            for (int i = 0; i < quantity; i++) {
-                enemies.add(enemyClass.getDeclaredConstructor().newInstance());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (int i = 0; i < quantity; i++) {
+            enemies.add(createEnemyFromInstance(enemyClass));
         }
+
         return enemies;
     }
+
     // Getter for Enemies
     public ArrayList<Enemy> getEnemies() {
         return enemies;
@@ -58,7 +67,7 @@ public class EnemiesArmy {
     }
 
     public void castEnemies(Instant currentTime) {
-        if (currentTime.isAfter(nextEnemy)) {
+        if (countActiveEnemies() < maxActive  && currentTime.isAfter(nextEnemy)) {
             int free = freeIndex();
             if (free < enemies.size()) {
                 nextEnemy = enemies.get(free).cast(currentTime);
@@ -66,34 +75,38 @@ public class EnemiesArmy {
         }
     }
 
-    public void atack(Player player, Instant currentTime, long delta){
-        for(Enemy enemy: getEnemies()) {
+    public void atack(Player player, Instant currentTime, long delta) {
+        for (Enemy enemy : getEnemies()) {
             enemy.attack(player, currentTime, delta);
         }
     }
-    public void updateProjectiles(long delta){
-        for(Enemy enemy: getEnemies()) {
+
+    public void updateProjectiles(long delta) {
+        for (Enemy enemy : getEnemies()) {
             enemy.updateProjectiles(delta);
         }
     }
-    public void drawProjetiles(){
-        for(Enemy enemy : getEnemies()){
+
+    public void drawProjetiles() {
+        for (Enemy enemy : getEnemies()) {
             if (enemy.getState() == Util.ACTIVE) {
-                for (Projectile projectile : enemy.getProjectiles()){
+                for (Projectile projectile : enemy.getProjectiles()) {
                     GameLib.setColor(projectile.getColor());
                     GameLib.drawCircle(projectile.getCoordinateX(), projectile.getCoordinateY(), projectile.getRadius());
                 }
             }
         }
     }
-    public void drawEnemys(Instant currentTime){
-        for(Enemy enemy : getEnemies()){
+
+    public void drawEnemys(Instant currentTime) {
+        for (Enemy enemy : getEnemies()) {
             enemy.draw(currentTime);
         }
     }
-    public void checkCollisions(Player player, Instant currentTime){
-        for (Projectile projectile : player.getProjectiles()){
-            for(Enemy enemy : getEnemies()){
+
+    public void checkCollisions(Player player, Instant currentTime) {
+        for (Projectile projectile : player.getProjectiles()) {
+            for (Enemy enemy : getEnemies()) {
                 enemy.colide(projectile, currentTime);
             }
         }
@@ -109,12 +122,4 @@ public class EnemiesArmy {
         return activeCount;
     }
 
-    public void castSpecificEnemy(Instant currentTime, int maxActive) {
-        if (countActiveEnemies() < maxActive && currentTime.isAfter(nextEnemy)) {
-            int free = freeIndex();
-            if (free < enemies.size()) {
-                nextEnemy = enemies.get(free).cast(currentTime);
-            }
-        }
-    }
 }

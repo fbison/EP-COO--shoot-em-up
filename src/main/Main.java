@@ -27,7 +27,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        final int enemyQuantity = Util.ENEMY_QUANTITY;
         var currentTime = Instant.now();
         boolean running = true;
         long delta;
@@ -35,9 +34,9 @@ public class Main {
         Player player = new Player((double) Util.WIDTH / 2,
                 Util.HEIGHT * 0.90, 0.25, 0.25, 12.0,currentTime, Util.PROJECTILE_QUANTITY, Color.BLUE, Color.GREEN);
 
-        EnemiesArmy armyEnemyOne = new EnemiesArmy(enemyQuantity, EnemyTypeOne.class, currentTime.plusMillis(2000));
-        EnemiesArmy armyEnemyTwo = new EnemiesArmy(enemyQuantity, EnemyTypeTwo.class, currentTime.plusMillis(2000));
-        EnemiesArmy armyEnemyThree = new EnemiesArmy(enemyQuantity, EnemyTypeThree.class, currentTime.plusMillis(2000));
+        EnemiesArmy armyEnemyOne = new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeOne.class, currentTime.plusMillis(2000));
+        EnemiesArmy armyEnemyTwo = new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeTwo.class, currentTime.plusMillis(2000));
+        EnemiesArmy armyEnemyThree = new EnemiesArmy(Util.ENEMY3_MAX_ACTIVE, EnemyTypeThree.class, currentTime.plusMillis(2000));
 
         BackgroundStars starsFirst = new BackgroundStars(0.07, 0.0, 20, Color.GRAY);
         BackgroundStars starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
@@ -73,10 +72,10 @@ public class Main {
             armyEnemyTwo.atack(player, currentTime, delta);
             armyEnemyThree.atack(player, currentTime, delta);
 
-            armyEnemyThree.castSpecificEnemy(currentTime, Util.ENEMY3_MAX_ACTIVE);
 
             armyEnemyOne.castEnemies(currentTime);
             armyEnemyTwo.castEnemies(currentTime);
+            armyEnemyThree.castEnemies(currentTime);
 
             player.setInactive(currentTime);
 
@@ -87,9 +86,10 @@ public class Main {
             player.verifyActions(currentTime, delta);
 
             player.keepInScren();
+            player.draw(currentTime);
+
             starsSecond.update(delta);
             starsFirst.update(delta);
-            player.draw(currentTime);
 
             armyEnemyOne.drawProjetiles();
             armyEnemyTwo.drawProjetiles();
