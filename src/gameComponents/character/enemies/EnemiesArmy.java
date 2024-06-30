@@ -5,6 +5,7 @@ import gameComponents.character.Projectile;
 import graphics.GameLib;
 import graphics.Util;
 
+import java.lang.reflect.Constructor;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -12,33 +13,26 @@ public class EnemiesArmy {
     private ArrayList<Enemy> enemies;
     private Instant nextEnemy;
     private int maxActive;
+    Class<? extends Enemy> enemyClass;
 
     // Constructor
-    public EnemiesArmy(int quantity, Class<? extends Enemy> enemyClass, Instant nextEnemy) {
-        this.enemies = createEnemies(quantity, enemyClass);
+    public EnemiesArmy(int quantity, Class<? extends Enemy> enemyClass, Instant currentTime, int timeToFirstEnemy) {
+        this.enemies = new ArrayList<>();
         this.maxActive = quantity;
-        this.nextEnemy = nextEnemy;
+        this.nextEnemy = currentTime.plusMillis(timeToFirstEnemy);
+        this.enemyClass = enemyClass;
     }
 
-    private static Enemy createEnemyFromInstance(Class<? extends Enemy> enemyClass) {
+    private static Enemy createEnemyFromInstance(Class<? extends Enemy> enemyClass, Instant currentTime) {
         try {
-            return (enemyClass.getDeclaredConstructor().newInstance());
+            Constructor<? extends Enemy> constructor = enemyClass.getConstructor(Instant.class);
+            return constructor.newInstance(currentTime);
         } catch (Exception e) {
             System.out.println("Inimigo construido sem construtor");
             return null;
         }
     }
 
-    public static ArrayList<Enemy> createEnemies(int quantity, Class<? extends Enemy> enemyClass) {
-        ArrayList<Enemy> enemies = new ArrayList<>();
-        for (int i = 0; i < quantity; i++) {
-            enemies.add(createEnemyFromInstance(enemyClass));
-        }
-
-        return enemies;
-    }
-
-    // Getter for Enemies
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
@@ -58,20 +52,15 @@ public class EnemiesArmy {
         this.nextEnemy = nextEnemy;
     }
 
-    public int freeIndex() {
-        int i;
-        for (i = 0; i < enemies.size(); i++) {
-            if (enemies.get(i).getState() == Util.INACTIVE) break;
-        }
-        return i;
-    }
-
     public void castEnemies(Instant currentTime) {
         if (countActiveEnemies() < maxActive  && currentTime.isAfter(nextEnemy)) {
-            int free = freeIndex();
-            if (free < enemies.size()) {
-                nextEnemy = enemies.get(free).cast(currentTime);
-            }
+            Enemy enemy = createEnemyFromInstance(enemyClass, currentTime);
+
+            if(enemy == null) return; //instancia
+
+            enemies.add(enemy);
+
+            nextEnemy = enemy.nextCast(currentTime);
         }
     }
 
@@ -122,4 +111,7 @@ public class EnemiesArmy {
         return activeCount;
     }
 
+    public void cleanInactive(){
+        enemies.removeIf(inimigo -> !inimigo.isActive());
+    }
 }

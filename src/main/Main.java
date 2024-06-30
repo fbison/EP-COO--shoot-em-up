@@ -34,9 +34,9 @@ public class Main {
         Player player = new Player((double) Util.WIDTH / 2,
                 Util.HEIGHT * 0.90, 0.25, 0.25, 12.0,currentTime, Util.PROJECTILE_QUANTITY, Color.BLUE, Color.GREEN);
 
-        EnemiesArmy armyEnemyOne = new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeOne.class, currentTime.plusMillis(2000));
-        EnemiesArmy armyEnemyTwo = new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeTwo.class, currentTime.plusMillis(2000));
-        EnemiesArmy armyEnemyThree = new EnemiesArmy(Util.ENEMY3_MAX_ACTIVE, EnemyTypeThree.class, currentTime.plusMillis(2000));
+        EnemiesArmy armyEnemyOne = new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeOne.class, currentTime, 2000);
+        EnemiesArmy armyEnemyTwo = new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeTwo.class, currentTime, 7000);
+        EnemiesArmy armyEnemyThree = new EnemiesArmy(Util.ENEMY3_MAX_ACTIVE, EnemyTypeThree.class, currentTime, 2000);
 
         BackgroundStars starsFirst = new BackgroundStars(0.07, 0.0, 20, Color.GRAY);
         BackgroundStars starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
@@ -61,6 +61,10 @@ public class Main {
             armyEnemyTwo.checkCollisions(player, currentTime);
             armyEnemyThree.checkCollisions(player, currentTime);
 
+            armyEnemyOne.cleanInactive();
+            armyEnemyTwo.cleanInactive();
+            armyEnemyThree.cleanInactive();
+
             //atualização de projéteis
             player.updateProjectiles(delta);
 
@@ -71,7 +75,6 @@ public class Main {
             armyEnemyOne.atack(player, currentTime, delta);
             armyEnemyTwo.atack(player, currentTime, delta);
             armyEnemyThree.atack(player, currentTime, delta);
-
 
             armyEnemyOne.castEnemies(currentTime);
             armyEnemyTwo.castEnemies(currentTime);

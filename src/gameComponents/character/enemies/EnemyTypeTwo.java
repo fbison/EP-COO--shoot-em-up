@@ -9,13 +9,35 @@ import java.time.Instant;
 
 public class EnemyTypeTwo extends Enemy {
     private double spawnX;
-    private int count;
+    private static int count = 0;
+    private static double nextCoordinateX= (Util.WIDTH * 0.20);
 
-    public EnemyTypeTwo() {
-        super(Util.INACTIVE, 0.0, 0.0, 0.0, 0.0, 12.0, null, null,
-                null, 0.0, 0.0, 0.0, 10, 2, Color.MAGENTA, Color.RED);
-        this.spawnX = (Util.WIDTH * 0.20);
-        this.count = 0;
+    public EnemyTypeTwo(Instant currentTime) {
+        super(Util.ACTIVE, nextCoordinateX,
+                -10.0, 0.0, 0.0, 12.0, null, null,
+                null, (3 * Math.PI) / 2, 0.0, 0.42, 10, 2, Color.MAGENTA, Color.RED);
+        incrementCount();
+        if(count == 10){
+            restartCount();
+            nextCoordinateX = Math.random() > 0.5 ? Util.WIDTH * 0.2 : Util.WIDTH * 0.8;
+        }
+    }
+    private static void incrementCount(){
+        count++;
+    }
+    private static void decrementCount(){
+        count--;
+    }
+    private static void restartCount(){
+        count = 0;
+    }
+   @Override
+    public Instant nextCast(Instant currentTime){
+       if (count < 10) {
+           return currentTime.plusMillis(120);
+       } else {
+           return currentTime.plusMillis((long) (3000 + Math.random() * 3000));
+       }
     }
 
     public double getSpawnX() {
@@ -26,12 +48,10 @@ public class EnemyTypeTwo extends Enemy {
         this.spawnX = spawnX;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
+    @Override
+    public void setState(int state) {
+        super.setState(state);
+        if (state == Util.INACTIVE) decrementCount();
     }
 
     @Override
@@ -92,24 +112,6 @@ public class EnemyTypeTwo extends Enemy {
         }
     }
 
-    @Override
-    public Instant cast(Instant currentTime) {
-        setCoordinateX(spawnX);
-        setCoordinateY(-10.0);
-        setSpeed(0.42);
-        setAngle((3 * Math.PI) / 2);
-        setRotationSpeed(0);
-        setState(Util.ACTIVE);
-        count ++;
-
-        if (count < 10) {
-            return currentTime.plusMillis(120);
-        } else {
-            count = 0;
-            spawnX = Math.random() > 0.5 ? Util.WIDTH * 0.2 : Util.WIDTH * 0.8;
-            return currentTime.plusMillis((long) (3000 + Math.random() * 3000));
-        }
-    }
 
     @Override
     public void draw(Instant currentTime){

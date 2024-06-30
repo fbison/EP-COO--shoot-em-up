@@ -1,5 +1,7 @@
 package gameComponents.essential;
 
+import graphics.Util;
+
 import java.awt.Color;
 
 public class Component extends GameObject {
@@ -20,6 +22,10 @@ public class Component extends GameObject {
 
     public int getState() {
         return state;
+    }
+
+    public boolean isActive(){
+        return state == Util.ACTIVE;
     }
 
     public void setState(int state) {

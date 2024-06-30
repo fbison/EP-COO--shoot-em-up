@@ -10,7 +10,6 @@ import java.awt.*;
 import java.time.Instant;
 
 public abstract class Enemy extends Character {
-    // Additional attributes
     private double angle;
     private double rotationSpeed;
     private double speed;
@@ -51,7 +50,7 @@ public abstract class Enemy extends Character {
 
     public abstract void attack(Player player, Instant currentTime, long delta);
 
-    public abstract Instant cast(Instant currentTime);
+    public abstract Instant nextCast(Instant currentTime);
 
     public abstract void draw(Instant currentTime);
 

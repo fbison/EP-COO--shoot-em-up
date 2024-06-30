@@ -8,9 +8,27 @@ import java.awt.*;
 import java.time.Instant;
 
 public class EnemyTypeOne extends Enemy {
-    public EnemyTypeOne() {
-        super(Util.INACTIVE, 0, 0, 0, 0, 9.0, null,
-                null, null, 0, 0, 0, 10, 2, Color.CYAN, Color.RED);
+    public EnemyTypeOne(Instant currentTime) {
+        super(Util.ACTIVE,
+                Math.random() * (Util.WIDTH - 20.0) + 10.0,
+                -10.0, 0,
+                0,
+                9.0,
+                null,
+                null,
+                currentTime.plusMillis(500),
+                3 * Math.PI / 2,
+                0,
+                0.20 + Math.random() * 0.15,
+                10,
+                2,
+                Color.CYAN,
+                Color.RED);
+    }
+
+    @Override
+    public Instant nextCast(Instant currentTime) {
+        return currentTime.plusMillis(500);
     }
 
     @Override
@@ -42,17 +60,6 @@ public class EnemyTypeOne extends Enemy {
         }
     }
 
-    @Override
-    public Instant cast(Instant currentTime) {
-        setCoordinateX(Math.random() * (Util.WIDTH - 20.0) + 10.0);
-        setCoordinateY(-10.0);
-        setSpeed(0.20 + Math.random() * 0.15);
-        setAngle(3 * Math.PI / 2);
-        setRotationSpeed(0);
-        setState(Util.ACTIVE);
-        setNextShoot(currentTime.plusMillis(500));
-        return currentTime.plusMillis(500);
-    }
 
     @Override
     public void draw(Instant currentTime){
