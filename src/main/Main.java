@@ -77,7 +77,6 @@ public class Main {
 
             armyEnemyOne.castEnemies(currentTime);
             armyEnemyTwo.castEnemies(currentTime);
-            //armyEnemyThree.castEnemies(currentTime);
 
             player.setInactive(currentTime);
 
