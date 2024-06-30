@@ -15,16 +15,6 @@ public abstract class Enemy extends Character {
     private double rotationSpeed;
     private double speed;
 
-    // Constructor
-    public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
-                 double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
-                 double angle, double rotationSpeed, double speed, Color colorEnemy) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, colorEnemy);
-        this.angle = angle;
-        this.rotationSpeed = rotationSpeed;
-        this.speed = speed;
-    }
-
     public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
                  double angle, double rotationSpeed, double speed, int countProjectiles, int projectileRadius, Color colorEnemy, Color colorProjectile) {

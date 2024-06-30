@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 public class MyKeyAdapter extends KeyAdapter {
 
-    private int[] codes = {
+    private final int[] codes = {
             KeyEvent.VK_UP,
             KeyEvent.VK_DOWN,
             KeyEvent.VK_LEFT,
@@ -15,8 +15,8 @@ public class MyKeyAdapter extends KeyAdapter {
             KeyEvent.VK_R,
     };
 
-    private boolean[] keyStates = null;
-    private long[] releaseTimeStamps = null;
+    private final boolean[] keyStates;
+    private final long[] releaseTimeStamps;
 
     public MyKeyAdapter() {
 
@@ -64,12 +64,7 @@ public class MyKeyAdapter extends KeyAdapter {
         boolean keyState = keyStates[index];
         long keyReleaseTime = releaseTimeStamps[index];
 
-        if (keyState == false) {
-
-            if (System.currentTimeMillis() - keyReleaseTime > 5) return false;
-        }
-
-        return true;
+        return keyState || System.currentTimeMillis() - keyReleaseTime <= 5;
     }
 
     public void debug() {

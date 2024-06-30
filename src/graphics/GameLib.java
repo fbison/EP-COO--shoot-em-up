@@ -90,9 +90,8 @@ public class GameLib {
         GameLib.drawCircle(x, y, alpha * alpha * 40 + 1);
     }
 
-    public static void drawStar(double x, double y, double size) {
-        double innerRadius = size / 2.5;
-        double outerRadius = size;
+    public static void drawStar(double x, double y, double outerRadius) {
+        double innerRadius = outerRadius / 2.5;
         double[] xPoints = new double[10];
         double[] yPoints = new double[10];
 
