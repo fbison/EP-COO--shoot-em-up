@@ -50,8 +50,6 @@ public class Main {
             delta = Duration.between(currentTime, Instant.now()).toMillis();
             currentTime = Instant.now();
 
-            //verificação de colisões
-
             player.checkCollisions(armyEnemyOne, currentTime);
             player.checkCollisions(armyEnemyTwo, currentTime);
             player.checkCollisions(armyEnemyThree, currentTime);
@@ -100,13 +98,12 @@ public class Main {
 
             lifeBar.update(player.getLife());
 
-            powerUp.draw();
+            powerUp.activate(currentTime, delta);
             powerUp.checkCollision(player);
-
-            if (currentTime.toEpochMilli() % 15000 < delta) {
-                powerUp.activate();
-            }
+            powerUp.draw();
             player.updateImmunity(currentTime);
+
+
 
             GameLib.display();
             busyWait(currentTime.plusMillis(5));

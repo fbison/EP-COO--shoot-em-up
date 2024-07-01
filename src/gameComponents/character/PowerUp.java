@@ -4,6 +4,7 @@ import graphics.GameLib;
 import graphics.Util;
 
 import java.awt.*;
+import java.time.Instant;
 import java.util.Random;
 
 public class PowerUp extends Component {
@@ -14,12 +15,14 @@ public class PowerUp extends Component {
         this.active = false;
     }
 
-    public void activate() {
-        Random random = new Random();
-        this.setCoordinateX(random.nextDouble() * Util.WIDTH);
-        this.setCoordinateY(random.nextDouble() * Util.HEIGHT);
-        this.setState(Util.ACTIVE);
-        this.active = true;
+    public void activate(Instant currentTime, double delta) {
+        if (currentTime.toEpochMilli() % 15000 < delta) {
+            Random random = new Random();
+            this.setCoordinateX(random.nextDouble() * Util.WIDTH);
+            this.setCoordinateY(random.nextDouble() * Util.HEIGHT);
+            this.setState(Util.ACTIVE);
+            this.active = true;
+        }
     }
 
     public void deactivate() {
