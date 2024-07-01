@@ -31,8 +31,7 @@ public class Main {
         boolean running = true;
         long delta;
 
-        Player player = new Player((double) Util.WIDTH / 2,
-                Util.HEIGHT * 0.90, 0.25, 0.25, 12.0,currentTime, Util.PROJECTILE_QUANTITY, Color.BLUE, Color.GREEN);
+        Player player = new Player(currentTime);
 
         EnemiesArmy armyEnemyOne = new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeOne.class, currentTime, 2000);
         EnemiesArmy armyEnemyTwo = new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeTwo.class, currentTime, 7000);
@@ -83,11 +82,12 @@ public class Main {
             player.setInactive(currentTime);
 
             if (GameLib.isKeyPressed(Util.KEY_ESCAPE)) running = false;
+
             if (player.getLife() == 0) {
                 GameOver.update();
             }
-            player.verifyActions(currentTime, delta);
 
+            player.verifyActions(currentTime, delta);
             player.keepInScren();
             player.draw(currentTime);
 

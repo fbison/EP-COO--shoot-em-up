@@ -8,13 +8,14 @@ import java.awt.Color;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Character extends Component {
     // Additional attributes
     private Instant explosionStart;
     private Instant explosionEnd;
     private Instant nextShoot;
-    private ArrayList<Projectile> projectiles;
+    private final ArrayList<Projectile> projectiles;
     private Color colorProjectile;
     private int projectileRadius;
     private int maxProjectiles;
@@ -47,6 +48,17 @@ public class Character extends Component {
         return explosionStart;
     }
 
+    public void setMaxProjectiles(int maxProjectiles) {
+        this.maxProjectiles = maxProjectiles;
+    }
+
+    public void setProjectileRadius(int projectileRadius) {
+        this.projectileRadius = projectileRadius;
+    }
+
+    public void setColorProjectile(Color colorProjectile) {
+        this.colorProjectile = colorProjectile;
+    }
     public void setExplosionStart(Instant explosionStart) {
         this.explosionStart = explosionStart;
     }
@@ -96,15 +108,18 @@ public class Character extends Component {
             prepareExplosion(currentTime);
         }
     }
-
     public void updateProjectiles(long delta) {
-        for (Projectile projectile : projectiles) {
-            if (projectile.getCoordinateY() < 0)
-                projectile.setState(Util.INACTIVE);
-            else {
+        Iterator<Projectile> iterator = this.getProjectiles().iterator();
+        while (iterator.hasNext()) {
+            Projectile projectile = iterator.next();
+
+            if (projectile.getCoordinateY() < 0) {
+                iterator.remove();
+            } else {
                 projectile.setCoordinateX(projectile.getCoordinateX() + (projectile.getSpeedX() * delta));
                 projectile.setCoordinateY(projectile.getCoordinateY() + (projectile.getSpeedY() * delta));
             }
         }
     }
+
 }

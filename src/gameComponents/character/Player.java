@@ -15,11 +15,28 @@ public class Player extends Character {
     private boolean immune;
     private Instant immunityEndTime;
 
-    public Player(double coordinateX, double coordinateY, double speedX, double speedY,
-                  double radius, Instant nextShoot, int countProjectiles, Color colorPlayer, Color colorProjectile) {
-        super(Util.ACTIVE, coordinateX, coordinateY, speedX, speedY, radius, null, null,
-                nextShoot, countProjectiles, 0, colorPlayer, colorProjectile);
+    public Player(Instant currentTime) {
+        super(Util.ACTIVE, (double) Util.WIDTH / 2,
+                Util.HEIGHT * 0.90, 0.25, 0.25, 12.0, null, null,
+                currentTime, Util.PROJECTILE_QUANTITY, 0, Color.BLUE, Color.GREEN);
         life = lifeFromComamndLine();
+        this.immune = false;
+    }
+
+    public void initialPosition(Instant currentTime){
+        this.setState(Util.ACTIVE);
+        this.setCoordinateX((double) Util.WIDTH / 2);
+        this.setCoordinateY(Util.HEIGHT * 0.90);
+        this.setSpeedX(0.25);
+        this.setSpeedY(0.25);
+        this.setRadius(12.0);
+        this.setExplosionStart(null);
+        this.setExplosionEnd(null);
+        this.setNextShoot(currentTime);
+        this.setMaxProjectiles(Util.PROJECTILE_QUANTITY);
+        this.setProjectileRadius(0);  // Defina o valor correto
+        this.setColor(Color.BLUE);
+        this.setColorProjectile(Color.GREEN);
         this.immune = false;
     }
 
@@ -49,28 +66,15 @@ public class Player extends Character {
         if (this.getCoordinateY() >= Util.HEIGHT) this.setCoordinateY(Util.HEIGHT - 1);
     }
 
-    public void updateProjectiles(long delta) {
-        for (Projectile projectile : this.getProjectiles()) {
-            if (projectile.isActive()) {
-                if (projectile.getCoordinateY() < 0)
-                    projectile.setState(Util.INACTIVE);
-                else {
-                    projectile.setCoordinateX(projectile.getCoordinateX() + (projectile.getSpeedX() * delta));
-                    projectile.setCoordinateY(projectile.getCoordinateY() + (projectile.getSpeedY() * delta));
-                }
-            }
-        }
-    }
-
     public void atack(Instant currentTime) {
         Projectile projectile = new Projectile(getCoordinateX(), getCoordinateY() - 2 * getRadius(), 0, -1.0, getRadius(), getColor());
         addProjectiles(projectile);
         setNextShoot(currentTime.plusMillis(100));
     }
 
-    public void backToLife() {
+    public void backToLife(Instant currentTime) {
         setLife(this.maxLife);
-        setState(Util.ACTIVE);
+        initialPosition(currentTime);
     }
 
     public void verifyActions(Instant currentTime, long delta) {
@@ -88,7 +92,7 @@ public class Player extends Character {
                 atack(currentTime);
             }
         } else if (GameLib.isKeyPressed(Util.KEY_R) && life == 0) {
-            backToLife();
+            backToLife(currentTime);
         }
     }
 

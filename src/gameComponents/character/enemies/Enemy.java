@@ -9,6 +9,7 @@ import graphics.Util;
 
 import java.awt.*;
 import java.time.Instant;
+import java.util.Iterator;
 
 public abstract class Enemy extends Character {
     private double angle;
@@ -74,15 +75,20 @@ public abstract class Enemy extends Character {
 
     @Override
     public void updateProjectiles(long delta) {
-        for (Projectile projectile : this.getProjectiles()) {
-            if (projectile.getCoordinateY() > Util.HEIGHT)
-                projectile.setState(Util.INACTIVE);
-            else {
+        Iterator<Projectile> iterator = this.getProjectiles().iterator();
+
+        while (iterator.hasNext()) {
+            Projectile projectile = iterator.next();
+
+            if (projectile.getCoordinateY() > Util.HEIGHT) {
+                iterator.remove();
+            } else {
                 projectile.setCoordinateX(projectile.getCoordinateX() + (projectile.getSpeedX() * delta));
                 projectile.setCoordinateY(projectile.getCoordinateY() + (projectile.getSpeedY() * delta));
             }
         }
     }
+
 
     public void drawProjectiles(){
         if (isActive()) {
