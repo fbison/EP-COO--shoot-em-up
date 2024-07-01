@@ -17,6 +17,7 @@ import graphics.GameLib;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 
 public class Main {
     public static void busyWait(Instant endTime) {
@@ -33,75 +34,52 @@ public class Main {
 
         Player player = new Player(currentTime);
 
-        EnemiesArmy armyEnemyOne = new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeOne.class, currentTime, 2000);
-        EnemiesArmy armyEnemyTwo = new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeTwo.class, currentTime, 7000);
-        EnemiesArmy armyEnemyThree = new EnemiesArmy(Util.ENEMY3_MAX_ACTIVE, EnemyTypeThree.class, currentTime, 2000);
+        ArrayList<EnemiesArmy> armys = new ArrayList<>();
+
+        armys.add(new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeOne.class, currentTime, 2000));
+        armys.add(new EnemiesArmy(Util.ENEMY_QUANTITY, EnemyTypeTwo.class, currentTime, 7000));
+        armys.add(new EnemiesArmy(Util.ENEMY3_MAX_ACTIVE, EnemyTypeThree.class, currentTime, 2000));
 
         BackgroundStars starsFirst = new BackgroundStars(0.07, 0.0, 20, Color.GRAY);
         BackgroundStars starsSecond = new BackgroundStars(0.045, 0.0, 50, Color.DARK_GRAY);
 
         LifeBar lifeBar = new LifeBar(player.getLife());
-        Message GameOver = new Message("Game Over");
+        Message gameOver = new Message("Game Over");
         PowerUp powerUp = new PowerUp();
 
         GameLib.initGraphics();
 
         while (running) {
+            if (GameLib.isKeyPressed(Util.KEY_ESCAPE)) running = false;
+
             delta = Duration.between(currentTime, Instant.now()).toMillis();
             currentTime = Instant.now();
 
-            player.checkCollisions(armyEnemyOne, currentTime);
-            player.checkCollisions(armyEnemyTwo, currentTime);
-            player.checkCollisions(armyEnemyThree, currentTime);
-
-            armyEnemyOne.checkCollisions(player, currentTime);
-            armyEnemyTwo.checkCollisions(player, currentTime);
-            armyEnemyThree.checkCollisions(player, currentTime);
-
-            armyEnemyOne.cleanInactive();
-            armyEnemyTwo.cleanInactive();
-            armyEnemyThree.cleanInactive();
-
-            //atualização de projéteis
-            player.updateProjectiles(delta);
-
-            armyEnemyOne.updateProjectiles(delta);
-            armyEnemyTwo.updateProjectiles(delta);
-            armyEnemyThree.updateProjectiles(delta);
-
-            armyEnemyOne.atack(player, currentTime, delta);
-            armyEnemyTwo.atack(player, currentTime, delta);
-            armyEnemyThree.atack(player, currentTime, delta);
-
-            armyEnemyOne.castEnemies(currentTime);
-            armyEnemyTwo.castEnemies(currentTime);
-            armyEnemyThree.castEnemies(currentTime);
-
-            player.setInactive(currentTime);
-
-            if (GameLib.isKeyPressed(Util.KEY_ESCAPE)) running = false;
-
-            if (player.getLife() == 0) {
-                GameOver.update();
+            for (EnemiesArmy army : armys) {
+                player.checkCollisions(army, currentTime);
+                army.checkCollisions(player, currentTime);
+                army.cleanInactive();
+                army.updateProjectiles(delta);
+                army.atack(player, currentTime, delta);
+                army.castEnemies(currentTime);
+                army.drawEnemies(currentTime);
             }
 
+            player.updateProjectiles(delta);
+            player.setInactive(currentTime);
             player.verifyActions(currentTime, delta);
             player.keepInScren();
             player.draw(currentTime);
-
-            starsSecond.update(delta);
-            starsFirst.update(delta);
-
-            armyEnemyOne.drawEnemies(currentTime);
-            armyEnemyTwo.drawEnemies(currentTime);
-            armyEnemyThree.drawEnemies(currentTime);
-
-            lifeBar.update(player.getLife());
 
             powerUp.activate(currentTime, delta);
             powerUp.checkCollision(player);
             powerUp.draw();
             player.updateImmunity(currentTime);
+
+            starsSecond.update(delta);
+            starsFirst.update(delta);
+            lifeBar.update(player.getLife());
+            gameOver.update(player);
 
 
 
