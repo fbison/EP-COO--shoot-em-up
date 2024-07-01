@@ -34,9 +34,6 @@ public class Character extends Component {
     }
 
 
-    public void cleanInactive(){
-        projectiles.removeIf(Component::isInactive);
-    }
     public int getProjectileRadius(){
         return projectileRadius;
     }

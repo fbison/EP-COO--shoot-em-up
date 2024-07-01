@@ -5,7 +5,7 @@ import gameComponents.essential.GameObject;
 import java.awt.Color;
 
 public class Star extends GameObject {
-    private double speed;
+    private final double speed;
 
     public Star(double coordinateX, double coordinateY, double speed, Color color) {
         super(coordinateX, coordinateY, color);
@@ -16,7 +16,4 @@ public class Star extends GameObject {
         return speed;
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
 }

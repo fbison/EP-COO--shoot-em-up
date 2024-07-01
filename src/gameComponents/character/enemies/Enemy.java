@@ -14,7 +14,7 @@ import java.util.Iterator;
 public abstract class Enemy extends Character {
     private double angle;
     private double rotationSpeed;
-    private double speed;
+    private final double speed;
 
     public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
@@ -47,9 +47,6 @@ public abstract class Enemy extends Character {
         return speed;
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
 
     public abstract void attack(Player player, Instant currentTime, long delta);
 

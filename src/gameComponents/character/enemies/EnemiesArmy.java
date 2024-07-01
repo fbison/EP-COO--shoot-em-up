@@ -3,16 +3,15 @@ package gameComponents.character.enemies;
 import gameComponents.character.Player;
 import gameComponents.character.Projectile;
 import gameComponents.essential.Component;
-import graphics.GameLib;
 
 import java.lang.reflect.Constructor;
 import java.time.Instant;
 import java.util.ArrayList;
 
 public class EnemiesArmy {
-    private ArrayList<Enemy> enemies;
+    private final ArrayList<Enemy> enemies;
     private Instant nextEnemy;
-    private int maxActive;
+    private final int maxActive;
     Class<? extends Enemy> enemyClass;
 
     // Constructor
@@ -37,21 +36,6 @@ public class EnemiesArmy {
         return enemies;
     }
 
-    // Setter for Enemies
-    public void setEnemies(ArrayList<Enemy> enemies) {
-        this.enemies = enemies;
-    }
-
-    // Getter for NextEnemy
-    public Instant getNextEnemy() {
-        return nextEnemy;
-    }
-
-    // Setter for NextEnemy
-    public void setNextEnemy(Instant nextEnemy) {
-        this.nextEnemy = nextEnemy;
-    }
-
     public void castEnemies(Instant currentTime) {
         if (countActiveEnemies() < maxActive  && currentTime.isAfter(nextEnemy)) {
             Enemy enemy = createEnemyFromInstance(enemyClass, currentTime);
@@ -73,17 +57,6 @@ public class EnemiesArmy {
     public void updateProjectiles(long delta) {
         for (Enemy enemy : getEnemies()) {
             enemy.updateProjectiles(delta);
-        }
-    }
-
-    public void drawProjetiles() {
-        for (Enemy enemy : getEnemies()) {
-            if (enemy.isActive()) {
-                for (Projectile projectile : enemy.getProjectiles()) {
-                    GameLib.setColor(projectile.getColor());
-                    GameLib.drawCircle(projectile.getCoordinateX(), projectile.getCoordinateY(), projectile.getRadius());
-                }
-            }
         }
     }
 
