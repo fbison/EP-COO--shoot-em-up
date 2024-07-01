@@ -1,6 +1,7 @@
 package gameComponents.character.enemies;
 
 import gameComponents.character.Player;
+import gameComponents.character.Projectile;
 import graphics.GameLib;
 import graphics.Util;
 
@@ -17,10 +18,12 @@ public class EnemyTypeThree extends Enemy {
                 10, 2, Color.GREEN, Color.YELLOW);
         this.movingRight = true;
     }
+
     @Override
     public Instant nextCast(Instant currentTime) {
         return currentTime.plusMillis(500);
     }
+
     @Override
     public void attack(Player player, Instant currentTime, long delta) {
         if (getState() == Util.EXPLODE) {
@@ -43,31 +46,26 @@ public class EnemyTypeThree extends Enemy {
 
             // Calcular a direção do disparo em direção ao jogador com variação aleatória
             if (currentTime.isAfter(getNextShoot()) && getCoordinateY() < player.getCoordinateY()) {
-                int free = findFreeIndex();
-                if (free < getProjectiles().size()) {
-                    double dx = player.getCoordinateX() - getCoordinateX();
-                    double dy = player.getCoordinateY() - getCoordinateY();
-                    double angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.1; // Variação de -0,05 a 0,05 radianos
+                double dx = player.getCoordinateX() - getCoordinateX();
+                double dy = player.getCoordinateY() - getCoordinateY();
+                double angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.1; // Variação de -0,05 a 0,05 radianos
 
-                    getProjectiles().get(free).setCoordinateX(getCoordinateX());
-                    getProjectiles().get(free).setCoordinateY(getCoordinateY());
-                    getProjectiles().get(free).setSpeedX(Math.cos(angle) * 0.45);
-                    getProjectiles().get(free).setSpeedY(Math.sin(angle) * 0.45);
-                    getProjectiles().get(free).setState(Util.ACTIVE);
-
-                    setNextShoot(currentTime.plusMillis((long) (200 + Math.random() * 500)));
-                }
+                Projectile projectile = new Projectile(getCoordinateX(), getCoordinateY(), Math.cos(angle) * 0.45,
+                        Math.sin(angle) * 0.45, getProjectileRadius(), getColorProjectiles());
+                addProjectiles(projectile);
+                setNextShoot(currentTime.plusMillis((long) (200 + Math.random() * 500)));
             }
         }
     }
 
     @Override
-    public void draw(Instant currentTime){
+    public void draw(Instant currentTime) {
         if (getState() == Util.EXPLODE) {
             drawExplosion(currentTime);
         } else if (isActive()) {
             GameLib.setColor(getColor());
             GameLib.drawHexagon(getCoordinateX(), getCoordinateY(), getRadius());
+            drawProjectiles();
         }
     }
 }

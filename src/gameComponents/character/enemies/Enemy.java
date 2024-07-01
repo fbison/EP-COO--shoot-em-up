@@ -4,6 +4,7 @@ import gameComponents.character.Character;
 import gameComponents.essential.Component;
 import gameComponents.character.Player;
 import gameComponents.character.Projectile;
+import graphics.GameLib;
 import graphics.Util;
 
 import java.awt.*;
@@ -17,7 +18,8 @@ public abstract class Enemy extends Character {
     public Enemy(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                  double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
                  double angle, double rotationSpeed, double speed, int countProjectiles, int projectileRadius, Color colorEnemy, Color colorProjectile) {
-        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, countProjectiles, projectileRadius, colorEnemy, colorProjectile);
+        super(state, coordinateX, coordinateY, speedX, speedY, radius, explosionStart, explosionEnd, nextShoot, countProjectiles, projectileRadius,
+                colorEnemy, colorProjectile);
         this.angle = angle;
         this.rotationSpeed = rotationSpeed;
         this.speed = speed;
@@ -82,5 +84,13 @@ public abstract class Enemy extends Character {
         }
     }
 
+    public void drawProjectiles(){
+        if (isActive()) {
+            for (Projectile projectile : getProjectiles()) {
+                GameLib.setColor(projectile.getColor());
+                GameLib.drawCircle(projectile.getCoordinateX(), projectile.getCoordinateY(), projectile.getRadius());
+            }
+        }
+    }
 
 }

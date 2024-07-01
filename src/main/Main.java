@@ -94,13 +94,9 @@ public class Main {
             starsSecond.update(delta);
             starsFirst.update(delta);
 
-            armyEnemyOne.drawProjetiles();
-            armyEnemyTwo.drawProjetiles();
-            armyEnemyThree.drawProjetiles();
-
-            armyEnemyOne.drawEnemys(currentTime);
-            armyEnemyTwo.drawEnemys(currentTime);
-            armyEnemyThree.drawEnemys(currentTime);
+            armyEnemyOne.drawEnemies(currentTime);
+            armyEnemyTwo.drawEnemies(currentTime);
+            armyEnemyThree.drawEnemies(currentTime);
 
             lifeBar.update(player.getLife());
 

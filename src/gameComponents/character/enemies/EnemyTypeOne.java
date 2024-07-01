@@ -1,6 +1,7 @@
 package gameComponents.character.enemies;
 
 import gameComponents.character.Player;
+import gameComponents.character.Projectile;
 import graphics.GameLib;
 import graphics.Util;
 
@@ -45,16 +46,10 @@ public class EnemyTypeOne extends Enemy {
                 setAngle(getAngle() + getRotationSpeed() * delta);
 
                 if (currentTime.isAfter(getNextShoot()) && getCoordinateY() < player.getCoordinateY()) {
-                    int free = findFreeIndex();
-                    if (free < getProjectiles().size()) {
-                        getProjectiles().get(free).setCoordinateX(getCoordinateX());
-                        getProjectiles().get(free).setCoordinateY(getCoordinateY());
-                        getProjectiles().get(free).setSpeedX(Math.cos(getAngle()) * 0.45);
-                        getProjectiles().get(free).setSpeedY(Math.sin(getAngle()) * 0.45 * (-1));
-                        getProjectiles().get(free).setState(Util.ACTIVE);
-
-                        setNextShoot(currentTime.plusMillis((long) (200 + Math.random() * 500)));
-                    }
+                    Projectile projectile = new Projectile(getCoordinateX(), getCoordinateY(), Math.cos(getAngle()) * 0.45,
+                            Math.sin(getAngle()) * 0.45 * (-1), getProjectileRadius(), getColorProjectiles());
+                    addProjectiles(projectile);
+                    setNextShoot(currentTime.plusMillis((long) (200 + Math.random() * 500)));
                 }
             }
         }
@@ -68,6 +63,7 @@ public class EnemyTypeOne extends Enemy {
         } else if (isActive()) {
             GameLib.setColor(getColor());
             GameLib.drawCircle(getCoordinateX(), getCoordinateY(), getRadius());
+            drawProjectiles();
         }
     }
 }

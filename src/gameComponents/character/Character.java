@@ -15,18 +15,32 @@ public class Character extends Component {
     private Instant explosionEnd;
     private Instant nextShoot;
     private ArrayList<Projectile> projectiles;
+    private Color colorProjectile;
+    private int projectileRadius;
+    private int maxProjectiles;
 
     public Character(int state, double coordinateX, double coordinateY, double speedX, double speedY,
                      double radius, Instant explosionStart, Instant explosionEnd, Instant nextShoot,
-                     int countProjectiles, int projectileRadius, Color colorCharacter, Color colorProjectile) {
+                     int maxProjectiles, int projectileRadius, Color colorCharacter, Color colorProjectile) {
         super(state, coordinateX, coordinateY, speedX, speedY, radius, colorCharacter);
         this.explosionStart = explosionStart;
         this.explosionEnd = explosionEnd;
         this.nextShoot = nextShoot;
-        this.projectiles = new ArrayList<>(countProjectiles);
-        for (int i = 0; i < countProjectiles; i++) {
-            this.projectiles.add(new Projectile(projectileRadius, colorProjectile));
-        }
+        this.projectiles = new ArrayList<>();
+        this.colorProjectile = colorProjectile;
+        this.projectileRadius = projectileRadius;
+        this.maxProjectiles = maxProjectiles;
+    }
+
+
+    public void cleanInactive(){
+        projectiles.removeIf(Component::isInactive);
+    }
+    public int getProjectileRadius(){
+        return projectileRadius;
+    }
+    public Color getColorProjectiles(){
+        return colorProjectile;
     }
 
     public Instant getExplosionStart() {
@@ -57,8 +71,8 @@ public class Character extends Component {
         return projectiles;
     }
 
-    public void setProjectiles(ArrayList<Projectile> projectiles) {
-        this.projectiles = projectiles;
+    public void addProjectiles(Projectile projectile) {
+        projectiles.add(projectile);
     }
 
     public void prepareExplosion( Instant currentTime){
@@ -92,28 +106,5 @@ public class Character extends Component {
                 projectile.setCoordinateY(projectile.getCoordinateY() + (projectile.getSpeedY() * delta));
             }
         }
-    }
-
-    public int findFreeIndex() {
-        int i;
-        for (i = 0; i < projectiles.size(); i++) {
-            if (projectiles.get(i).getState() == Util.INACTIVE)
-                return i;
-        }
-        return i;
-    }
-
-    public int[] findFreeIndex(int amount) {
-        int i, k;
-        int[] freeArray = {projectiles.size(), projectiles.size(), projectiles.size()};
-
-        for (i = 0, k = 0; i < projectiles.size() && k < amount; i++) {
-            if (projectiles.get(i).getState() == Util.INACTIVE) {
-                freeArray[k] = i;
-                k++;
-            }
-        }
-
-        return freeArray;
     }
 }

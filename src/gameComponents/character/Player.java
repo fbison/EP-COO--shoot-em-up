@@ -63,15 +63,9 @@ public class Player extends Character {
     }
 
     public void atack(Instant currentTime) {
-        int free = findFreeIndex();
-        if (free < getProjectiles().size()) {
-            getProjectiles().get(free).setCoordinateX(getCoordinateX());
-            getProjectiles().get(free).setCoordinateY(getCoordinateY() - 2 * getRadius());
-            getProjectiles().get(free).setSpeedX(0);
-            getProjectiles().get(free).setSpeedY(-1.0);
-            getProjectiles().get(free).setState(Util.ACTIVE);
-            setNextShoot(currentTime.plusMillis(100));
-        }
+        Projectile projectile = new Projectile(getCoordinateX(), getCoordinateY() - 2 * getRadius(), 0, -1.0, getRadius(), getColor());
+        addProjectiles(projectile);
+        setNextShoot(currentTime.plusMillis(100));
     }
 
     public void backToLife() {

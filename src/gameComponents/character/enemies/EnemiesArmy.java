@@ -4,7 +4,6 @@ import gameComponents.character.Player;
 import gameComponents.character.Projectile;
 import gameComponents.essential.Component;
 import graphics.GameLib;
-import graphics.Util;
 
 import java.lang.reflect.Constructor;
 import java.time.Instant;
@@ -88,7 +87,7 @@ public class EnemiesArmy {
         }
     }
 
-    public void drawEnemys(Instant currentTime) {
+    public void drawEnemies(Instant currentTime) {
         for (Enemy enemy : getEnemies()) {
             enemy.draw(currentTime);
         }
